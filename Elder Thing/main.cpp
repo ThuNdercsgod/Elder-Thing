@@ -12,6 +12,9 @@ int main()
 
     // TODO Weapon::saveToFile()
     weapon.saveToFile();
+    weapon.loadFromFile();
+
+    weapon.print();
 
     return 0;
 }

@@ -26,5 +26,5 @@ private:
     float maxCarryCapacity = 3;
 
     int weaponSlots;
-    bool weaponSlotFree[3];
+    bool weaponSlotFree[8];
 };

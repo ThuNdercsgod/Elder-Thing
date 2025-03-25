@@ -14,6 +14,27 @@ void Weapon::print()
 
 bool Weapon::loadFromFile()
 {
+    std::ifstream load("weapons.bin", std::ios::binary | std::ios::in);
+    if (!load.is_open())
+    {
+        std::cerr << "File opening error!" << std::endl;
+        return false;
+    }
+
+    load.seekg(0, std::ios::beg);
+
+    load.read(this->name, sizeof(Weapon::name));
+    load.seekg(1, std::ios::cur);
+    load.read((char *)&this->damage, sizeof(Weapon::damage));
+    load.seekg(1, std::ios::cur);
+    load.read((char *)&this->weight, sizeof(Weapon::weight));
+    load.seekg(1, std::ios::cur);
+    load.read((char *)&this->requiredStrength, sizeof(Weapon::requiredStrength));
+
+    load.seekg(1, std::ios::cur);
+
+    // TODO write the total number of weapons in the file
+
     return true;
 }
 
@@ -28,12 +49,18 @@ bool Weapon::saveToFile()
         return false;
     }
     // TODO figure out wether or not it should have a - before
-    load.seekg(sizeof(int), std::ios::end);
+    load.seekg(-(sizeof(int)), std::ios::end);
     load.read((char *)&total, sizeof(int));
+
+    load.seekg(0, std::ios::end);
+    long fileSize = load.tellg();
+
+    std::cout << fileSize << std::endl;
+
     load.close();
 
     // TODO save it before the last int or delete the last int and put it at the end
-    std::ofstream save("weapons.bin", std::ios::binary | std::ios::app);
+    std::fstream save("weapons.bin", std::ios::binary | std::ios::in | std::ios::out | std::ios::ate);
 
     if (!save.is_open())
     {
@@ -49,9 +76,6 @@ bool Weapon::saveToFile()
     save.write(",", 1);
     save.write((char *)&this->requiredStrength, sizeof(Weapon::requiredStrength));
     save.write(";", 1);
-
-    total++;
-    save.write((char *)&total, sizeof(total));
 
     save.close();
 
