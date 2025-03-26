@@ -8,11 +8,11 @@ int main()
 
     weapon.initialize();
 
-    weapon.print();
+    // weapon.print();
 
     // TODO Weapon::saveToFile()
     weapon.saveToFile();
-    weapon.loadFromFile();
+    // weapon.loadFromFile();
 
     weapon.print();
 

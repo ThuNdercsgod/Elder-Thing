@@ -7,10 +7,10 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                //"${workspaceFolder}/main.cpp",
-                //"${workspaceFolder}/weapon.cpp",
-                //"${workspaceFolder}/player.cpp",
-                "${fileDirname}/*.cpp",
+                "${workspaceFolder}/main.cpp",
+                "${workspaceFolder}/weapon.cpp",
+                "${workspaceFolder}/player.cpp",
+                // "*.cpp",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}.exe"
             ],
