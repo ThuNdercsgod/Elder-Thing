@@ -22,7 +22,7 @@ private:
 
     bool validName(const char *name) const;
     bool validDamage(float damage) const;
-    bool validWeight(int weight) const;
+    bool validWeight(float weight) const;
     bool validRequiredStrength(int requiredStrength) const;
 
 private:

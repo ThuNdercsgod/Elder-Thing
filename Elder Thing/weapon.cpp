@@ -217,7 +217,7 @@ bool Weapon::validDamage(float damage) const
     return true;
 }
 
-bool Weapon::validWeight(int weight) const
+bool Weapon::validWeight(float weight) const
 {
     if (!(weight >= 0 && weight <= 20))
     {
