@@ -1,9 +1,10 @@
 #include <cstring>
 #include <fstream>
 #include <iostream>
+
 #include "weapon.hpp"
 
-void Weapon::print()
+void Weapon::print() const
 {
     std::cout << "Weapon \"" << this->name << "\":" << std::endl;
     std::cout << "Damage: " << this->damage << std::endl;
@@ -37,7 +38,7 @@ bool Weapon::loadFromFile()
 }
 
 // TODO stop it from deleting the file when editing the total size
-bool Weapon::saveToFile()
+bool Weapon::saveToFile() const
 {
     int total = 0;
 
@@ -80,23 +81,30 @@ bool Weapon::saveToFile()
     return true;
 }
 
-void Weapon::initialize()
+void Weapon::input()
 {
-    bool valid;
-    do
+    Weapon::inputName();
+    Weapon::inputDamage();
+    Weapon::inputWeight();
+    Weapon::inputRequiredStrength();
+}
+
+void Weapon::initialize(const char *name, float damage, float weight, int requiredStrength)
+{
+    if (!(Weapon::validName(name) &&
+          Weapon::validDamage(damage) &&
+          Weapon::validWeight(weight) &&
+          Weapon::validRequiredStrength(requiredStrength)))
     {
-        valid = true;
-
-        if (!Weapon::validName() || !Weapon::validDamage() ||
-            !Weapon::validWeight() || !Weapon::validRequieredStrength())
-        {
-            std::cout << "Wrong input! Try again:" << std::endl;
-            std::cin.clear();
-            std::cin.ignore();
-            valid = false;
-        }
-
-    } while (valid == false);
+        std::cout << "Invalid weapon!" << std::endl;
+    }
+    else
+    {
+        strcpy(this->name, name);
+        this->damage = damage;
+        this->weight = weight;
+        this->requiredStrength = requiredStrength;
+    }
 }
 
 float Weapon::getDamage() const
@@ -119,67 +127,114 @@ const char *Weapon::getName() const
     return this->name;
 }
 
-bool Weapon::validName()
+void Weapon::inputName()
 {
     char input[128];
+    bool valid;
 
-    std::cout << "Enter the name of the weapon: ";
-    std::cin.getline(input, 127);
-    std::cout << std::endl;
-
-    if (strlen(input) >= 32)
+    do
     {
-        return false;
-    }
+        std::cout << "Enter the name of the weapon: ";
+        std::cin.getline(input, 127);
+        std::cout << std::endl;
+
+        valid = Weapon::validName(input);
+    } while (!valid);
 
     strcpy(this->name, input);
-    return true;
 }
 
-bool Weapon::validDamage()
+void Weapon::inputDamage()
 {
     float input;
-    std::cout << "Enter the damage of the weapon: ";
-    std::cin >> input;
-    std::cout << std::endl;
+    bool valid;
 
-    if (!(input >= 0 && input <= 100))
+    do
     {
-        return false;
-    }
+        std::cout << "Enter the damage of the weapon: ";
+        std::cin >> input;
+        std::cout << std::endl;
+
+        valid = Weapon::validDamage(input);
+    } while (!valid);
 
     this->damage = input;
-    return true;
 }
 
-bool Weapon::validWeight()
+void Weapon::inputWeight()
 {
-    float input;
-    std::cout << "Enter the weigth of the weapon: ";
-    std::cin >> input;
-    std::cout << std::endl;
+    int input;
+    bool valid;
 
-    if (!(input >= 0 && input <= 100))
+    do
     {
-        return false;
-    }
+        std::cout << "Enter the weight of the weapon: ";
+        std::cin >> input;
+        std::cout << std::endl;
+
+        valid = Weapon::validWeight(input);
+    } while (!valid);
 
     this->weight = input;
-    return true;
 }
 
-bool Weapon::validRequieredStrength()
+void Weapon::inputRequiredStrength()
 {
-    float input;
-    std::cout << "Enter the required strength of the weapon: ";
-    std::cin >> input;
-    std::cout << std::endl;
+    int input;
+    bool valid;
 
-    if (!(input >= 0 && input <= 100))
+    do
     {
+        std::cout << "Enter the required strength of the weapon: ";
+        std::cin >> input;
+        std::cout << std::endl;
+
+        valid = Weapon::validRequiredStrength(input);
+    } while (!valid);
+
+    this->requiredStrength = input;
+}
+
+bool Weapon::validName(const char *name) const
+{
+    if (strlen(name) >= 32)
+    {
+        std::cout << "Invalid weapon name!" << std::endl;
         return false;
     }
 
-    this->requiredStrength = input;
+    return true;
+}
+
+bool Weapon::validDamage(float damage) const
+{
+    if (!(damage >= 0 && damage <= 100))
+    {
+        std::cout << "Invalid weapon damage!" << std::endl;
+        return false;
+    }
+
+    return true;
+}
+
+bool Weapon::validWeight(int weight) const
+{
+    if (!(weight >= 0 && weight <= 8))
+    {
+        std::cout << "Invalid weapon weight!" << std::endl;
+        return false;
+    }
+
+    return true;
+}
+
+bool Weapon::validRequiredStrength(int requiredStrength) const
+{
+    if (!(requiredStrength >= 0))
+    {
+        std::cout << "Invalid weapon required strength!" << std::endl;
+        return false;
+    }
+
     return true;
 }

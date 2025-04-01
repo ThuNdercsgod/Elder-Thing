@@ -8,8 +8,10 @@
                 "-fdiagnostics-color=always",
                 "-g",
                 "${workspaceFolder}/main.cpp",
-                "${workspaceFolder}/weapon.cpp",
+                "${workspaceFolder}/command.cpp",
+                "${workspaceFolder}/test.cpp",
                 "${workspaceFolder}/player.cpp",
+                "${workspaceFolder}/weapon.cpp",
                 // "*.cpp",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}.exe"
