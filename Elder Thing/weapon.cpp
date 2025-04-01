@@ -4,12 +4,39 @@
 
 #include "weapon.hpp"
 
+Weapon::Weapon()
+{
+    strcpy(this->name, "Undefined");
+    this->damage = 0;
+    this->weight = 0;
+    this->requiredLevel = 0;
+}
+Weapon::Weapon(const char *name, float damage, float weight, int requiredLevel)
+{
+    if (!(Weapon::validName(name) &&
+          Weapon::validDamage(damage) &&
+          Weapon::validWeight(weight) &&
+          Weapon::validRequiredLevel(requiredLevel)))
+    {
+        std::cout << "Invalid weapon!" << std::endl;
+    }
+    else
+    {
+        strcpy(this->name, name);
+        this->damage = damage;
+        this->weight = weight;
+        this->requiredLevel = requiredLevel;
+    }
+}
+
+Weapon::~Weapon() {}
+
 void Weapon::print() const
 {
     std::cout << "Weapon \"" << this->name << "\":" << std::endl;
     std::cout << "Damage: " << this->damage << std::endl;
     std::cout << "Weight: " << this->weight << std::endl;
-    std::cout << "Required Strength: " << this->requiredStrength << std::endl;
+    std::cout << "Required level: " << this->requiredLevel << std::endl;
     std::cout << std::endl;
 }
 
@@ -30,7 +57,7 @@ bool Weapon::loadFromFile()
     load.seekg(1, std::ios::cur);
     load.read((char *)&this->weight, sizeof(Weapon::weight));
     load.seekg(1, std::ios::cur);
-    load.read((char *)&this->requiredStrength, sizeof(Weapon::requiredStrength));
+    load.read((char *)&this->requiredLevel, sizeof(Weapon::requiredLevel));
 
     load.seekg(1, std::ios::cur);
 
@@ -74,7 +101,7 @@ bool Weapon::saveToFile() const
     edit.write(this->name, sizeof(Weapon::name));
     edit.write((char *)&this->damage, sizeof(Weapon::damage));
     edit.write((char *)&this->weight, sizeof(Weapon::weight));
-    edit.write((char *)&this->requiredStrength, sizeof(Weapon::requiredStrength));
+    edit.write((char *)&this->requiredLevel, sizeof(Weapon::requiredLevel));
 
     edit.close();
 
@@ -86,25 +113,7 @@ void Weapon::input()
     Weapon::inputName();
     Weapon::inputDamage();
     Weapon::inputWeight();
-    Weapon::inputRequiredStrength();
-}
-
-void Weapon::initialize(const char *name, float damage, float weight, int requiredStrength)
-{
-    if (!(Weapon::validName(name) &&
-          Weapon::validDamage(damage) &&
-          Weapon::validWeight(weight) &&
-          Weapon::validRequiredStrength(requiredStrength)))
-    {
-        std::cout << "Invalid weapon!" << std::endl;
-    }
-    else
-    {
-        strcpy(this->name, name);
-        this->damage = damage;
-        this->weight = weight;
-        this->requiredStrength = requiredStrength;
-    }
+    Weapon::inputRequiredLevel();
 }
 
 float Weapon::getDamage() const
@@ -117,9 +126,9 @@ float Weapon::getWeight() const
     return this->weight;
 }
 
-int Weapon::getRequiredStrength() const
+int Weapon::getRequiredLevel() const
 {
-    return this->requiredStrength;
+    return this->requiredLevel;
 }
 
 const char *Weapon::getName() const
@@ -178,21 +187,21 @@ void Weapon::inputWeight()
     this->weight = input;
 }
 
-void Weapon::inputRequiredStrength()
+void Weapon::inputRequiredLevel()
 {
     int input;
     bool valid;
 
     do
     {
-        std::cout << "Enter the required strength of the weapon: ";
+        std::cout << "Enter the required level of the weapon: ";
         std::cin >> input;
         std::cout << std::endl;
 
-        valid = Weapon::validRequiredStrength(input);
+        valid = Weapon::validRequiredLevel(input);
     } while (!valid);
 
-    this->requiredStrength = input;
+    this->requiredLevel = input;
 }
 
 bool Weapon::validName(const char *name) const
@@ -228,11 +237,11 @@ bool Weapon::validWeight(float weight) const
     return true;
 }
 
-bool Weapon::validRequiredStrength(int requiredStrength) const
+bool Weapon::validRequiredLevel(int requiredLevel) const
 {
-    if (!(requiredStrength >= 0))
+    if (!(requiredLevel >= 0))
     {
-        std::cout << "Invalid weapon required strength!" << std::endl;
+        std::cout << "Invalid weapon required level!" << std::endl;
         return false;
     }
 

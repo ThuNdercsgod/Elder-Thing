@@ -3,31 +3,34 @@
 class Weapon
 {
 public:
+    Weapon();
+    Weapon(const char *name, float damage, float weight, int requiredLevel);
+    ~Weapon();
+
     void print() const;
     bool loadFromFile();
     bool saveToFile() const;
     void input();
-    void initialize(const char *name, float damage, float weight, int requiredStrength);
 
     float getDamage() const;
     float getWeight() const;
-    int getRequiredStrength() const;
+    int getRequiredLevel() const;
     const char *getName() const;
 
 private:
     void inputName();
     void inputDamage();
     void inputWeight();
-    void inputRequiredStrength();
+    void inputRequiredLevel();
 
     bool validName(const char *name) const;
     bool validDamage(float damage) const;
     bool validWeight(float weight) const;
-    bool validRequiredStrength(int requiredStrength) const;
+    bool validRequiredLevel(int requiredLevel) const;
 
 private:
     float damage = 0;
     float weight = 0;
-    int requiredStrength = 0;
+    int requiredLevel = 0;
     char name[32] = "";
 };
