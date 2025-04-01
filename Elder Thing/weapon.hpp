@@ -27,7 +27,7 @@ private:
 
 private:
     float damage = 0;
-    int weight = 0;
+    float weight = 0;
     int requiredStrength = 0;
     char name[32] = "";
 };

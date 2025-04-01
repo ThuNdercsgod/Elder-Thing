@@ -163,7 +163,7 @@ void Weapon::inputDamage()
 
 void Weapon::inputWeight()
 {
-    int input;
+    float input;
     bool valid;
 
     do
@@ -219,7 +219,7 @@ bool Weapon::validDamage(float damage) const
 
 bool Weapon::validWeight(int weight) const
 {
-    if (!(weight >= 0 && weight <= 8))
+    if (!(weight >= 0 && weight <= 20))
     {
         std::cout << "Invalid weapon weight!" << std::endl;
         return false;
