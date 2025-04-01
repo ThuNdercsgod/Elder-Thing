@@ -43,3 +43,20 @@ void WeaponTest::validation()
     Weapon longNameWeapon("This is an extremely long weapon name that should be truncated", 50, 5.0f, 10);
     longNameWeapon.print();
 }
+
+void PlayerTest::equipping()
+{
+    Player player(20, 20, 70, 5, 1);
+
+    Weapon longsword("Longsword", 80, 5.0f, 12);
+
+    Weapon greatsword("Greatsword", 100, 12.0f, 20);
+
+    Weapon dagger("Dagger", 45, 1.5f, 5);
+
+    player.equipWeapon(longsword);
+    player.equipWeapon(greatsword);
+    player.equipWeapon(dagger);
+
+    player.print();
+}

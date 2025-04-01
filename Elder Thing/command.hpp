@@ -7,4 +7,7 @@ namespace Command
 
     void weaponTest();
     void printWeaponTest();
+
+    void playerTest();
+    void printPlayerTest();
 }

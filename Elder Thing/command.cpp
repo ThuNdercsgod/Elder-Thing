@@ -20,13 +20,12 @@ void Command::test()
         case 0:
             valid = true;
             break;
-        // case 1:
-        //     break;
-        case 2:
+        case 1:
             Command::weaponTest();
             break;
-        // case 3:
-        //     break;
+        case 2:
+            Command::playerTest();
+            break;
         // case 4:
         //     break;
         default:
@@ -40,8 +39,8 @@ void Command::printTest()
 {
     std::cout << "\n=== Elder Thing Tests ===\n"
               //   << "1. Run all tests\n"
-              << "2. Run Weapon tests\n"
-              //   << "3. Run Player basic tests\n"
+              << "1. Run Weapon tests\n"
+              << "2. Run Player tests\n"
               //   << "4. Run Player flask tests\n"
               << "0. Exit\n"
               << std::endl;
@@ -82,6 +81,41 @@ void Command::printWeaponTest()
     std::cout << "\n=== Elder Thing Weapon Tests ===\n"
               << "1. Run basic weapon tests\n"
               << "2. Run validation weapon tests\n"
+              << "0. Go back\n"
+              << std::endl;
+}
+
+void Command::playerTest()
+{
+    int input;
+    bool valid;
+
+    do
+    {
+        valid = false;
+        Command::printPlayerTest();
+        std::cout << "Enter the number representing the command:" << std::endl;
+        std::cin >> input;
+
+        switch (input)
+        {
+        case 0:
+            valid = true;
+            break;
+        case 1:
+            PlayerTest::equipping();
+            break;
+        default:
+            std::cout << "Invalid input!" << std::endl;
+            break;
+        }
+    } while (!valid);
+}
+
+void Command::printPlayerTest()
+{
+    std::cout << "\n=== Elder Thing Player Tests ===\n"
+              << "1. Run equipping tests\n"
               << "0. Go back\n"
               << std::endl;
 }
