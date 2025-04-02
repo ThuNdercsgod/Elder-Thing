@@ -46,13 +46,39 @@ void WeaponTest::validation()
 
 void PlayerTest::equipping()
 {
-    Player player(20, 20, 70, 5, 1);
+    Player player(20, 20, 70, 5, 10);
 
     Weapon longsword("Longsword", 80, 5.0f, 12);
 
     Weapon greatsword("Greatsword", 100, 12.0f, 20);
 
     Weapon dagger("Dagger", 45, 1.5f, 5);
+
+    player.equipWeapon(longsword);
+    player.equipWeapon(greatsword);
+    player.equipWeapon(dagger);
+
+    player.print();
+
+    player.setLevel(30);
+
+    player.equipWeapon(longsword);
+    player.equipWeapon(greatsword);
+
+    player.print();
+}
+
+void PlayerTest::input()
+{
+    Player player;
+
+    Weapon longsword("Longsword", 80, 5.0f, 12);
+
+    Weapon greatsword("Greatsword", 100, 12.0f, 20);
+
+    Weapon dagger("Dagger", 45, 1.5f, 5);
+
+    player.print();
 
     player.equipWeapon(longsword);
     player.equipWeapon(greatsword);

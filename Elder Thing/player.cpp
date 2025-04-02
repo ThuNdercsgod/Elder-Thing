@@ -2,13 +2,14 @@
 
 #include "player.hpp"
 
+// Default constructor. Gets input from user.
 Player::Player()
 {
-    this->hp = 100;
-    this->mp = 100;
-    this->stamina = 100;
-    this->runes = 0;
-    this->level = 0;
+    Player::inputHp();
+    Player::inputMp();
+    Player::inputStamina();
+    Player::inputRunes();
+    Player::inputLevel();
 }
 
 Player::Player(float hp, float mp, float stamina, int runes, float level)
@@ -32,7 +33,6 @@ Player::Player(float hp, float mp, float stamina, int runes, float level)
     }
 }
 
-// TODO make it validate for the players level
 void Player::equipWeapon(Weapon weapon)
 {
     int i = 0;
@@ -47,8 +47,18 @@ void Player::equipWeapon(Weapon weapon)
         }
     }
 
-    weaponSlots[i] = weapon;
-    weaponsSlotsOccupied[i] = true;
+    if (weapon.getRequiredLevel() <= this->getLevel())
+    {
+        weaponSlots[i] = weapon;
+        weaponsSlotsOccupied[i] = true;
+        this->currentWeight += weapon.getWeight();
+    }
+    else
+    {
+        std::cout << "Player level is not high enough! "
+                  << weapon.getName()
+                  << " not equipped!" << std::endl;
+    }
 }
 
 Player::~Player() {}
@@ -161,6 +171,81 @@ int Player::getRunes() const
 float Player::getLevel() const
 {
     return this->level;
+}
+
+void Player::inputHp()
+{
+    float input;
+    bool valid;
+
+    do
+    {
+        std::cout << "Enter the HP of the player:" << std::endl;
+        std::cin >> input;
+        valid = Player::validHp(input);
+    } while (!valid);
+
+    this->hp = input;
+}
+
+void Player::inputMp()
+{
+    float input;
+    bool valid;
+
+    do
+    {
+        std::cout << "Enter the MP of the player:" << std::endl;
+        std::cin >> input;
+        valid = Player::validMp(input);
+    } while (!valid);
+
+    this->mp = input;
+}
+
+void Player::inputStamina()
+{
+    float input;
+    bool valid;
+
+    do
+    {
+        std::cout << "Enter the stamina of the player:" << std::endl;
+        std::cin >> input;
+        valid = Player::validStamina(input);
+    } while (!valid);
+
+    this->stamina = input;
+}
+
+void Player::inputRunes()
+{
+    float input;
+    bool valid;
+
+    do
+    {
+        std::cout << "Enter the runes of the player:" << std::endl;
+        std::cin >> input;
+        valid = Player::validRunes(input);
+    } while (!valid);
+
+    this->runes = input;
+}
+
+void Player::inputLevel()
+{
+    float input;
+    bool valid;
+
+    do
+    {
+        std::cout << "Enter the level of the player:" << std::endl;
+        std::cin >> input;
+        valid = Player::validLevel(input);
+    } while (!valid);
+
+    this->level = input;
 }
 
 bool Player::validHp(float hp) const

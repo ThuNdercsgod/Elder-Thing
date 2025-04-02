@@ -30,6 +30,12 @@ public:
     float getLevel() const;
 
 private:
+    void inputHp();
+    void inputMp();
+    void inputStamina();
+    void inputRunes();
+    void inputLevel();
+
     bool validHp(float hp) const;
     bool validMp(float mp) const;
     bool validRunes(int runes) const;
@@ -46,7 +52,7 @@ private:
 
     int flaskChargesHp = 0, flaskChargesMp = 0;
 
-    float currentWeight = 0, maxWeight = 20;
+    float currentWeight = 0, maxWeight = 100;
     Weapon weaponSlots[8] = {};
     bool weaponsSlotsOccupied[8] = {};
 };

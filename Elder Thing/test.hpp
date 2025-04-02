@@ -11,4 +11,5 @@ namespace WeaponTest
 namespace PlayerTest
 {
     void equipping();
+    void input();
 }
