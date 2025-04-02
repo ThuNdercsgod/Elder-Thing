@@ -10,7 +10,6 @@ public:
     void print() const;
     bool loadFromFile();
     bool saveToFile() const;
-    void input();
 
     float getDamage() const;
     float getWeight() const;

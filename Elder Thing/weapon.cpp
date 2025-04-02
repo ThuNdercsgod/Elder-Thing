@@ -4,13 +4,15 @@
 
 #include "weapon.hpp"
 
+// Default constructor. Gets input from user
 Weapon::Weapon()
 {
-    strcpy(this->name, "Undefined");
-    this->damage = 0;
-    this->weight = 0;
-    this->requiredLevel = 0;
+    Weapon::inputName();
+    Weapon::inputDamage();
+    Weapon::inputWeight();
+    Weapon::inputRequiredLevel();
 }
+
 Weapon::Weapon(const char *name, float damage, float weight, int requiredLevel)
 {
     if (!(Weapon::validName(name) &&
@@ -108,14 +110,6 @@ bool Weapon::saveToFile() const
     return true;
 }
 
-void Weapon::input()
-{
-    Weapon::inputName();
-    Weapon::inputDamage();
-    Weapon::inputWeight();
-    Weapon::inputRequiredLevel();
-}
-
 float Weapon::getDamage() const
 {
     return this->damage;
@@ -143,9 +137,9 @@ void Weapon::inputName()
 
     do
     {
-        std::cout << "Enter the name of the weapon: ";
+        std::cout << "Enter the name of the weapon: " << std::endl;
         std::cin.getline(input, 127);
-        std::cout << std::endl;
+        std::cin.ignore();
 
         valid = Weapon::validName(input);
     } while (!valid);
@@ -160,9 +154,8 @@ void Weapon::inputDamage()
 
     do
     {
-        std::cout << "Enter the damage of the weapon: ";
+        std::cout << "Enter the damage of the weapon: " << std::endl;
         std::cin >> input;
-        std::cout << std::endl;
 
         valid = Weapon::validDamage(input);
     } while (!valid);
@@ -177,9 +170,8 @@ void Weapon::inputWeight()
 
     do
     {
-        std::cout << "Enter the weight of the weapon: ";
+        std::cout << "Enter the weight of the weapon: " << std::endl;
         std::cin >> input;
-        std::cout << std::endl;
 
         valid = Weapon::validWeight(input);
     } while (!valid);
@@ -194,9 +186,8 @@ void Weapon::inputRequiredLevel()
 
     do
     {
-        std::cout << "Enter the required level of the weapon: ";
+        std::cout << "Enter the required level of the weapon: " << std::endl;
         std::cin >> input;
-        std::cout << std::endl;
 
         valid = Weapon::validRequiredLevel(input);
     } while (!valid);
