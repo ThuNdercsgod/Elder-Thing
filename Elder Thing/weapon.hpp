@@ -5,7 +5,6 @@ class Weapon
 public:
     Weapon();
     Weapon(const char *name, float damage, float weight, int requiredLevel);
-    ~Weapon();
 
     void print() const;
     bool loadFromFile();

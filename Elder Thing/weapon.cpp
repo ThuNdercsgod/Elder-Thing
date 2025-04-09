@@ -4,34 +4,28 @@
 
 #include "weapon.hpp"
 
-// Default constructor. Gets input from user
 Weapon::Weapon()
-{
-    inputName();
-    this->inputDamage();
-    this->inputWeight();
-    this->inputRequiredLevel();
-}
+    : Weapon("Unkown", 0, 0, 0) {}
 
+// Might throw int 1
 Weapon::Weapon(const char *name, float damage, float weight, int requiredLevel)
 {
-    if (!(this->validName(name) &&
-          this->validDamage(damage) &&
-          this->validWeight(weight) &&
-          this->validRequiredLevel(requiredLevel)))
-    {
-        std::cout << "Invalid weapon!" << std::endl;
-    }
-    else
+    if (this->validName(name) &&
+        this->validDamage(damage) &&
+        this->validWeight(weight) &&
+        this->validRequiredLevel(requiredLevel))
     {
         strcpy(this->name, name);
         this->damage = damage;
         this->weight = weight;
         this->requiredLevel = requiredLevel;
     }
+    else
+    {
+        std::cout << "Invalid parameters for weapon creation!" << std::endl;
+        throw 1;
+    }
 }
-
-Weapon::~Weapon() {}
 
 void Weapon::print() const
 {
@@ -53,13 +47,13 @@ bool Weapon::loadFromFile()
 
     load.seekg(5, std::ios::beg);
 
-    load.read(this->name, sizeof(Weapon::name));
+    load.read(this->name, sizeof(this->name));
     load.seekg(1, std::ios::cur);
-    load.read((char *)&this->damage, sizeof(Weapon::damage));
+    load.read((char *)&this->damage, sizeof(this->damage));
     load.seekg(1, std::ios::cur);
-    load.read((char *)&this->weight, sizeof(Weapon::weight));
+    load.read((char *)&this->weight, sizeof(this->weight));
     load.seekg(1, std::ios::cur);
-    load.read((char *)&this->requiredLevel, sizeof(Weapon::requiredLevel));
+    load.read((char *)&this->requiredLevel, sizeof(this->requiredLevel));
 
     load.seekg(1, std::ios::cur);
 
@@ -100,10 +94,10 @@ bool Weapon::saveToFile() const
 
     edit.seekp(0, std::ios::end);
 
-    edit.write(this->name, sizeof(Weapon::name));
-    edit.write((char *)&this->damage, sizeof(Weapon::damage));
-    edit.write((char *)&this->weight, sizeof(Weapon::weight));
-    edit.write((char *)&this->requiredLevel, sizeof(Weapon::requiredLevel));
+    edit.write(this->name, sizeof(this->name));
+    edit.write((char *)&this->damage, sizeof(this->damage));
+    edit.write((char *)&this->weight, sizeof(this->weight));
+    edit.write((char *)&this->requiredLevel, sizeof(this->requiredLevel));
 
     edit.close();
 

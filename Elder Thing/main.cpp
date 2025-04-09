@@ -13,8 +13,22 @@ int main()
     // TODO expand player
     // TODO add copy constructors and operators
     // TODO add static methods
-    Command command;
-    command.test();
+
+    try
+    {
+        Command command;
+        command.test();
+    }
+    catch (std::bad_alloc &e)
+    {
+        std::cerr << "Memory allocation error!";
+        return 1;
+    }
+    catch (int &e)
+    {
+        std::cerr << "Invalid parameters!" << std::endl;
+        return 2;
+    }
 
     return 0;
 }

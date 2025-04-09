@@ -2,16 +2,9 @@
 
 #include "player.hpp"
 
-// Default constructor. Gets input from user.
-Player::Player()
-{
-    this->inputHp();
-    this->inputMp();
-    this->inputStamina();
-    this->inputRunes();
-    this->inputLevel();
-}
+Player::Player() : Player(100, 100, 100, 0, 0) {}
 
+// Might throw int 1;
 Player::Player(float hp, float mp, float stamina, int runes, float level)
 {
     if (this->validHp(hp) &&
@@ -28,8 +21,8 @@ Player::Player(float hp, float mp, float stamina, int runes, float level)
     }
     else
     {
-        std::cout << "Invalid parameters for player creation! Using default parameters!"
-                  << std::endl;
+        std::cout << "Invalid parameters for player creation!" << std::endl;
+        throw 1;
     }
 }
 
@@ -60,8 +53,6 @@ void Player::equipWeapon(Weapon weapon)
                   << " not equipped!" << std::endl;
     }
 }
-
-Player::~Player() {}
 
 void Player::print()
 {

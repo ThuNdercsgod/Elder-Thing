@@ -13,3 +13,8 @@ public:
     void equipping();
     void input();
 };
+
+class EnemyTest
+{
+public:
+};

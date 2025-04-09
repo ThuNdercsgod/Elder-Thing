@@ -7,7 +7,6 @@ class Player
 public:
     Player();
     Player(float hp, float mp, float stamina, int runes, float level);
-    ~Player();
 
     void equipWeapon(Weapon weapon);
 
