@@ -1,15 +1,15 @@
 #pragma once
 
-#include "player.hpp"
-#include "weapon.hpp"
-
-namespace WeaponTest
+class WeaponTest
 {
+public:
     void basic();
     void validation();
-}
-namespace PlayerTest
+};
+
+class PlayerTest
 {
+public:
     void equipping();
     void input();
-}
+};

@@ -11,7 +11,7 @@ void Command::test()
     do
     {
         valid = false;
-        Command::printTest();
+        this->printTest();
         std::cout << "Enter the number representing the command:" << std::endl;
         std::cin >> input;
 
@@ -21,10 +21,10 @@ void Command::test()
             valid = true;
             break;
         case 1:
-            Command::weaponTest();
+            this->weaponTest();
             break;
         case 2:
-            Command::playerTest();
+            this->playerTest();
             break;
         // case 4:
         //     break;
@@ -54,9 +54,10 @@ void Command::weaponTest()
     do
     {
         valid = false;
-        Command::printWeaponTest();
+        this->printWeaponTest();
         std::cout << "Enter the number representing the command:" << std::endl;
         std::cin >> input;
+        WeaponTest weaponTest;
 
         switch (input)
         {
@@ -64,10 +65,10 @@ void Command::weaponTest()
             valid = true;
             break;
         case 1:
-            WeaponTest::basic();
+            weaponTest.basic();
             break;
         case 2:
-            WeaponTest::validation();
+            weaponTest.validation();
             break;
         default:
             std::cout << "Invalid input!" << std::endl;
@@ -96,6 +97,7 @@ void Command::playerTest()
         Command::printPlayerTest();
         std::cout << "Enter the number representing the command:" << std::endl;
         std::cin >> input;
+        PlayerTest playerTest;
 
         switch (input)
         {
@@ -103,10 +105,10 @@ void Command::playerTest()
             valid = true;
             break;
         case 1:
-            PlayerTest::equipping();
+            playerTest.equipping();
             break;
         case 2:
-            PlayerTest::input();
+            playerTest.input();
             break;
         default:
             std::cout << "Invalid input!" << std::endl;

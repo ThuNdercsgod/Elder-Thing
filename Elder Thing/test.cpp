@@ -1,6 +1,8 @@
 #include <iostream>
 
+#include "player.hpp"
 #include "test.hpp"
+#include "weapon.hpp"
 
 void WeaponTest::basic()
 {

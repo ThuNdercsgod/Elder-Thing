@@ -1,7 +1,8 @@
 #pragma once
 
-namespace Command
+class Command
 {
+public:
     void test();
     void printTest();
 
@@ -10,4 +11,4 @@ namespace Command
 
     void playerTest();
     void printPlayerTest();
-}
+};
