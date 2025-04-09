@@ -7,10 +7,14 @@
 
 int main()
 {
-    // TODO Player::equipWeapon()
-    // TODO add more tests for PlayerTest
     // TODO add class "Enemy"
-    Command::test();
+    // TODO add class "Spell"
+    // TODO add Spell test
+    // TODO expand player
+    // TODO add copy constructors and operators
+    // TODO add static methods
+    Command command;
+    command.test();
 
     return 0;
 }

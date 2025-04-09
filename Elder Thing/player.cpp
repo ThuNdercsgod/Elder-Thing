@@ -5,20 +5,20 @@
 // Default constructor. Gets input from user.
 Player::Player()
 {
-    Player::inputHp();
-    Player::inputMp();
-    Player::inputStamina();
-    Player::inputRunes();
-    Player::inputLevel();
+    this->inputHp();
+    this->inputMp();
+    this->inputStamina();
+    this->inputRunes();
+    this->inputLevel();
 }
 
 Player::Player(float hp, float mp, float stamina, int runes, float level)
 {
-    if (Player::validHp(hp) &&
-        Player::validMp(mp) &&
-        Player::validStamina(stamina) &&
-        Player::validRunes(runes) &&
-        Player::validLevel(level))
+    if (this->validHp(hp) &&
+        this->validMp(mp) &&
+        this->validStamina(stamina) &&
+        this->validRunes(runes) &&
+        this->validLevel(level))
     {
         this->hp = hp;
         this->mp = mp;
@@ -95,7 +95,7 @@ void Player::printInventory()
 
 void Player::setHp(float newHp)
 {
-    if (Player::validHp(newHp))
+    if (this->validHp(newHp))
     {
         this->hp = newHp;
     }
@@ -103,7 +103,7 @@ void Player::setHp(float newHp)
 
 void Player::setMp(float newMp)
 {
-    if (Player::validMp(newMp))
+    if (this->validMp(newMp))
     {
         this->mp = newMp;
     }
@@ -111,7 +111,7 @@ void Player::setMp(float newMp)
 
 void Player::setStamina(float newStamina)
 {
-    if (Player::validStamina(newStamina))
+    if (this->validStamina(newStamina))
     {
         this->stamina = newStamina;
     }
@@ -119,7 +119,7 @@ void Player::setStamina(float newStamina)
 
 void Player::setRunes(int newRunes)
 {
-    if (Player::validRunes(newRunes))
+    if (this->validRunes(newRunes))
     {
         this->runes = newRunes;
     }
@@ -127,7 +127,7 @@ void Player::setRunes(int newRunes)
 
 void Player::setLevel(float newLevel)
 {
-    if (Player::validLevel(newLevel))
+    if (this->validLevel(newLevel))
     {
         this->level = newLevel;
     }
@@ -182,7 +182,7 @@ void Player::inputHp()
     {
         std::cout << "Enter the HP of the player:" << std::endl;
         std::cin >> input;
-        valid = Player::validHp(input);
+        valid = this->validHp(input);
     } while (!valid);
 
     this->hp = input;
@@ -197,7 +197,7 @@ void Player::inputMp()
     {
         std::cout << "Enter the MP of the player:" << std::endl;
         std::cin >> input;
-        valid = Player::validMp(input);
+        valid = this->validMp(input);
     } while (!valid);
 
     this->mp = input;
@@ -212,7 +212,7 @@ void Player::inputStamina()
     {
         std::cout << "Enter the stamina of the player:" << std::endl;
         std::cin >> input;
-        valid = Player::validStamina(input);
+        valid = this->validStamina(input);
     } while (!valid);
 
     this->stamina = input;
@@ -227,7 +227,7 @@ void Player::inputRunes()
     {
         std::cout << "Enter the runes of the player:" << std::endl;
         std::cin >> input;
-        valid = Player::validRunes(input);
+        valid = this->validRunes(input);
     } while (!valid);
 
     this->runes = input;
@@ -242,7 +242,7 @@ void Player::inputLevel()
     {
         std::cout << "Enter the level of the player:" << std::endl;
         std::cin >> input;
-        valid = Player::validLevel(input);
+        valid = this->validLevel(input);
     } while (!valid);
 
     this->level = input;

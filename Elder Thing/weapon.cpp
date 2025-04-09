@@ -7,18 +7,18 @@
 // Default constructor. Gets input from user
 Weapon::Weapon()
 {
-    Weapon::inputName();
-    Weapon::inputDamage();
-    Weapon::inputWeight();
-    Weapon::inputRequiredLevel();
+    inputName();
+    this->inputDamage();
+    this->inputWeight();
+    this->inputRequiredLevel();
 }
 
 Weapon::Weapon(const char *name, float damage, float weight, int requiredLevel)
 {
-    if (!(Weapon::validName(name) &&
-          Weapon::validDamage(damage) &&
-          Weapon::validWeight(weight) &&
-          Weapon::validRequiredLevel(requiredLevel)))
+    if (!(this->validName(name) &&
+          this->validDamage(damage) &&
+          this->validWeight(weight) &&
+          this->validRequiredLevel(requiredLevel)))
     {
         std::cout << "Invalid weapon!" << std::endl;
     }
@@ -141,7 +141,7 @@ void Weapon::inputName()
         std::cin.getline(input, 127);
         std::cin.ignore();
 
-        valid = Weapon::validName(input);
+        valid = this->validName(input);
     } while (!valid);
 
     strcpy(this->name, input);
@@ -157,7 +157,7 @@ void Weapon::inputDamage()
         std::cout << "Enter the damage of the weapon: " << std::endl;
         std::cin >> input;
 
-        valid = Weapon::validDamage(input);
+        valid = this->validDamage(input);
     } while (!valid);
 
     this->damage = input;
@@ -173,7 +173,7 @@ void Weapon::inputWeight()
         std::cout << "Enter the weight of the weapon: " << std::endl;
         std::cin >> input;
 
-        valid = Weapon::validWeight(input);
+        valid = this->validWeight(input);
     } while (!valid);
 
     this->weight = input;
@@ -189,7 +189,7 @@ void Weapon::inputRequiredLevel()
         std::cout << "Enter the required level of the weapon: " << std::endl;
         std::cin >> input;
 
-        valid = Weapon::validRequiredLevel(input);
+        valid = this->validRequiredLevel(input);
     } while (!valid);
 
     this->requiredLevel = input;
