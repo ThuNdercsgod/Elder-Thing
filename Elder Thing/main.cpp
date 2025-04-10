@@ -19,14 +19,20 @@ int main()
         Command command;
         command.test();
     }
-    catch (std::bad_alloc &e)
+    catch (const std::bad_alloc &e)
     {
-        std::cerr << "Memory allocation error!";
+        std::cerr << "Memory allocation error!" << std::endl;
         return 1;
     }
-    catch (int &e)
+    catch (const std::out_of_range &e)
     {
-        std::cerr << "Invalid parameters!" << std::endl;
+        std::cerr << "Memory allocation error!" << std::endl;
+        ;
+        return 1;
+    }
+    catch (const std::invalid_argument &e)
+    {
+        std::cerr << e.what() << std::endl;
         return 2;
     }
 

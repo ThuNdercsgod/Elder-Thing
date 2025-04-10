@@ -7,7 +7,7 @@
 Weapon::Weapon()
     : Weapon("Unkown", 0, 0, 0) {}
 
-// Might throw int 1
+// Might throw std::invalid_argument;
 Weapon::Weapon(const char *name, float damage, float weight, int requiredLevel)
 {
     if (this->validName(name) &&
@@ -22,8 +22,7 @@ Weapon::Weapon(const char *name, float damage, float weight, int requiredLevel)
     }
     else
     {
-        std::cout << "Invalid parameters for weapon creation!" << std::endl;
-        throw 1;
+        throw std::invalid_argument("Invalid Weapon parameters!");
     }
 }
 

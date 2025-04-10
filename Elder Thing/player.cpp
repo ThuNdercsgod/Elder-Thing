@@ -4,7 +4,7 @@
 
 Player::Player() : Player(100, 100, 100, 0, 0) {}
 
-// Might throw int 1;
+// Might throw std::invalid_argument;
 Player::Player(float hp, float mp, float stamina, int runes, float level)
 {
     if (this->validHp(hp) &&
@@ -21,8 +21,7 @@ Player::Player(float hp, float mp, float stamina, int runes, float level)
     }
     else
     {
-        std::cout << "Invalid parameters for player creation!" << std::endl;
-        throw 1;
+        throw std::invalid_argument("Invalid Player parameters!");
     }
 }
 
@@ -84,43 +83,68 @@ void Player::printInventory()
     std::cout << std::endl;
 }
 
+// Might throw std::invalid_argument;
 void Player::setHp(float newHp)
 {
     if (this->validHp(newHp))
     {
         this->hp = newHp;
     }
+    else
+    {
+        throw std::invalid_argument("Invalid Player HP!");
+    }
 }
 
+// Might throw std::invalid_argument;
 void Player::setMp(float newMp)
 {
     if (this->validMp(newMp))
     {
         this->mp = newMp;
     }
+    else
+    {
+        throw std::invalid_argument("Invalid Player MP!");
+    }
 }
 
+// Might throw std::invalid_argument;
 void Player::setStamina(float newStamina)
 {
     if (this->validStamina(newStamina))
     {
         this->stamina = newStamina;
     }
+    else
+    {
+        throw std::invalid_argument("Invalid Player stamina!");
+    }
 }
 
+// Might throw std::invalid_argument;
 void Player::setRunes(int newRunes)
 {
     if (this->validRunes(newRunes))
     {
         this->runes = newRunes;
     }
+    else
+    {
+        throw std::invalid_argument("Invalid Player runes!");
+    }
 }
 
+// Might throw std::invalid_argument;
 void Player::setLevel(float newLevel)
 {
     if (this->validLevel(newLevel))
     {
         this->level = newLevel;
+    }
+    else
+    {
+        throw std::invalid_argument("Invalid Player level!");
     }
 }
 
