@@ -17,4 +17,6 @@ public:
 class EnemyTest
 {
 public:
+    void basic();
+    void attack();
 };

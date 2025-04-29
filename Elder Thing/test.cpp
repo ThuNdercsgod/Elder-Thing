@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "enemy.hpp"
 #include "player.hpp"
 #include "test.hpp"
 #include "weapon.hpp"
@@ -88,3 +89,33 @@ void PlayerTest::input()
 
     player.print();
 }
+
+void EnemyTest::basic()
+{
+    std::cout << "=== Testing Enemy Basic Functionality ===\n"
+              << std::endl;
+
+    // Default constructor
+    std::cout << "Creating enemy with default constructor:" << std::endl;
+    Enemy defaultEnemy;
+    defaultEnemy.print();
+
+    // Parameterized constructor
+    std::cout << "\nCreating enemy with parameterized constructor:" << std::endl;
+    Enemy zombie("Zombie", 100, 15);
+    zombie.print();
+
+    // Test exception handling
+    std::cout << "\nTesting exception handling with invalid parameters:" << std::endl;
+    Enemy invalidEnemy("Invalid", -50, 10);
+    std::cout << "This should not be printed!" << std::endl;
+}
+
+// void EnemyTest::attack()
+// {
+//     std::cout << "=== Testing Enemy Attack Functionality ===\n"
+//               << std::endl;
+//     Enemy defaultEnemy;
+//     // Testing exception handling
+//     defaultEnemy.addAttack("Invalid", -10, 10);
+// }

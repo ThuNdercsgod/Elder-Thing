@@ -11,4 +11,7 @@ public:
 
     void playerTest();
     void printPlayerTest();
+
+    void enemyTest();
+    void printEnemyTest();
 };
