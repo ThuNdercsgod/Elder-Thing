@@ -44,61 +44,61 @@ bool Weapon::loadFromFile()
         return false;
     }
 
-    load.seekg(5, std::ios::beg);
+    load.seekg(sizeof(int), std::ios::beg);
 
-    load.read(this->name, sizeof(this->name));
-    load.seekg(1, std::ios::cur);
-    load.read((char *)&this->damage, sizeof(this->damage));
-    load.seekg(1, std::ios::cur);
-    load.read((char *)&this->weight, sizeof(this->weight));
-    load.seekg(1, std::ios::cur);
-    load.read((char *)&this->requiredLevel, sizeof(this->requiredLevel));
+    load.read(this->name, sizeof(Weapon::name));
+    load.read((char *)&this->damage, sizeof(Weapon::damage));
+    load.read((char *)&this->weight, sizeof(Weapon::weight));
+    load.read((char *)&this->requiredLevel, sizeof(Weapon::requiredLevel));
 
-    load.seekg(1, std::ios::cur);
-
+    load.close();
     return true;
 }
 
-// TODO stop it from deleting the file when editing the total size
 bool Weapon::saveToFile() const
 {
     int total = 0;
 
-    std::fstream load("weapons.bin", std::ios::binary | std::ios::in);
-    if (!load.is_open())
+    // Open in both modes, so content does not get truncated
+    std::fstream file("weapons.bin", std::ios::in | std::ios::out | std::ios::binary);
+    if (!file.is_open())
     {
-        std::cerr << "File opening error!" << std::endl;
-        return false;
+        // If it does not exist, create it
+        file.open("weapons.bin", std::ios::out | std::ios::binary);
+        if (!file.is_open())
+        {
+            std::cerr << "File opening error!" << std::endl;
+            return false;
+        }
+
+        // Write an initial placeholder value for the count
+        file.write((char *)(&total), sizeof(int)); // reinterpret_cast preferred
+        file.close();                              // Dont forget to close the OUT mode
+
+        // Reopen again as planned
+        file.open("weapons.bin", std::ios::in | std::ios::out | std::ios::binary);
+        if (!file.is_open())
+        {
+            std::cerr << "File reopening error!" << std::endl;
+            return false;
+        }
     }
 
-    load.seekg(0, std::ios::beg);
-    load.read((char *)&total, sizeof(int));
+    file.seekg(0, std::ios::beg);
+    file.read((char *)(&total), sizeof(int));
 
-    std::cout << total << std::endl;
-
-    load.close();
-
-    // TODO save it before the last int or delete the last int and put it at the end
-    std::ofstream edit("weapons.bin", std::ios::binary);
-
-    if (!edit.is_open())
-    {
-        std::cerr << "File opening error!" << std::endl;
-        return false;
-    }
-
-    edit.seekp(0, std::ios::beg);
     total++;
-    edit.write((char *)&total, sizeof(total));
 
-    edit.seekp(0, std::ios::end);
+    file.seekp(0, std::ios::beg);
+    file.write((char *)(&total), sizeof(int));
 
-    edit.write(this->name, sizeof(this->name));
-    edit.write((char *)&this->damage, sizeof(this->damage));
-    edit.write((char *)&this->weight, sizeof(this->weight));
-    edit.write((char *)&this->requiredLevel, sizeof(this->requiredLevel));
+    file.seekp(0, std::ios::end);
+    file.write(this->name, sizeof(Weapon::name));
+    file.write((char *)(&this->damage), sizeof(Weapon::damage));
+    file.write((char *)(&this->weight), sizeof(Weapon::weight));
+    file.write((char *)(&this->requiredLevel), sizeof(Weapon::requiredLevel));
 
-    edit.close();
+    file.close();
 
     return true;
 }
