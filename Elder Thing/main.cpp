@@ -34,6 +34,11 @@ int main()
         std::cerr << e.what() << std::endl;
         return 2;
     }
+    catch (const std::ios_base::failure &e)
+    {
+        std::cerr << e.what() << std::endl;
+        return 2;
+    }
 
     return 0;
 }
