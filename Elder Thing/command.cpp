@@ -106,10 +106,16 @@ void Command::playerTest()
             valid = true;
             break;
         case 1:
-            playerTest.equipping();
+            playerTest.basic();
             break;
         case 2:
+            playerTest.equipping();
+            break;
+        case 3:
             playerTest.input();
+            break;
+        case 4:
+            playerTest.operators();
             break;
         default:
             std::cout << "Invalid input!" << std::endl;
@@ -121,8 +127,10 @@ void Command::playerTest()
 void Command::printPlayerTest()
 {
     std::cout << "\n=== Elder Thing Player Tests ===\n"
-              << "1. Run equipping tests\n"
-              << "2. Run input tests\n"
+              << "1. Run basic tests\n"
+              << "2. Run equipping tests\n"
+              << "3. Run input tests\n"
+              << "4. Run operators tests\n"
               << "0. Go back\n"
               << std::endl;
 }

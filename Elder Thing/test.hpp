@@ -10,8 +10,10 @@ public:
 class PlayerTest
 {
 public:
+    void basic();
     void equipping();
     void input();
+    void operators();
 };
 
 class EnemyTest

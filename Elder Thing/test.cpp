@@ -47,9 +47,23 @@ void WeaponTest::validation()
     longNameWeapon.print();
 }
 
+void PlayerTest::basic()
+{
+    Player defConstr;
+    defConstr.print();
+
+    Player paramConstr("Parametrized player", 20, 20, 70, 5, 10);
+    paramConstr.print();
+
+    Player copyConstr(paramConstr);
+    copyConstr.print();
+
+    std::cout << copyConstr << std::endl;
+}
+
 void PlayerTest::equipping()
 {
-    Player player(20, 20, 70, 5, 10);
+    Player player("Default", 20, 20, 70, 5, 10);
 
     Weapon longsword("Longsword", 80, 5.0f, 12);
 
@@ -88,6 +102,24 @@ void PlayerTest::input()
     player.equipWeapon(dagger);
 
     player.print();
+}
+
+void PlayerTest::operators()
+{
+    Player def("Default", 20, 20, 70, 5, 10);
+
+    Player equalOp;
+    equalOp = def;
+    equalOp.print();
+
+    Player plusPlus;
+    plusPlus++;
+    plusPlus.print();
+
+    Weapon weapon;
+    Player plus;
+    plus + weapon;
+    plus.printInventory();
 }
 
 void EnemyTest::basic()
