@@ -12,7 +12,7 @@
                 "${workspaceFolder}/test.cpp",
                 "${workspaceFolder}/player.cpp",
                 "${workspaceFolder}/weapon.cpp",
-                // "*.cpp",
+                "${workspaceFolder}/enemy.cpp",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}.exe"
             ],
