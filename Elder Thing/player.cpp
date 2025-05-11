@@ -1,11 +1,12 @@
+#include <cstring>
 #include <iostream>
 
 #include "player.hpp"
 
-Player::Player() : Player(100, 100, 100, 0, 0) {}
+Player::Player() : Player("Unknown", 100, 100, 100, 0, 0) {}
 
-// Might throw std::invalid_argument;
-Player::Player(float hp, float mp, float stamina, int runes, float level)
+// Might throw std::invalid_argument or std::bad_alloc
+Player::Player(const char *name, float hp, float mp, float stamina, int runes, float level)
 {
     if (this->validHp(hp) &&
         this->validMp(mp) &&
@@ -13,6 +14,9 @@ Player::Player(float hp, float mp, float stamina, int runes, float level)
         this->validRunes(runes) &&
         this->validLevel(level))
     {
+        this->name = new char[strlen(name) + 1];
+        strcpy(this->name, name);
+
         this->hp = hp;
         this->mp = mp;
         this->stamina = stamina;
@@ -23,6 +27,92 @@ Player::Player(float hp, float mp, float stamina, int runes, float level)
     {
         throw std::invalid_argument("Invalid Player parameters!");
     }
+}
+
+// Might throws std::bad_alloc
+Player::Player(const Player &other)
+{
+    this->name = new char[strlen(other.name) + 1];
+    strcpy(this->name, other.name);
+
+    this->hp = other.hp;
+    this->mp = other.mp;
+    this->stamina = other.stamina;
+    this->runes = other.runes;
+    this->level = other.level;
+}
+
+Player::~Player()
+{
+    delete[] this->name;
+    this->name = nullptr;
+}
+
+// Might throw std::bad_alloc
+Player &Player::operator=(const Player &other)
+{
+    if (this != &other)
+    {
+        delete[] this->name;
+        this->name = new char[strlen(other.name) + 1];
+        strcpy(this->name, other.name);
+
+        this->hp = other.hp;
+        this->mp = other.mp;
+        this->stamina = other.stamina;
+        this->runes = other.runes;
+        this->level = other.level;
+    }
+    return *this;
+}
+
+Player &Player::operator++()
+{
+    int level = this->level;
+
+    this->level = level + 1;
+
+    return *this;
+}
+
+Player Player::operator++(int)
+{
+    Player old = *this;
+    int level = this->level;
+    this->level = level + 1;
+
+    return old;
+}
+
+Player &Player::operator+(const Weapon &weapon)
+{
+    for (int i = 0; i < 8; i++)
+    {
+        if (this->weaponsSlotsOccupied)
+        {
+            this->weaponSlots[i] = weapon;
+            return *this;
+        }
+    }
+
+    std::cout << "Inventory full!" << std::endl;
+    return *this;
+}
+
+// Might throw std::ios_base::failure
+std::ostream &operator<<(std::ostream &os, const Player &player)
+{
+    if (os.fail() || os.bad())
+    {
+        throw std::ios_base::failure("Output stream error!");
+    }
+
+    return os << "\n=== " << player.name << " stats ===\n"
+              << "HP: " << player.hp << "/" << player.maxHp
+              << "\nMP: " << player.mp << "/" << player.maxMp
+              << "\nRunes: " << player.runes
+              << "\nLevel: " << player.level
+              << "\nCurrent weight: " << player.currentWeight;
 }
 
 void Player::equipWeapon(Weapon weapon)
@@ -55,7 +145,7 @@ void Player::equipWeapon(Weapon weapon)
 
 void Player::print()
 {
-    std::cout << "\n=== Player stats ===\n"
+    std::cout << "\n=== " << this->name << " stats ===\n"
               << "HP: " << this->hp << "/" << this->maxHp
               << "\nMP: " << this->mp << "/" << this->maxMp
               << "\nRunes: " << this->runes

@@ -6,7 +6,16 @@ class Player
 {
 public:
     Player();
-    Player(float hp, float mp, float stamina, int runes, float level);
+    Player(const char *name, float hp, float mp, float stamina, int runes, float level);
+    Player(const Player &other);
+    ~Player();
+
+    Player &operator=(const Player &other);
+    Player &operator++();
+    Player operator++(int);
+    Player &operator+(const Weapon &weapon);
+
+    friend std::ostream &operator<<(std::ostream &os, const Player &player);
 
     void equipWeapon(Weapon weapon);
 
@@ -42,6 +51,7 @@ private:
     bool validLevel(float level) const;
 
 private:
+    char *name;
     float hp, maxHp = 100;
     float mp, maxMp = 100;
     float stamina, maxStamina = 100;
