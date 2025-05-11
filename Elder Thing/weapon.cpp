@@ -7,7 +7,7 @@
 Weapon::Weapon()
     : Weapon("Unkown", 0, 0, 0) {}
 
-// Might throw std::invalid_argument;
+// Might throw std::invalid_argument or std::bad_alloc
 Weapon::Weapon(const char *name, float damage, float weight, int requiredLevel)
 {
     if (this->validName(name) &&
@@ -15,7 +15,9 @@ Weapon::Weapon(const char *name, float damage, float weight, int requiredLevel)
         this->validWeight(weight) &&
         this->validRequiredLevel(requiredLevel))
     {
+        this->name = new char[strlen(name) + 1];
         strcpy(this->name, name);
+
         this->damage = damage;
         this->weight = weight;
         this->requiredLevel = requiredLevel;
@@ -26,13 +28,87 @@ Weapon::Weapon(const char *name, float damage, float weight, int requiredLevel)
     }
 }
 
+// Might throw std::bad_alloc
+Weapon::Weapon(const Weapon &other)
+{
+    this->name = new char[strlen(other.name) + 1];
+    strcpy(this->name, other.name);
+
+    this->damage = other.damage;
+    this->weight = other.weight;
+    this->requiredLevel = other.requiredLevel;
+}
+
+Weapon::~Weapon()
+{
+    delete[] this->name;
+}
+
+// Might throw std::bad_alloc
+Weapon &Weapon::operator=(const Weapon &other)
+{
+    if (this != &other)
+    {
+        delete[] this->name;
+        this->name = new char[strlen(other.name) + 1];
+        strcpy(this->name, other.name);
+
+        this->damage = other.damage;
+        this->weight = other.weight;
+        this->requiredLevel = other.requiredLevel;
+    }
+    return *this;
+}
+
+bool Weapon::operator==(const Weapon &other)
+{
+    if (strcmp(this->name, other.name) == 0 &&
+        this->damage == other.damage)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool Weapon::operator!=(const Weapon &other)
+{
+    return !(this == &other);
+}
+
+bool Weapon ::operator<(const Weapon &other)
+{
+    if (this->damage < other.damage)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool Weapon::operator>(const Weapon &other)
+{
+    return this > &other;
+}
+
+std::ostream &operator<<(std::ostream &os, const Weapon &weapon)
+{
+    if (os.fail() || os.bad())
+    {
+        throw std::ios_base::failure("Output stream error!");
+    }
+
+    return os << "Weapon \"" << weapon.name << "\":\n"
+              << "Damage: " << weapon.damage << "\n"
+              << "Weight: " << weapon.weight << "\n"
+              << "Required level: " << weapon.requiredLevel;
+}
+
 void Weapon::print() const
 {
-    std::cout << "Weapon \"" << this->name << "\":" << std::endl;
-    std::cout << "Damage: " << this->damage << std::endl;
-    std::cout << "Weight: " << this->weight << std::endl;
-    std::cout << "Required level: " << this->requiredLevel << std::endl;
-    std::cout << std::endl;
+    std::cout << "Weapon \"" << this->name << "\":\n"
+              << "Damage: " << this->damage << "\n"
+              << "Weight: " << this->weight << "\n"
+              << "Required level: " << this->requiredLevel
+              << std::endl;
 }
 
 bool Weapon::loadFromFile()

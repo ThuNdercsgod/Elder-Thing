@@ -5,6 +5,16 @@ class Weapon
 public:
     Weapon();
     Weapon(const char *name, float damage, float weight, int requiredLevel);
+    Weapon(const Weapon &other);
+    ~Weapon();
+
+    Weapon &operator=(const Weapon &other);
+    bool operator==(const Weapon &other);
+    bool operator!=(const Weapon &other);
+    bool operator>(const Weapon &other);
+    bool operator<(const Weapon &other);
+    friend std::ostream &operator<<(std::ostream &os, const Weapon &weapon);
+    // friend std::istream &operator>>(std::istream &is, const Weapon &weapon);
 
     void print() const;
     bool loadFromFile();
@@ -30,5 +40,5 @@ private:
     float damage = 0;
     float weight = 0;
     int requiredLevel = 0;
-    char name[32] = "";
+    char *name;
 };
