@@ -1,4 +1,5 @@
 #include <cstring>
+#include <iostream>
 
 #include "spell.hpp"
 
@@ -60,26 +61,42 @@ Spell &Spell::operator=(const Spell &other)
 
 void Spell::resetCooldown()
 {
-    this->cooldown = 0;
+    this->remainingCooldown = 0;
 }
 
 void Spell::decrementCooldown(int amount)
 {
-    if (this->cooldown >= amount)
+    if (this->remainingCooldown >= amount)
     {
-        this->cooldown -= amount;
+        this->remainingCooldown -= amount;
     }
     else
     {
-        this->cooldown = 0;
+        this->remainingCooldown = 0;
     }
 }
 
 bool Spell::isOnCooldown() const
 {
-    if (this->cooldown > 0)
+    if (this->remainingCooldown > 0)
     {
         return true;
     }
     return false;
+}
+
+void Spell::print() const
+{
+    std::cout << "Spell \"" << this->name << "\":\n"
+              << "Damage: " << this->damage << "\n"
+              << "MP cost: " << this->mpCost << "\n"
+              << "Cooldown: " << this->cooldown << "\n"
+              << "Required intelligence: " << this->requiredIntelligence << "\n"
+              << "Required faith: " << this->requiredFaith
+              << std::endl;
+}
+
+int Spell::getRemainingCooldown() const
+{
+    return this->remainingCooldown;
 }

@@ -14,7 +14,11 @@ public:
     void decrementCooldown(int amount);
     bool isOnCooldown() const;
 
+    void print() const;
+
     friend class Player;
+
+    int getRemainingCooldown() const;
 
 private:
     char *name;
