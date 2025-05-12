@@ -21,10 +21,10 @@ void Command::test()
             valid = true;
             break;
         case 1:
-            this->weaponTest();
+            this->playerTest();
             break;
         case 2:
-            this->playerTest();
+            this->weaponTest();
             break;
         case 3:
             this->enemyTest();
@@ -39,9 +39,8 @@ void Command::test()
 void Command::printTest()
 {
     std::cout << "\n=== Elder Thing Tests ===\n"
-              //   << "1. Run all tests\n"
-              << "1. Run Weapon tests\n"
-              << "2. Run Player tests\n"
+              << "1. Run Player tests\n"
+              << "2. Run Weapon tests\n"
               << "3. Run Enemy tests\n"
               << "0. Exit\n"
               << std::endl;
@@ -109,12 +108,15 @@ void Command::playerTest()
             playerTest.basic();
             break;
         case 2:
-            playerTest.equipping();
+            playerTest.weaponEquip();
             break;
         case 3:
-            playerTest.input();
+            playerTest.spellEquip();
             break;
         case 4:
+            playerTest.spellCast();
+            break;
+        case 5:
             playerTest.operators();
             break;
         default:
@@ -128,9 +130,10 @@ void Command::printPlayerTest()
 {
     std::cout << "\n=== Elder Thing Player Tests ===\n"
               << "1. Run basic tests\n"
-              << "2. Run equipping tests\n"
-              << "3. Run input tests\n"
-              << "4. Run operators tests\n"
+              << "2. Run weapon equip tests\n"
+              << "3. Run spell equip tests\n"
+              << "4. Run spell cast tests\n"
+              << "5. Run operators tests\n"
               << "0. Go back\n"
               << std::endl;
 }

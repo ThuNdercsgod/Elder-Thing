@@ -5,6 +5,142 @@
 #include "test.hpp"
 #include "weapon.hpp"
 
+void PlayerTest::basic()
+{
+    Player defConstr;
+    defConstr.print();
+
+    Player paramConstr("Parametrized player", 20, 20, 70, 5, 10);
+    paramConstr.print();
+
+    Player copyConstr(paramConstr);
+    copyConstr.print();
+
+    std::cout << copyConstr << std::endl;
+}
+
+// void PlayerTest::input()
+// {
+//     Player player;
+//     Weapon longsword("Longsword", 80, 5.0f, 12);
+//     Weapon greatsword("Greatsword", 100, 12.0f, 20);
+//     Weapon dagger("Dagger", 45, 1.5f, 5);
+//     player.print();
+//     player.equipWeapon(longsword);
+//     player.equipWeapon(greatsword);
+//     player.equipWeapon(dagger);
+//     player.print();
+// }
+
+void PlayerTest::weaponEquip()
+{
+    Player player("Default", 20, 20, 70, 5, 10);
+
+    Weapon longsword("Longsword", 80, 5.0f, 12);
+
+    Weapon greatsword("Greatsword", 100, 12.0f, 20);
+
+    Weapon dagger("Dagger", 45, 1.5f, 5);
+
+    player.equipWeapon(longsword);
+    player.equipWeapon(greatsword);
+    player.equipWeapon(dagger);
+
+    player.print();
+
+    player.setLevel(30);
+
+    player.equipWeapon(longsword);
+    player.equipWeapon(greatsword);
+
+    player.print();
+}
+
+void PlayerTest::spellEquip()
+{
+    // Create a new player
+    Player player("Default", 20, 20, 70, 5, 10);
+
+    // Print initial status
+    std::cout << "Initial player status:" << std::endl;
+    player.printStatus();
+    player.printSpell();
+
+    // Create some spells
+    Spell fireball("Fireball", 30, 15, 2, 12, 0);
+    Spell healingLight("Healing Light", 0, 20, 3, 5, 15);
+    Spell lightningBolt("Lightning Bolt", 45, 25, 3, 15, 8);
+
+    player.increaseIntelligence(20);
+    player.increaseFaith(20);
+
+    // Equip spells
+    std::cout << "\nLearning spells:" << std::endl;
+    player.equipSpell(fireball);
+    player.equipSpell(healingLight);
+    player.equipSpell(lightningBolt);
+
+    // Print updated spell list
+    std::cout << "\nUpdated spell list:" << std::endl;
+    player.printSpell();
+}
+
+void PlayerTest::spellCast()
+{
+    std::cout << "\n=== Testing Spell Casting ===\n"
+              << std::endl;
+
+    // Create a player with increased intelligence
+    Player player("Default", 20, 20, 70, 5, 10);
+
+    // Increase intelligence to meet requirements
+    player.increaseIntelligence(12);
+
+    // Learn a spell
+    Spell fireball("Fireball", 30, 15, 2, 12, 0);
+    player.equipSpell(fireball);
+    player.setCurrentSpell(0);
+
+    std::cout << "Player status before casting:" << std::endl;
+    player.printStatus();
+    player.printSpell();
+
+    // Cast the spell
+    std::cout << "\nCasting spell:" << std::endl;
+    int damage = player.castSpell();
+    std::cout << "Spell dealt " << damage << " damage" << std::endl;
+
+    std::cout << "\nPlayer status after casting:" << std::endl;
+    player.printStatus();
+
+    // Try to cast again (should be on cooldown)
+    std::cout << "\nTrying to cast again:" << std::endl;
+    damage = player.castSpell();
+    std::cout << "Spell dealt " << damage << " damage" << std::endl;
+
+    // Show final status
+    std::cout << "\nFinal player status:" << std::endl;
+    player.printStatus();
+}
+
+void PlayerTest::operators()
+{
+    Player def("Default", 20, 20, 70, 5, 10);
+
+    Player equalOp;
+    equalOp = def;
+    equalOp.print();
+
+    Player plusPlus;
+    plusPlus++;
+    plusPlus.print();
+
+    Weapon dagger("Dagger", 45, 1.5f, 5);
+    Player plus("Default", 20, 20, 70, 5, 10);
+    plus + dagger;
+    plus.printInventory();
+}
+
 void WeaponTest::basic()
 {
     // Create and initialize weapons
@@ -37,89 +173,29 @@ void WeaponTest::validation()
     // Test validation
     std::cout << "\nTesting validation with invalid values:" << std::endl;
 
-    Weapon invalidWeapon("Invalid Weapon", -10, -2.0f, -5);
-    invalidWeapon.print();
+    try
+    {
+        // Testing invalid damage
+        Weapon invalidWeapon("Invalid Weapon", -10, -2.0f, -5);
+        invalidWeapon.print();
+    }
+    catch (std::invalid_argument &e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
 
     // Test long name
     std::cout << "\nTesting long name truncation:" << std::endl;
 
-    Weapon longNameWeapon("This is an extremely long weapon name that should be truncated", 50, 5.0f, 10);
-    longNameWeapon.print();
-}
-
-void PlayerTest::basic()
-{
-    Player defConstr;
-    defConstr.print();
-
-    Player paramConstr("Parametrized player", 20, 20, 70, 5, 10);
-    paramConstr.print();
-
-    Player copyConstr(paramConstr);
-    copyConstr.print();
-
-    std::cout << copyConstr << std::endl;
-}
-
-void PlayerTest::equipping()
-{
-    Player player("Default", 20, 20, 70, 5, 10);
-
-    Weapon longsword("Longsword", 80, 5.0f, 12);
-
-    Weapon greatsword("Greatsword", 100, 12.0f, 20);
-
-    Weapon dagger("Dagger", 45, 1.5f, 5);
-
-    player.equipWeapon(longsword);
-    player.equipWeapon(greatsword);
-    player.equipWeapon(dagger);
-
-    player.print();
-
-    player.setLevel(30);
-
-    player.equipWeapon(longsword);
-    player.equipWeapon(greatsword);
-
-    player.print();
-}
-
-void PlayerTest::input()
-{
-    Player player;
-
-    Weapon longsword("Longsword", 80, 5.0f, 12);
-
-    Weapon greatsword("Greatsword", 100, 12.0f, 20);
-
-    Weapon dagger("Dagger", 45, 1.5f, 5);
-
-    player.print();
-
-    player.equipWeapon(longsword);
-    player.equipWeapon(greatsword);
-    player.equipWeapon(dagger);
-
-    player.print();
-}
-
-void PlayerTest::operators()
-{
-    Player def("Default", 20, 20, 70, 5, 10);
-
-    Player equalOp;
-    equalOp = def;
-    equalOp.print();
-
-    Player plusPlus;
-    plusPlus++;
-    plusPlus.print();
-
-    Weapon weapon;
-    Player plus;
-    plus + weapon;
-    plus.printInventory();
+    try
+    {
+        Weapon longNameWeapon("This is an extremely long weapon name that should be truncated", 50, 5.0f, 10);
+        longNameWeapon.print();
+    }
+    catch (std::invalid_argument &e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
 }
 
 void EnemyTest::basic()
@@ -137,10 +213,16 @@ void EnemyTest::basic()
     Enemy zombie("Zombie", 100, 15);
     zombie.print();
 
-    // Test exception handling
-    std::cout << "\nTesting exception handling with invalid parameters:" << std::endl;
-    Enemy invalidEnemy("Invalid", -50, 10);
-    std::cout << "This should not be printed!" << std::endl;
+    try
+    { // Test exception handling
+        std::cout << "\nTesting exception handling with invalid parameters:" << std::endl;
+        Enemy invalidEnemy("Invalid", -50, 10);
+        std::cout << "This should not be printed!" << std::endl;
+    }
+    catch (std::invalid_argument &e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
 }
 
 // void EnemyTest::attack()

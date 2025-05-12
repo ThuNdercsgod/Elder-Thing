@@ -1,5 +1,16 @@
 #pragma once
 
+class PlayerTest
+{
+public:
+    void basic();
+    // void input();
+    void weaponEquip();
+    void spellEquip();
+    void spellCast();
+    void operators();
+};
+
 class WeaponTest
 {
 public:
@@ -7,18 +18,9 @@ public:
     void validation();
 };
 
-class PlayerTest
-{
-public:
-    void basic();
-    void equipping();
-    void input();
-    void operators();
-};
-
 class EnemyTest
 {
 public:
     void basic();
-    void attack();
+    // void attack();
 };
