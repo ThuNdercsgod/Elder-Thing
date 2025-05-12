@@ -19,8 +19,11 @@ public:
     Enemy();
     Enemy(const char *name, int maxHp, int damage);
     Enemy(const Enemy &other);
-    Enemy &operator=(const Enemy &other);
     ~Enemy();
+
+    Enemy &operator=(const Enemy &other);
+    bool operator!();
+    friend std::ostream &operator<<(std::ostream &os, const Enemy &enemy);
 
     // void addAttack(const char *name, int damage, int range);
     void print() const;
@@ -32,8 +35,8 @@ private:
     bool validDamage(int damage) const;
 
     char *name;
-    int hp, maxHp;
-    int damage;
+    float hp, maxHp;
+    float damage;
     // int numberOfAttacks;
     // Attack *attacks;
 };

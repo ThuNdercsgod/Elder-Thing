@@ -37,11 +37,18 @@ Enemy::Enemy(const Enemy &other)
     // this->numberOfAttacks = 0;
 }
 
+Enemy::~Enemy()
+{
+    delete[] this->name;
+    this->name = nullptr;
+}
+
 // Might throw std::bad_alloc
 Enemy &Enemy::operator=(const Enemy &other)
 {
     if (this != &other)
     {
+        delete[] this->name;
         this->name = new char[strlen(other.name) + 1];
         strcpy(this->name, other.name);
 
@@ -53,10 +60,21 @@ Enemy &Enemy::operator=(const Enemy &other)
     return *this;
 }
 
-Enemy::~Enemy()
+std::ostream &operator<<(std::ostream &os, const Enemy &enemy)
 {
-    delete[] this->name;
-    this->name = nullptr;
+    return os << "\n=== Enemy " << enemy.name << " ===\n"
+              << "\nHP: " << enemy.hp << "/" << enemy.maxHp
+              << "\nDamage: " << enemy.damage
+              << std::endl;
+}
+
+bool Enemy::operator!()
+{
+    if (this->hp == 0)
+    {
+        return true;
+    }
+    return false;
 }
 
 // void Enemy::addAttack(const char *name, int damage, int range)
@@ -81,7 +99,7 @@ Enemy::~Enemy()
 
 void Enemy::print() const
 {
-    std::cout << "\n=== Enemy " << this->name << " ===\n"
+    std::cout << "\n=== Enemy " << this->name << " ==="
               << "\nHP: " << this->hp << "/" << this->maxHp
               << "\nDamage: " << this->damage
               << std::endl;
