@@ -37,8 +37,8 @@ private:
     bool validRequiredLevel(int requiredLevel) const;
 
 private:
-    float damage = 0;
-    float weight = 0;
-    int requiredLevel = 0;
     char *name;
+    float damage;
+    float weight;
+    int requiredLevel;
 };
