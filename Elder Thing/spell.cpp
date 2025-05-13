@@ -59,9 +59,40 @@ Spell &Spell::operator=(const Spell &other)
     return *this;
 }
 
+// Might throw std::ios_bas::failure
+std::ostream &operator<<(std::ostream &os, const Spell &spell)
+{
+    if (os.fail() || os.bad())
+    {
+        throw std::ios_base::failure("Output stream error!");
+    }
+
+    return os << "Spell \"" << spell.name << "\":\n"
+              << "Damage: " << spell.damage << "\n"
+              << "MP cost: " << spell.mpCost << "\n"
+              << "Cooldown: " << spell.cooldown << "\n"
+              << "Required intelligence: " << spell.requiredIntelligence << "\n"
+              << "Required faith: " << spell.requiredFaith
+              << std::endl;
+}
+
+bool Spell::operator<(const Spell &other) const
+{
+    if (this->damage < other.damage)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool Spell::operator>(const Spell &other) const
+{
+    return this > &other;
+}
+
 void Spell::resetCooldown()
 {
-    this->remainingCooldown = 0;
+    this->remainingCooldown = this->cooldown;
 }
 
 void Spell::decrementCooldown(int amount)
@@ -94,6 +125,11 @@ void Spell::print() const
               << "Required intelligence: " << this->requiredIntelligence << "\n"
               << "Required faith: " << this->requiredFaith
               << std::endl;
+}
+
+char *Spell::getName() const
+{
+    return this->name;
 }
 
 int Spell::getRemainingCooldown() const

@@ -9,6 +9,10 @@ public:
     ~Spell();
 
     Spell &operator=(const Spell &other);
+    bool operator<(const Spell &other) const;
+    bool operator>(const Spell &other) const;
+
+    friend std::ostream &operator<<(std::ostream &os, const Spell &spell);
 
     void resetCooldown();
     void decrementCooldown(int amount);
@@ -18,6 +22,7 @@ public:
 
     friend class Player;
 
+    char *getName() const;
     int getRemainingCooldown() const;
 
 private:
