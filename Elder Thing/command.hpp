@@ -6,11 +6,14 @@ public:
     void test();
     void printTest();
 
+    void playerTest();
+    void printPlayerTest();
+
     void weaponTest();
     void printWeaponTest();
 
-    void playerTest();
-    void printPlayerTest();
+    void spellTest();
+    void printSpellTest();
 
     void enemyTest();
     void printEnemyTest();

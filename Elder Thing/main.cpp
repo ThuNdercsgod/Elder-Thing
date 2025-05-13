@@ -7,12 +7,8 @@
 
 int main()
 {
-    // TODO expand class "Enemy"
-    // TODO add class "Spell"
-    // TODO add Spell test
-    // TODO expand class "Player"
-    // TODO add copy constructors and operators
-    // TODO add static methods
+    // TODO add base class "Character" with "Astrologer" and "Confessor"
+    // TODO expand base class "Spell" with "SorcerySpell" and "IncantationSpell"
 
     try
     {

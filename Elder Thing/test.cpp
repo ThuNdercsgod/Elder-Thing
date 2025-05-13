@@ -3,7 +3,6 @@
 #include "enemy.hpp"
 #include "player.hpp"
 #include "test.hpp"
-#include "weapon.hpp"
 
 void PlayerTest::basic()
 {
@@ -71,8 +70,8 @@ void PlayerTest::spellEquip()
     Spell healingLight("Healing Light", 0, 20, 3, 5, 15);
     Spell lightningBolt("Lightning Bolt", 45, 25, 3, 15, 8);
 
-    player.increaseIntelligence(20);
-    player.increaseFaith(20);
+    player.setIntelligence(20);
+    player.setFaith(20);
 
     // Equip spells
     std::cout << "\nLearning spells:" << std::endl;
@@ -94,7 +93,7 @@ void PlayerTest::spellCast()
     Player player("Default", 20, 20, 70, 5, 10);
 
     // Increase intelligence to meet requirements
-    player.increaseIntelligence(12);
+    player.setIntelligence(12);
 
     // Learn a spell
     Spell fireball("Fireball", 30, 15, 2, 12, 0);
@@ -125,16 +124,24 @@ void PlayerTest::spellCast()
 
 void PlayerTest::operators()
 {
-    Player def("Default", 20, 20, 70, 5, 10);
+    std::cout << "\n=== Testing Player Operators ===\n"
+              << std::endl;
 
+    std::cout << "Creating Default Player: " << std::endl;
+    Player def("Default", 20, 20, 70, 5, 10);
+    def.print();
+
+    std::cout << "\nUsing assignment operator: " << std::endl;
     Player equalOp;
     equalOp = def;
     equalOp.print();
 
+    std::cout << "\nIncreasing Player Level by 1: " << std::endl;
     Player plusPlus;
     plusPlus++;
     plusPlus.print();
 
+    std::cout << "\nAdding a weapon to player inventory: " << std::endl;
     Weapon dagger("Dagger", 45, 1.5f, 5);
     Player plus("Default", 20, 20, 70, 5, 10);
     plus + dagger;
@@ -196,6 +203,94 @@ void WeaponTest::validation()
     {
         std::cerr << e.what() << std::endl;
     }
+}
+
+void SpellTest::basic()
+{
+    std::cout << "=== Testing Spell Basic Functionality ===\n"
+              << std::endl;
+
+    // Default constructor
+    std::cout << "Creating spell with default constructor:" << std::endl;
+    Spell defaultSpell;
+    defaultSpell.print();
+
+    // Parameterized constructor
+    std::cout << "\nCreating spells with parameterized constructor:" << std::endl;
+    Spell fireball("Fireball", 30, 15, 2, 12, 0);
+    fireball.print();
+
+    std::cout << std::endl;
+    Spell healingLight("Healing Light", 0, 20, 3, 5, 15);
+    healingLight.print();
+
+    // Copy constructor
+    std::cout << "\nUsing copy constructor:" << std::endl;
+    Spell copied(fireball);
+    std::cout << "Copied spell:" << std::endl;
+    copied.print();
+
+    // Test cooldown functionality
+    std::cout << "\nTesting cooldown functionality:" << std::endl;
+    std::cout << "Initial state:" << std::endl;
+    std::cout << "Is Fireball on cooldown? " << (fireball.isOnCooldown() ? "Yes" : "No") << std::endl;
+
+    fireball.resetCooldown();
+    std::cout << "After reset cooldown:" << std::endl;
+    std::cout << "Is Fireball on cooldown? " << (fireball.isOnCooldown() ? "Yes" : "No") << std::endl;
+    std::cout << "Cooldown remaining: " << fireball.getRemainingCooldown() << std::endl;
+
+    fireball.decrementCooldown(1);
+    std::cout << "After decrement cooldown:" << std::endl;
+    std::cout << "Is Fireball on cooldown? " << (fireball.isOnCooldown() ? "Yes" : "No") << std::endl;
+    std::cout << "Cooldown remaining: " << fireball.getRemainingCooldown() << std::endl;
+
+    fireball.decrementCooldown(1);
+    std::cout << "After second decrement cooldown:" << std::endl;
+    std::cout << "Is Fireball on cooldown? " << (fireball.isOnCooldown() ? "Yes" : "No") << std::endl;
+    std::cout << "Cooldown remaining: " << fireball.getRemainingCooldown() << std::endl;
+}
+
+void SpellTest::operators()
+{
+    std::cout << "=== Testing Spell Operators ===\n"
+              << std::endl;
+
+    Spell fireball("Fireball", 30, 15, 2, 12, 0);
+    Spell lightningBolt("Lightning Bolt", 45, 25, 3, 15, 8);
+    Spell healingLight("Healing Light", 0, 20, 3, 5, 15);
+
+    std::cout << "Using copy constructor:" << std::endl;
+    Spell copiedSpell(fireball);
+    copiedSpell.print();
+
+    std::cout << "\nUsing assignment operator:" << std::endl;
+    Spell assignedSpell;
+    assignedSpell = fireball;
+    assignedSpell.print();
+
+    std::cout << "\nUsing less than operator:" << std::endl;
+    if (fireball < lightningBolt)
+    {
+        std::cout << fireball.getName() << " is less powerful than " << lightningBolt.getName() << std::endl;
+    }
+    else
+    {
+        std::cout << fireball.getName() << " is more powerful than " << lightningBolt.getName() << std::endl;
+    }
+
+    std::cout << "\nUsing greater than operator:" << std::endl;
+    if (fireball > healingLight)
+    {
+        std::cout << fireball.getName() << " is more powerful than " << healingLight.getName() << std::endl;
+    }
+    else
+    {
+        std::cout << fireball.getName() << " is less powerful than " << healingLight.getName() << std::endl;
+    }
+
+    std::cout << "\nUsing output operator:" << std::endl;
+    std::cout << fireball << std::endl;
 }
 
 void EnemyTest::basic()

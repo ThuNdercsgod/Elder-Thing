@@ -1,8 +1,7 @@
 #pragma once
 
-class PlayerTest
+namespace PlayerTest
 {
-public:
     void basic();
     // void input();
     void weaponEquip();
@@ -11,16 +10,20 @@ public:
     void operators();
 };
 
-class WeaponTest
+namespace WeaponTest
 {
-public:
     void basic();
     void validation();
 };
 
-class EnemyTest
+namespace SpellTest
 {
-public:
+    void basic();
+    void operators();
+};
+
+namespace EnemyTest
+{
     void basic();
     // void attack();
 };
