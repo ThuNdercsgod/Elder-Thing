@@ -9,10 +9,10 @@ public:
     ~Weapon();
 
     Weapon &operator=(const Weapon &other);
-    bool operator==(const Weapon &other);
-    bool operator!=(const Weapon &other);
-    bool operator>(const Weapon &other);
-    bool operator<(const Weapon &other);
+    bool operator==(const Weapon &other) const;
+    bool operator!=(const Weapon &other) const;
+    bool operator>(const Weapon &other) const;
+    bool operator<(const Weapon &other) const;
     friend std::ostream &operator<<(std::ostream &os, const Weapon &weapon);
     // friend std::istream &operator>>(std::istream &is, const Weapon &weapon);
 

@@ -60,7 +60,7 @@ Weapon &Weapon::operator=(const Weapon &other)
     return *this;
 }
 
-bool Weapon::operator==(const Weapon &other)
+bool Weapon::operator==(const Weapon &other) const
 {
     if (strcmp(this->name, other.name) == 0 &&
         this->damage == other.damage)
@@ -70,12 +70,12 @@ bool Weapon::operator==(const Weapon &other)
     return false;
 }
 
-bool Weapon::operator!=(const Weapon &other)
+bool Weapon::operator!=(const Weapon &other) const
 {
     return !(this == &other);
 }
 
-bool Weapon ::operator<(const Weapon &other)
+bool Weapon ::operator<(const Weapon &other) const
 {
     if (this->damage < other.damage)
     {
@@ -84,7 +84,7 @@ bool Weapon ::operator<(const Weapon &other)
     return false;
 }
 
-bool Weapon::operator>(const Weapon &other)
+bool Weapon::operator>(const Weapon &other) const
 {
     return this > &other;
 }

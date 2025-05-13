@@ -68,7 +68,7 @@ std::ostream &operator<<(std::ostream &os, const Enemy &enemy)
               << std::endl;
 }
 
-bool Enemy::operator!()
+bool Enemy::operator!() const
 {
     if (this->hp == 0)
     {

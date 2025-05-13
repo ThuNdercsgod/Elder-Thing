@@ -22,7 +22,7 @@ public:
     ~Enemy();
 
     Enemy &operator=(const Enemy &other);
-    bool operator!();
+    bool operator!() const;
     friend std::ostream &operator<<(std::ostream &os, const Enemy &enemy);
 
     // void addAttack(const char *name, int damage, int range);
