@@ -3,7 +3,8 @@
 
 #include "player.hpp"
 
-Player::Player() : Player("Unknown", 100, 100, 100, 0, 0) {}
+Player::Player()
+    : Player("Unknown", 100, 100, 100, 0, 0) {}
 
 // Might throw std::invalid_argument or std::bad_alloc
 Player::Player(const char *name, float maxHp, float maxMp, float maxStamina, int runes, float level)
@@ -477,29 +478,64 @@ void Player::setLevel(float newLevel)
     }
 }
 
-void Player::increaseStrength(int amount)
+void Player::setStrength(int amount)
 {
-    this->strength += amount;
+    if (amount > 0)
+    {
+        this->strength += amount;
+    }
+    else
+    {
+        std::cout << "Invalid amount for stat increase!" << std::endl;
+    }
 }
 
-void Player::increaseDexterity(int amount)
+void Player::setDexterity(int amount)
 {
-    this->dexterity += amount;
+    if (amount > 0)
+    {
+        this->dexterity += amount;
+    }
+    else
+    {
+        std::cout << "Invalid amount for stat increase!" << std::endl;
+    }
 }
 
-void Player::increaseIntelligence(int amount)
+void Player::setIntelligence(int amount)
 {
-    this->intelligence += amount;
+    if (amount > 0)
+    {
+        this->intelligence += amount;
+    }
+    else
+    {
+        std::cout << "Invalid amount for stat increase!" << std::endl;
+    }
 }
 
-void Player::increaseFaith(int amount)
+void Player::setFaith(int amount)
 {
-    this->faith += amount;
+    if (amount > 0)
+    {
+        this->faith += amount;
+    }
+    else
+    {
+        std::cout << "Invalid amount for stat increase!" << std::endl;
+    }
 }
 
-void Player::increaseEndurance(int amount)
+void Player::setEndurance(int amount)
 {
-    this->endurance += amount;
+    if (amount > 0)
+    {
+        this->endurance += amount;
+    }
+    else
+    {
+        std::cout << "Invalid amount for stat increase!" << std::endl;
+    }
 }
 
 void Player::inputHp()

@@ -48,11 +48,11 @@ public:
     void setStamina(float newStamina);
     void setRunes(int newRunes);
     void setLevel(float newLevel);
-    void increaseStrength(int amount);
-    void increaseDexterity(int amount);
-    void increaseIntelligence(int amount);
-    void increaseFaith(int amount);
-    void increaseEndurance(int amount);
+    void setStrength(int amount);
+    void setDexterity(int amount);
+    void setIntelligence(int amount);
+    void setFaith(int amount);
+    void setEndurance(int amount);
 
 private:
     void inputHp();
