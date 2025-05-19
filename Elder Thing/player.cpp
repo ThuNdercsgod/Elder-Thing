@@ -4,36 +4,46 @@
 #include "player.hpp"
 
 Player::Player()
-    : Player("Unknown", 100, 100, 100, 0, 0) {}
+    : Player("Unknown", "Default", 100, 100, 100, 0, 0) {}
 
 // Might throw std::invalid_argument or std::bad_alloc
-Player::Player(const char *name, float maxHp, float maxMp, float maxStamina, int runes, float level)
+Player::Player(const char *name, const char *className, float maxHp, float maxMp, float maxStamina, int runes, float level)
     : flaskChargesHp(0), flaskChargesMp(0), currentWeight(0), maxWeight(100), equippedSpell(-1),
-      strength(0), dexterity(0), intelligence(0), faith(0), endurance(0)
+      equippedWeapon(-1), strength(0), dexterity(0), intelligence(0), faith(0), endurance(0)
 {
-    if (this->validHp(maxHp) &&
-        this->validMp(maxMp) &&
-        this->validStamina(maxStamina) &&
-        this->validRunes(runes) &&
-        this->validLevel(level))
-    {
-        this->name = new char[strlen(name) + 1];
-        strcpy(this->name, name);
-
-        this->hp = maxHp;
-        this->maxHp = maxHp;
-        this->mp = maxMp;
-        this->maxMp = maxMp;
-        this->stamina = maxStamina;
-        this->maxStamina = maxStamina;
-
-        this->runes = runes;
-        this->level = level;
-    }
-    else
+    if (!(this->validHp(maxHp) &&
+          this->validMp(maxMp) &&
+          this->validStamina(maxStamina) &&
+          this->validRunes(runes) &&
+          this->validLevel(level)))
     {
         throw std::invalid_argument("Invalid Player parameters!");
     }
+    this->name = new char[strlen(name) + 1];
+    strcpy(this->name, name);
+
+    this->className = new (std::nothrow) char[strlen(className) + 1];
+    if (!this->className)
+    {
+        delete[] this->name;
+        this->name = nullptr;
+        throw std::bad_alloc();
+    }
+    strcpy(this->className, className);
+
+    this->hp = maxHp;
+    if (this->hp == 0)
+    {
+        this->isAlive = false;
+    }
+    this->maxHp = maxHp;
+    this->mp = maxMp;
+    this->maxMp = maxMp;
+    this->stamina = maxStamina;
+    this->maxStamina = maxStamina;
+
+    this->runes = runes;
+    this->level = level;
 }
 
 // Might throws std::bad_alloc
@@ -42,6 +52,15 @@ Player::Player(const Player &other)
     this->name = new char[strlen(other.name) + 1];
     strcpy(this->name, other.name);
 
+    this->className = new (std::nothrow) char[strlen(other.className) + 1];
+    if (!this->className)
+    {
+        delete[] this->name;
+        this->name = nullptr;
+        throw std::bad_alloc();
+    }
+    strcpy(this->className, other.className);
+
     this->hp = other.hp;
     this->maxHp = other.maxHp;
     this->mp = other.mp;
@@ -49,17 +68,19 @@ Player::Player(const Player &other)
     this->stamina = other.stamina;
     this->maxStamina = other.maxStamina;
 
+    this->runes = other.runes;
+    this->level = other.level;
+
     this->strength = other.strength;
     this->dexterity = other.dexterity;
     this->intelligence = other.intelligence;
     this->faith = other.faith;
     this->endurance = other.endurance;
 
-    this->runes = other.runes;
-    this->level = other.level;
-
     this->flaskChargesHp = other.flaskChargesHp;
     this->flaskChargesMp = other.flaskChargesMp;
+
+    this->isAlive = other.isAlive;
 
     this->currentWeight = other.currentWeight;
     this->maxWeight = other.maxWeight;
@@ -70,6 +91,8 @@ Player::Player(const Player &other)
         this->spellSlots[i] = other.spellSlots[i];
         this->spellSlotsOccupied[i] = other.spellSlotsOccupied[i];
     }
+    this->equippedWeapon = other.equippedWeapon;
+    this->equippedSpell = other.equippedSpell;
 }
 
 Player::~Player()
@@ -84,8 +107,18 @@ Player &Player::operator=(const Player &other)
     if (this != &other)
     {
         delete[] this->name;
+        delete[] this->className;
         this->name = new char[strlen(other.name) + 1];
         strcpy(this->name, other.name);
+
+        this->className = new (std::nothrow) char[strlen(other.className) + 1];
+        if (!this->className)
+        {
+            delete[] this->name;
+            this->name = nullptr;
+            throw std::bad_alloc();
+        }
+        strcpy(this->className, other.className);
 
         this->hp = other.hp;
         this->maxHp = other.maxHp;
@@ -94,17 +127,19 @@ Player &Player::operator=(const Player &other)
         this->stamina = other.stamina;
         this->maxStamina = other.maxStamina;
 
+        this->runes = other.runes;
+        this->level = other.level;
+
         this->strength = other.strength;
         this->dexterity = other.dexterity;
         this->intelligence = other.intelligence;
         this->faith = other.faith;
         this->endurance = other.endurance;
 
-        this->runes = other.runes;
-        this->level = other.level;
-
         this->flaskChargesHp = other.flaskChargesHp;
         this->flaskChargesMp = other.flaskChargesMp;
+
+        this->isAlive = other.isAlive;
 
         this->currentWeight = other.currentWeight;
         this->maxWeight = other.maxWeight;
@@ -115,6 +150,8 @@ Player &Player::operator=(const Player &other)
             this->spellSlots[i] = other.spellSlots[i];
             this->spellSlotsOccupied[i] = other.spellSlotsOccupied[i];
         }
+        this->equippedWeapon = other.equippedWeapon;
+        this->equippedSpell = other.equippedSpell;
     }
     return *this;
 }
@@ -258,6 +295,23 @@ void Player::unequipSpell(int index)
 }
 
 // Might throw std::invalid_argument
+void Player::setCurrentWeapon(int index)
+{
+    if (index < 0 || index >= 8)
+    {
+        throw std::invalid_argument("Invalid weapon slot!");
+    }
+
+    if (this->weaponsSlotsOccupied[index] == true)
+    {
+        this->equippedWeapon = index;
+    }
+    else
+    {
+        throw std::invalid_argument("Invalid weapon slot!");
+    }
+}
+
 void Player::setCurrentSpell(int index)
 {
     if (index < 0 || index >= 8)
@@ -271,7 +325,7 @@ void Player::setCurrentSpell(int index)
     }
     else
     {
-        std::cout << "Spell slot is empty!" << std::endl;
+        throw std::invalid_argument("Invalid spell slot!");
     }
 }
 
@@ -287,6 +341,36 @@ int Player::castSpell()
         std::cout << "Spell is on cooldown!" << std::endl;
         return 0;
     }
+}
+
+void Player::useHpFlask()
+{
+    this->flaskChargesHp--;
+    this->hp = this->maxHp;
+}
+
+void Player::useMpFlask()
+{
+    this->flaskChargesMp--;
+    this->mp = this->maxMp;
+}
+
+void Player::takeDamage(const Enemy &enemy)
+{
+    if (this->hp <= enemy.getDamage())
+    {
+        this->hp = 0;
+        this->isAlive = false;
+    }
+    else
+    {
+        this->hp -= enemy.getDamage();
+    }
+}
+
+int Player::calculateAttackPower() const
+{
+    return this->weaponSlots[this->equippedWeapon].getDamage();
 }
 
 void Player::print() const
@@ -419,6 +503,10 @@ void Player::setHp(float newHp)
     if (this->validHp(newHp))
     {
         this->hp = newHp;
+        if (this->hp == 0)
+        {
+            this->isAlive = false;
+        }
     }
     else
     {
@@ -536,81 +624,6 @@ void Player::setEndurance(int amount)
     {
         std::cout << "Invalid amount for stat increase!" << std::endl;
     }
-}
-
-void Player::inputHp()
-{
-    float input;
-    bool valid;
-
-    do
-    {
-        std::cout << "Enter the HP of the player:" << std::endl;
-        std::cin >> input;
-        valid = this->validHp(input) && input <= this->maxHp;
-    } while (!valid);
-
-    this->hp = input;
-}
-
-void Player::inputMp()
-{
-    float input;
-    bool valid;
-
-    do
-    {
-        std::cout << "Enter the MP of the player:" << std::endl;
-        std::cin >> input;
-        valid = this->validMp(input) && input <= this->maxMp;
-    } while (!valid);
-
-    this->mp = input;
-}
-
-void Player::inputStamina()
-{
-    float input;
-    bool valid;
-
-    do
-    {
-        std::cout << "Enter the stamina of the player:" << std::endl;
-        std::cin >> input;
-        valid = this->validStamina(input) && input <= this->maxStamina;
-    } while (!valid);
-
-    this->stamina = input;
-}
-
-void Player::inputRunes()
-{
-    float input;
-    bool valid;
-
-    do
-    {
-        std::cout << "Enter the runes of the player:" << std::endl;
-        std::cin >> input;
-        valid = this->validRunes(input);
-    } while (!valid);
-
-    this->runes = input;
-}
-
-void Player::inputLevel()
-{
-    float input;
-    bool valid;
-
-    do
-    {
-        std::cout << "Enter the level of the player:" << std::endl;
-        std::cin >> input;
-        valid = this->validLevel(input);
-    } while (!valid);
-
-    this->level = input;
 }
 
 bool Player::validHp(float hp) const

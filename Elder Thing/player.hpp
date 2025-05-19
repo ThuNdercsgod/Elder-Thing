@@ -1,5 +1,6 @@
 #pragma once
 
+#include "enemy.hpp"
 #include "spell.hpp"
 #include "weapon.hpp"
 
@@ -7,7 +8,7 @@ class Player
 {
 public:
     Player();
-    Player(const char *name, float maxHp, float maxMp, float maxStamina, int runes, float level);
+    Player(const char *name, const char *className, float maxHp, float maxMp, float maxStamina, int runes, float level);
     Player(const Player &other);
     ~Player();
 
@@ -21,8 +22,13 @@ public:
     void equipWeapon(Weapon weapon);
     void equipSpell(Spell spell);
     void unequipSpell(int index);
+    void setCurrentWeapon(int index);
     void setCurrentSpell(int index);
     int castSpell();
+    void useHpFlask();
+    void useMpFlask();
+    void takeDamage(const Enemy &enemy);
+    int calculateAttackPower() const;
 
     void print() const;
     void printStatus() const;
@@ -54,36 +60,33 @@ public:
     void setFaith(int amount);
     void setEndurance(int amount);
 
-private:
-    void inputHp();
-    void inputMp();
-    void inputStamina();
-    void inputRunes();
-    void inputLevel();
-
+protected:
     bool validHp(float hp) const;
     bool validMp(float mp) const;
     bool validRunes(int runes) const;
     bool validStamina(float stamina) const;
     bool validLevel(float level) const;
-    // TODO valid() for strength, dexterity, intelligence, faith, endurance;
 
 private:
     char *name;
+    char *className;
     float hp, maxHp;
     float mp, maxMp;
     float stamina, maxStamina;
 
-    int strength, dexterity, intelligence, faith, endurance;
-
     int runes;
     float level;
 
-    int flaskChargesHp = 0, flaskChargesMp = 0;
+    int strength, dexterity, intelligence, faith, endurance;
+
+    int flaskChargesHp = 2, flaskChargesMp = 2;
+
+    bool isAlive = true;
 
     float currentWeight, maxWeight;
     Weapon weaponSlots[8] = {};
     bool weaponsSlotsOccupied[8] = {false, false, false, false, false, false, false, false};
+    int equippedWeapon;
 
     Spell spellSlots[8] = {};
     bool spellSlotsOccupied[8] = {false, false, false, false, false, false, false, false};
