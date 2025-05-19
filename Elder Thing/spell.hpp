@@ -1,3 +1,5 @@
+#pragma once
+
 class Player;
 
 class Spell
@@ -17,6 +19,7 @@ public:
     void resetCooldown();
     void decrementCooldown(int amount);
     bool isOnCooldown() const;
+    // const char *getSpellType() const;
 
     void print() const;
 
