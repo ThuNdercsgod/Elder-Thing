@@ -8,7 +8,7 @@ class Player
 {
 public:
     Player();
-    Player(const char *name, const char *className, float maxHp, float maxMp, float maxStamina, int runes, float level);
+    Player(const char *name, float maxHp, float maxMp, float maxStamina, int runes, float level);
     Player(const Player &other);
     ~Player();
 
@@ -61,6 +61,10 @@ public:
     void setEndurance(int amount);
 
 protected:
+    // void performSpecialPower() const;
+    // bool canLearnSpell(const Spell &spell) const;
+    // const char *getClassName() const;
+
     bool validHp(float hp) const;
     bool validMp(float mp) const;
     bool validRunes(int runes) const;
@@ -69,7 +73,6 @@ protected:
 
 private:
     char *name;
-    char *className;
     float hp, maxHp;
     float mp, maxMp;
     float stamina, maxStamina;

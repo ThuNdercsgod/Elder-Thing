@@ -4,10 +4,10 @@
 #include "player.hpp"
 
 Player::Player()
-    : Player("Unknown", "Default", 100, 100, 100, 0, 0) {}
+    : Player("Unknown", 100, 100, 100, 0, 0) {}
 
 // Might throw std::invalid_argument or std::bad_alloc
-Player::Player(const char *name, const char *className, float maxHp, float maxMp, float maxStamina, int runes, float level)
+Player::Player(const char *name, float maxHp, float maxMp, float maxStamina, int runes, float level)
     : flaskChargesHp(0), flaskChargesMp(0), currentWeight(0), maxWeight(100), equippedSpell(-1),
       equippedWeapon(-1), strength(0), dexterity(0), intelligence(0), faith(0), endurance(0)
 {
@@ -21,15 +21,6 @@ Player::Player(const char *name, const char *className, float maxHp, float maxMp
     }
     this->name = new char[strlen(name) + 1];
     strcpy(this->name, name);
-
-    this->className = new (std::nothrow) char[strlen(className) + 1];
-    if (!this->className)
-    {
-        delete[] this->name;
-        this->name = nullptr;
-        throw std::bad_alloc();
-    }
-    strcpy(this->className, className);
 
     this->hp = maxHp;
     if (this->hp == 0)
@@ -51,15 +42,6 @@ Player::Player(const Player &other)
 {
     this->name = new char[strlen(other.name) + 1];
     strcpy(this->name, other.name);
-
-    this->className = new (std::nothrow) char[strlen(other.className) + 1];
-    if (!this->className)
-    {
-        delete[] this->name;
-        this->name = nullptr;
-        throw std::bad_alloc();
-    }
-    strcpy(this->className, other.className);
 
     this->hp = other.hp;
     this->maxHp = other.maxHp;
@@ -107,18 +89,8 @@ Player &Player::operator=(const Player &other)
     if (this != &other)
     {
         delete[] this->name;
-        delete[] this->className;
         this->name = new char[strlen(other.name) + 1];
         strcpy(this->name, other.name);
-
-        this->className = new (std::nothrow) char[strlen(other.className) + 1];
-        if (!this->className)
-        {
-            delete[] this->name;
-            this->name = nullptr;
-            throw std::bad_alloc();
-        }
-        strcpy(this->className, other.className);
 
         this->hp = other.hp;
         this->maxHp = other.maxHp;
