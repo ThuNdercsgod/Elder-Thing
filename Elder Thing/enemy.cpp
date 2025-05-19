@@ -9,7 +9,7 @@ Enemy::Enemy()
 // Might throw std::invalid_argument or std::bad_alloc
 Enemy::Enemy(const char *name, int maxHp, int damage)
 {
-    if (this->validName(name) && this->validMaxHp(maxHp) && this->validDamage(damage))
+    if (this->validName(name) && this->validHp(maxHp) && this->validDamage(damage))
     {
         this->name = new char[strlen(name) + 1];
         strcpy(this->name, name);
@@ -105,6 +105,56 @@ void Enemy::print() const
               << std::endl;
 }
 
+const char *Enemy::getName() const
+{
+    return this->name;
+}
+
+int Enemy::getHp() const
+{
+    return this->hp;
+}
+
+int Enemy::getMaxHp() const
+{
+    return this->maxHp;
+}
+
+int Enemy::getDamage() const
+{
+    return this->damage;
+}
+
+// Might throw std::invalid_argument
+void Enemy::setHp(int hp)
+{
+    if (!this->validHp(hp))
+    {
+        throw std::invalid_argument("Invalid parameters for Enemy!");
+    }
+    this->hp = hp;
+}
+
+// Might throw std::invalid_argument
+void Enemy::setMaxHp(int maxHp)
+{
+    if (!this->validHp(maxHp))
+    {
+        throw std::invalid_argument("Invalid parameters for Enemy!");
+    }
+    this->maxHp = maxHp;
+}
+
+// Might throw std::invalid_argument
+void Enemy::setDamage(int damage)
+{
+    if (!this->validDamage(damage))
+    {
+        throw std::invalid_argument("Invalid Parameters for Enemy!");
+    }
+    this->damage = damage;
+}
+
 bool Enemy::validName(const char *name) const
 {
     if (strcmp(name, "") != 0)
@@ -117,15 +167,6 @@ bool Enemy::validName(const char *name) const
 bool Enemy::validHp(int hp) const
 {
     if (hp > 0)
-    {
-        return true;
-    }
-    return false;
-}
-
-bool Enemy::validMaxHp(int maxHp) const
-{
-    if (maxHp > 0)
     {
         return true;
     }

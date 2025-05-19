@@ -28,10 +28,18 @@ public:
     // void addAttack(const char *name, int damage, int range);
     void print() const;
 
+    const char *getName() const;
+    int getHp() const;
+    int getMaxHp() const;
+    int getDamage() const;
+
+    void setHp(int hp);
+    void setMaxHp(int maxHp);
+    void setDamage(int damage);
+
 private:
     bool validName(const char *name) const;
     bool validHp(int hp) const;
-    bool validMaxHp(int maxHp) const;
     bool validDamage(int damage) const;
 
     char *name;
