@@ -19,14 +19,47 @@ Astrologer::Astrologer(const char *name, float maxHp, float maxMp, float maxStam
     this->cosmicAffinity = cosmicAffinity;
 }
 
+void Astrologer::castSorcerySpell(const SorcerySpell &spell) const
+{
+    std::cout << "Casting Sorcery Spell: " << spell.getName()
+              << " with damage: " << spell.getDamage()
+              << " and MP cost: " << spell.getMpCost()
+              << std::endl;
+}
+
+void Astrologer::empowerNextSpell(const SorcerySpell &spell) const
+{
+    std::cout << "Casting Sorcery Spell: " << spell.getName()
+              << " with damage: " << spell.getDamage() * 2
+              << " and MP cost: " << spell.getMpCost()
+              << std::endl;
+}
+
+void Astrologer::predictEnemyAction(const Enemy &enemy) const
+{
+    std::cout << "Predicting enemy action: " << enemy.getName()
+              << " with HP: " << enemy.getHp()
+              << " and damage: " << enemy.getDamage()
+              << std::endl;
+}
+
 void Astrologer::performSpecialAction() const
 {
     std::cout << "Cosmic Vision Activated!" << std::endl;
 }
 
-bool Astrologer::canLearnSpell(const Spell &spell) const
+bool Astrologer::canLearnSpell(const SorcerySpell &spell) const
 {
-    if (strcmp(spell.getType(), "Sorcery") == 0)
+    if (strcmp(spell.getSpellType(), "Sorcery") == 0)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool Astrologer::canLearnSpell(const IncantationSpell &spell) const
+{
+    if (strcmp(spell.getSpellType(), "Sorcery") == 0)
     {
         return true;
     }
@@ -36,6 +69,26 @@ bool Astrologer::canLearnSpell(const Spell &spell) const
 const char *Astrologer::getClassName() const
 {
     return "Astrologer";
+}
+
+void Astrologer::print() const
+{
+    this->printStatus();
+    this->printInventory();
+    this->printSpell();
+}
+
+void Astrologer::printStatus() const
+{
+    std::cout << "\n=== " << this->getName() << " stats ===\n"
+              << "HP: " << this->getHp() << "/" << this->getMaxHp()
+              << "\nMP: " << this->getMp() << "/" << this->getMaxMp()
+              << "\nRunes: " << this->getRunes()
+              << "\nLevel: " << this->getLevel()
+              << "\nStaff Power: " << this->getStaffPower()
+              << "\nIntelligence Scalling: " << this->getIntelligenceScalling()
+              << "\nCosmic Affinity: " << this->getCosmicAffinity()
+              << std::endl;
 }
 
 int Astrologer::getStaffPower() const
