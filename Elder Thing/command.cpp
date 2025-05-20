@@ -82,6 +82,9 @@ void Command::playerTest()
         case 5:
             PlayerTest::operators();
             break;
+        case 6:
+            this->playerClassTest();
+            break;
         default:
             std::cout << "Invalid input!" << std::endl;
             break;
@@ -97,8 +100,48 @@ void Command::printPlayerTest()
               << "3. Run spell equip tests\n"
               << "4. Run spell cast tests\n"
               << "5. Run operators tests\n"
+              << "6. Run classes tests\n"
               << "0. Go back\n"
               << std::endl;
+}
+
+void Command::printPlayerClassTest()
+{
+    std::cout << "\n=== Elder Thing Player Class Tests ===\n"
+              << "1. Run Astrologer tests\n"
+              << "2. Run Confessor tests\n"
+              << "0. Go back\n"
+              << std::endl;
+}
+
+void Command::playerClassTest()
+{
+    int input;
+    bool valid;
+
+    do
+    {
+        valid = false;
+        Command::printPlayerClassTest();
+        std::cout << "Enter the number representing the command:" << std::endl;
+        std::cin >> input;
+
+        switch (input)
+        {
+        case 0:
+            valid = true;
+            break;
+        case 1:
+            PlayerTest::PlayerClass::astrologer();
+            break;
+        case 2:
+            PlayerTest::PlayerClass::confessor();
+            break;
+        default:
+            std::cout << "Invalid input!" << std::endl;
+            break;
+        }
+    } while (!valid);
 }
 
 void Command::weaponTest()
@@ -163,6 +206,9 @@ void Command::spellTest()
         case 2:
             SpellTest::operators();
             break;
+        case 3:
+            this->spellTypeTest();
+            break;
         default:
             std::cout << "Invalid input!" << std::endl;
             break;
@@ -175,8 +221,48 @@ void Command::printSpellTest()
     std::cout << "\n=== Elder Thing Spell Tests ===\n"
               << "1. Run basic spell tests\n"
               << "2. Run operators spell tests\n"
+              << "3. Run spell type tests\n"
               << "0. Go back\n"
               << std::endl;
+}
+
+void Command::printSpellTypeTest()
+{
+    std::cout << "\n=== Elder Thing Spell Type Tests ===\n"
+              << "1. Run Sorcery Spell tests\n"
+              << "2. Run Incantation Spell tests\n"
+              << "0. Go back\n"
+              << std::endl;
+}
+
+void Command::spellTypeTest()
+{
+    int input;
+    bool valid;
+
+    do
+    {
+        valid = false;
+        Command::printSpellTypeTest();
+        std::cout << "Enter the number representing the command:" << std::endl;
+        std::cin >> input;
+
+        switch (input)
+        {
+        case 0:
+            valid = true;
+            break;
+        case 1:
+            SpellTest::SpellTypes::sorcery();
+            break;
+        case 2:
+            SpellTest::SpellTypes::incantation();
+            break;
+        default:
+            std::cout << "Invalid input!" << std::endl;
+            break;
+        }
+    } while (!valid);
 }
 
 void Command::enemyTest()

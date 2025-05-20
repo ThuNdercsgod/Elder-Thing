@@ -1,7 +1,16 @@
 #include <iostream>
 
-#include "enemy.hpp"
+#include "astrologer.hpp"
+#include "confessor.hpp"
 #include "player.hpp"
+
+#include "incantationspell.hpp"
+#include "sorceryspell.hpp"
+#include "spell.hpp"
+
+#include "enemy.hpp"
+#include "weapon.hpp"
+
 #include "test.hpp"
 
 void PlayerTest::basic()
@@ -148,6 +157,50 @@ void PlayerTest::operators()
     plus.printInventory();
 }
 
+void PlayerTest::PlayerClass::astrologer()
+{
+    std::cout << "\n=== Testing Astrologer Class ===\n"
+              << std::endl;
+
+    // Create an Astrologer object
+    Astrologer astrologer("Astrologer", 100, 100, 100, 30, 30, 30, 30, 30);
+
+    // Print initial status
+    astrologer.print();
+
+    // Test casting spells
+    SorcerySpell fireball("Fireball", 30, 15, 2, 12, 0);
+    astrologer.castSorcerySpell(fireball);
+
+    SorcerySpell healingLight("Healing Light", 0, 20, 3, 5, 15);
+    astrologer.castSorcerySpell(healingLight);
+
+    // Test special action
+    astrologer.performSpecialAction();
+}
+
+void PlayerTest::PlayerClass::confessor()
+{
+    std::cout << "\n=== Testing Confessor Class ===\n"
+              << std::endl;
+
+    // Create a Confessor object
+    Confessor confessor("Confessor", 100, 100, 100, 30, 30, 30, 30, 30);
+
+    // Print initial status
+    confessor.print();
+
+    // Test casting spells
+    IncantationSpell fireball("Fireball", 30, 15, 2, 12, 0);
+    confessor.castIncantationSpell(fireball);
+
+    IncantationSpell healingLight("Healing Light", 0, 20, 3, 5, 15);
+    confessor.castIncantationSpell(healingLight);
+
+    // Test special action
+    confessor.performSpecialAction();
+}
+
 void WeaponTest::basic()
 {
     // Create and initialize weapons
@@ -291,6 +344,24 @@ void SpellTest::operators()
 
     std::cout << "\nUsing output operator:" << std::endl;
     std::cout << fireball << std::endl;
+}
+
+void SpellTest::SpellTypes::sorcery()
+{
+    std::cout << "=== Testing Sorcery Spell ===\n"
+              << std::endl;
+
+    SorcerySpell fireball("Fireball", 30, 15, 2, 12, 0);
+    fireball.print();
+}
+
+void SpellTest::SpellTypes::incantation()
+{
+    std::cout << "=== Testing Incantation Spell ===\n"
+              << std::endl;
+
+    IncantationSpell healingLight("Healing Light", 0, 20, 3, 5, 15);
+    healingLight.print();
 }
 
 void EnemyTest::basic()
