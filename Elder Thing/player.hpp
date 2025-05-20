@@ -35,6 +35,7 @@ public:
     void printInventory() const;
     void printSpell() const;
 
+    const char *getName() const;
     float getHp() const;
     float getMaxHp() const;
     float getMp() const;
@@ -48,6 +49,7 @@ public:
     int getIntelligence() const;
     int getFaith() const;
     int getEndurance() const;
+    bool getIsAlive() const;
 
     void setHp(float newHp);
     void setMp(float newMp);
@@ -59,6 +61,7 @@ public:
     void setIntelligence(int amount);
     void setFaith(int amount);
     void setEndurance(int amount);
+    void setIsAlive(bool alive);
 
 protected:
     // void performSpecialPower() const;

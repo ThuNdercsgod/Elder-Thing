@@ -233,8 +233,8 @@ void Player::equipSpell(Spell spell)
         }
     }
 
-    if (spell.requiredIntelligence <= this->intelligence &&
-        spell.requiredFaith <= this->faith)
+    if (spell.getRequiredIntelligence() <= this->intelligence &&
+        spell.getRequiredFaith() <= this->faith)
     {
         spellSlots[i] = spell;
         spellSlotsOccupied[i] = true;
@@ -242,7 +242,7 @@ void Player::equipSpell(Spell spell)
     else
     {
         std::cout << "Player intelligence or faith is not high enough! "
-                  << spell.name
+                  << spell.getName()
                   << " not learned!" << std::endl;
     }
 }
@@ -305,8 +305,8 @@ int Player::castSpell()
 {
     if (this->spellSlots[this->equippedSpell].isOnCooldown() == false)
     {
-        this->spellSlots[this->equippedSpell].remainingCooldown = this->spellSlots[this->equippedSpell].cooldown;
-        return this->spellSlots[this->equippedSpell].damage;
+        this->spellSlots[this->equippedSpell].setRemainingCooldown(this->spellSlots[this->equippedSpell].getCooldown());
+        return this->spellSlots[this->equippedSpell].getDamage();
     }
     else
     {
@@ -394,7 +394,7 @@ void Player::printSpell() const
     {
         if (this->spellSlotsOccupied[i] == true)
         {
-            std::cout << i + 1 << ". " << spellSlots[i].name << std::endl;
+            std::cout << i + 1 << ". " << spellSlots[i].getName() << std::endl;
         }
         else
         {
@@ -402,6 +402,11 @@ void Player::printSpell() const
         }
     }
     std::cout << std::endl;
+}
+
+const char *Player::getName() const
+{
+    return this->name;
 }
 
 float Player::getHp() const
@@ -467,6 +472,11 @@ int Player::getFaith() const
 int Player::getEndurance() const
 {
     return this->endurance;
+}
+
+bool Player::getIsAlive() const
+{
+    return this->isAlive;
 }
 
 // Might throw std::invalid_argument;
@@ -596,6 +606,11 @@ void Player::setEndurance(int amount)
     {
         std::cout << "Invalid amount for stat increase!" << std::endl;
     }
+}
+
+void Player::setIsAlive(bool alive)
+{
+    this->isAlive = alive;
 }
 
 bool Player::validHp(float hp) const
