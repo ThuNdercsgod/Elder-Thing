@@ -1,15 +1,14 @@
 #include <iostream>
 
+#include "astrologer.hpp"
 #include "command.hpp"
+#include "sorceryspell.hpp"
 // #include "player.hpp"
 // #include "test.hpp"
 // #include "weapon.hpp"
 
 int main()
 {
-    // TODO add base class "Character" with "Astrologer" and "Confessor"
-    // TODO expand base class "Spell" with "SorcerySpell" and "IncantationSpell"
-
     try
     {
         Command command;

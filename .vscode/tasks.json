@@ -11,8 +11,13 @@
                 "${workspaceFolder}/Elder Thing/command.cpp",
                 "${workspaceFolder}/Elder Thing/test.cpp",
                 "${workspaceFolder}/Elder Thing/player.cpp",
+                "${workspaceFolder}/Elder Thing/astrologer.cpp",
+                "${workspaceFolder}/Elder Thing/confessor.cpp",
                 "${workspaceFolder}/Elder Thing/weapon.cpp",
                 "${workspaceFolder}/Elder Thing/enemy.cpp",
+                "${workspaceFolder}/Elder Thing/spell.cpp",
+                "${workspaceFolder}/Elder Thing/sorceryspell.cpp",
+                "${workspaceFolder}/Elder Thing/incantationspell.cpp",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}.exe"
             ],
