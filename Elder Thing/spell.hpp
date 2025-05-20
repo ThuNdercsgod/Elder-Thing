@@ -1,6 +1,6 @@
 #pragma once
 
-class Player;
+#include <iostream>
 
 class Spell
 {
@@ -19,14 +19,34 @@ public:
     void resetCooldown();
     void decrementCooldown(int amount);
     bool isOnCooldown() const;
-    // const char *getSpellType() const;
+    const char *getSpellType() const;
 
     void print() const;
 
-    friend class Player;
-
-    char *getName() const;
+    const char *getName() const;
+    float getDamage() const;
+    int getMpCost() const;
+    int getCooldown() const;
+    int getRequiredIntelligence() const;
+    int getRequiredFaith() const;
     int getRemainingCooldown() const;
+
+    void setName(const char *name);
+    void setDamage(float damage);
+    void setMpCost(int mpCost);
+    void setCooldown(int cooldown);
+    void setRequiredIntelligence(int requiredIntelligence);
+    void setRequiredFaith(int requiredFaith);
+    void setRemainingCooldown(int remainingCooldown);
+
+protected:
+    bool validName(const char *name) const;
+    bool validDamage(float damage) const;
+    bool validMpCost(int mpCost) const;
+    bool validCooldown(int cooldown) const;
+    bool validRequiredIntelligence(int requiredIntelligence) const;
+    bool validRequiredFaith(int requiredFaith) const;
+    bool validRemainingCooldown(int remainingCooldown) const;
 
 private:
     char *name;
