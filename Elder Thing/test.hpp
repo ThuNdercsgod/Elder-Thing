@@ -25,15 +25,16 @@ namespace WeaponTest
     void validation();
 };
 
-namespace SpellTest
+namespace SorcerySpellTest
 {
     void basic();
     void operators();
-    namespace SpellTypes
-    {
-        void sorcery();
-        void incantation();
-    }
+};
+
+namespace IncantationSpellTest
+{
+    void basic();
+    void operators();
 };
 
 namespace EnemyTest

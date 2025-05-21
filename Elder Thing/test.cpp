@@ -41,16 +41,16 @@ void AstrologerTest::weaponEquip()
 
     Weapon dagger("Dagger", 45, 1.5f, 5);
 
-    astrologer.equipWeapon(longsword);
-    astrologer.equipWeapon(greatsword);
-    astrologer.equipWeapon(dagger);
+    astrologer.equipWeapon(&longsword);
+    astrologer.equipWeapon(&greatsword);
+    astrologer.equipWeapon(&dagger);
 
     astrologer.print();
 
     astrologer.setLevel(30);
 
-    astrologer.equipWeapon(longsword);
-    astrologer.equipWeapon(greatsword);
+    astrologer.equipWeapon(&longsword);
+    astrologer.equipWeapon(&greatsword);
 
     astrologer.print();
 }
@@ -66,18 +66,18 @@ void AstrologerTest::spellEquip()
     astrologer.printSpell();
 
     // Create some spells
-    Spell fireball("Fireball", 30, 15, 2, 12, 0);
-    Spell healingLight("Healing Light", 0, 20, 3, 5, 15);
-    Spell lightningBolt("Lightning Bolt", 45, 25, 3, 15, 8);
+    SorcerySpell fireball("Fireball", 30, 15, 2, 12, 0);
+    IncantationSpell healingLight("Healing Light", 0, 20, 3, 5, 15);
+    SorcerySpell lightningBolt("Lightning Bolt", 45, 25, 3, 15, 8);
 
     astrologer.setIntelligence(20);
     astrologer.setFaith(20);
 
     // Equip spells
     std::cout << "\nLearning spells:" << std::endl;
-    astrologer.equipSpell(fireball);
-    astrologer.equipSpell(healingLight);
-    astrologer.equipSpell(lightningBolt);
+    astrologer.equipSpell(&fireball);
+    astrologer.equipSpell(&healingLight);
+    astrologer.equipSpell(&lightningBolt);
 
     // Print updated spell list
     std::cout << "\nUpdated spell list:" << std::endl;
@@ -96,8 +96,8 @@ void AstrologerTest::spellCast()
     astrologer.setIntelligence(12);
 
     // Learn a spell
-    Spell fireball("Fireball", 30, 15, 2, 12, 0);
-    astrologer.equipSpell(fireball);
+    SorcerySpell fireball("Fireball", 30, 15, 2, 12, 0);
+    astrologer.equipSpell(&fireball);
     astrologer.setCurrentSpell(0);
 
     std::cout << "Astrologer status before casting:" << std::endl;
@@ -177,16 +177,16 @@ void ConfessorTest::weaponEquip()
 
     Weapon dagger("Dagger", 45, 1.5f, 5);
 
-    confessor.equipWeapon(longsword);
-    confessor.equipWeapon(greatsword);
-    confessor.equipWeapon(dagger);
+    confessor.equipWeapon(&longsword);
+    confessor.equipWeapon(&greatsword);
+    confessor.equipWeapon(&dagger);
 
     confessor.print();
 
     confessor.setLevel(30);
 
-    confessor.equipWeapon(longsword);
-    confessor.equipWeapon(greatsword);
+    confessor.equipWeapon(&longsword);
+    confessor.equipWeapon(&greatsword);
 
     confessor.print();
 }
@@ -202,18 +202,18 @@ void ConfessorTest::spellEquip()
     confessor.printSpell();
 
     // Create some spells
-    Spell fireball("Fireball", 30, 15, 2, 12, 0);
-    Spell healingLight("Healing Light", 0, 20, 3, 5, 15);
-    Spell lightningBolt("Lightning Bolt", 45, 25, 3, 15, 8);
+    SorcerySpell fireball("Fireball", 30, 15, 2, 12, 0);
+    IncantationSpell healingLight("Healing Light", 0, 20, 3, 5, 15);
+    SorcerySpell lightningBolt("Lightning Bolt", 45, 25, 3, 15, 8);
 
     confessor.setIntelligence(20);
     confessor.setFaith(20);
 
     // Equip spells
     std::cout << "\nLearning spells:" << std::endl;
-    confessor.equipSpell(fireball);
-    confessor.equipSpell(healingLight);
-    confessor.equipSpell(lightningBolt);
+    confessor.equipSpell(&fireball);
+    confessor.equipSpell(&healingLight);
+    confessor.equipSpell(&lightningBolt);
 
     // Print updated spell list
     std::cout << "\nUpdated spell list:" << std::endl;
@@ -232,8 +232,8 @@ void ConfessorTest::spellCast()
     confessor.setIntelligence(12);
 
     // Learn a spell
-    Spell fireball("Fireball", 30, 15, 2, 12, 0);
-    confessor.equipSpell(fireball);
+    SorcerySpell fireball("Fireball", 30, 15, 2, 12, 0);
+    confessor.equipSpell(&fireball);
     confessor.setCurrentSpell(0);
 
     std::cout << "Confessor status before casting:" << std::endl;
@@ -341,28 +341,23 @@ void WeaponTest::validation()
     }
 }
 
-void SpellTest::basic()
+void SorcerySpellTest::basic()
 {
-    std::cout << "=== Testing Spell Basic Functionality ===\n"
+    std::cout << "=== Testing Sorcery Spell Basic Functionality ===\n"
               << std::endl;
-
-    // Default constructor
-    std::cout << "Creating spell with default constructor:" << std::endl;
-    Spell defaultSpell;
-    defaultSpell.print();
 
     // Parameterized constructor
     std::cout << "\nCreating spells with parameterized constructor:" << std::endl;
-    Spell fireball("Fireball", 30, 15, 2, 12, 0);
+    SorcerySpell fireball("Fireball", 30, 15, 2, 12, 0);
     fireball.print();
 
     std::cout << std::endl;
-    Spell healingLight("Healing Light", 0, 20, 3, 5, 15);
+    SorcerySpell healingLight("Healing Light", 0, 20, 3, 5, 15);
     healingLight.print();
 
     // Copy constructor
     std::cout << "\nUsing copy constructor:" << std::endl;
-    Spell copied(fireball);
+    SorcerySpell copied(fireball);
     std::cout << "Copied spell:" << std::endl;
     copied.print();
 
@@ -387,21 +382,21 @@ void SpellTest::basic()
     std::cout << "Cooldown remaining: " << fireball.getRemainingCooldown() << std::endl;
 }
 
-void SpellTest::operators()
+void SorcerySpellTest::operators()
 {
-    std::cout << "=== Testing Spell Operators ===\n"
+    std::cout << "=== Testing Sorcery Spell Operators ===\n"
               << std::endl;
 
-    Spell fireball("Fireball", 30, 15, 2, 12, 0);
-    Spell lightningBolt("Lightning Bolt", 45, 25, 3, 15, 8);
-    Spell healingLight("Healing Light", 0, 20, 3, 5, 15);
+    SorcerySpell fireball("Fireball", 30, 15, 2, 12, 0);
+    SorcerySpell lightningBolt("Lightning Bolt", 45, 25, 3, 15, 8);
+    SorcerySpell healingLight("Healing Light", 0, 20, 3, 5, 15);
 
     std::cout << "Using copy constructor:" << std::endl;
-    Spell copiedSpell(fireball);
+    SorcerySpell copiedSpell(fireball);
     copiedSpell.print();
 
     std::cout << "\nUsing assignment operator:" << std::endl;
-    Spell assignedSpell;
+    SorcerySpell assignedSpell("Assigned Spell", 0, 0, 0, 0, 0);
     assignedSpell = fireball;
     assignedSpell.print();
 
@@ -429,22 +424,87 @@ void SpellTest::operators()
     std::cout << fireball << std::endl;
 }
 
-void SpellTest::SpellTypes::sorcery()
+void IncantationSpellTest::basic()
 {
-    std::cout << "=== Testing Sorcery Spell ===\n"
+    std::cout << "=== Testing Incantation Spell Basic Functionality ===\n"
               << std::endl;
 
-    SorcerySpell fireball("Fireball", 30, 15, 2, 12, 0);
+    // Parameterized constructor
+    std::cout << "\nCreating spells with parameterized constructor:" << std::endl;
+    IncantationSpell fireball("Fireball", 30, 15, 2, 12, 0);
     fireball.print();
-}
 
-void SpellTest::SpellTypes::incantation()
-{
-    std::cout << "=== Testing Incantation Spell ===\n"
-              << std::endl;
-
+    std::cout << std::endl;
     IncantationSpell healingLight("Healing Light", 0, 20, 3, 5, 15);
     healingLight.print();
+
+    // Copy constructor
+    std::cout << "\nUsing copy constructor:" << std::endl;
+    IncantationSpell copied(fireball);
+    std::cout << "Copied spell:" << std::endl;
+    copied.print();
+
+    // Test cooldown functionality
+    std::cout << "\nTesting cooldown functionality:" << std::endl;
+    std::cout << "Initial state:" << std::endl;
+    std::cout << "Is Fireball on cooldown? " << (fireball.isOnCooldown() ? "Yes" : "No") << std::endl;
+
+    fireball.resetCooldown();
+    std::cout << "After reset cooldown:" << std::endl;
+    std::cout << "Is Fireball on cooldown? " << (fireball.isOnCooldown() ? "Yes" : "No") << std::endl;
+    std::cout << "Cooldown remaining: " << fireball.getRemainingCooldown() << std::endl;
+
+    fireball.decrementCooldown(1);
+    std::cout << "After decrement cooldown:" << std::endl;
+    std::cout << "Is Fireball on cooldown? " << (fireball.isOnCooldown() ? "Yes" : "No") << std::endl;
+    std::cout << "Cooldown remaining: " << fireball.getRemainingCooldown() << std::endl;
+
+    fireball.decrementCooldown(1);
+    std::cout << "After second decrement cooldown:" << std::endl;
+    std::cout << "Is Fireball on cooldown? " << (fireball.isOnCooldown() ? "Yes" : "No") << std::endl;
+    std::cout << "Cooldown remaining: " << fireball.getRemainingCooldown() << std::endl;
+}
+
+void IncantationSpellTest::operators()
+{
+    std::cout << "=== Testing Incantation Spell Operators ===\n"
+              << std::endl;
+
+    IncantationSpell fireball("Fireball", 30, 15, 2, 12, 0);
+    IncantationSpell lightningBolt("Lightning Bolt", 45, 25, 3, 15, 8);
+    IncantationSpell healingLight("Healing Light", 0, 20, 3, 5, 15);
+
+    std::cout << "Using copy constructor:" << std::endl;
+    IncantationSpell copiedSpell(fireball);
+    copiedSpell.print();
+
+    std::cout << "\nUsing assignment operator:" << std::endl;
+    IncantationSpell assignedSpell("Assigned Spell", 0, 0, 0, 0, 0);
+    assignedSpell = fireball;
+    assignedSpell.print();
+
+    std::cout << "\nUsing less than operator:" << std::endl;
+    if (fireball < lightningBolt)
+    {
+        std::cout << fireball.getName() << " is less powerful than " << lightningBolt.getName() << std::endl;
+    }
+    else
+    {
+        std::cout << fireball.getName() << " is more powerful than " << lightningBolt.getName() << std::endl;
+    }
+
+    std::cout << "\nUsing greater than operator:" << std::endl;
+    if (fireball > healingLight)
+    {
+        std::cout << fireball.getName() << " is more powerful than " << healingLight.getName() << std::endl;
+    }
+    else
+    {
+        std::cout << fireball.getName() << " is less powerful than " << healingLight.getName() << std::endl;
+    }
+
+    std::cout << "\nUsing output operator:" << std::endl;
+    std::cout << fireball << std::endl;
 }
 
 void EnemyTest::basic()

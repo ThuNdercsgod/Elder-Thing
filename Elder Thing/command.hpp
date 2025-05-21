@@ -21,8 +21,11 @@ public:
     void spellTest();
     void printSpellTest();
 
-    void printSpellTypeTest();
-    void spellTypeTest();
+    void sorcerySpellTest();
+    void printSorcerySpellTest();
+
+    void incantationSpellTest();
+    void printIncantationSpellTest();
 
     void enemyTest();
     void printEnemyTest();
