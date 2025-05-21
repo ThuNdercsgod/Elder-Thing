@@ -1,9 +1,7 @@
 #include <iostream>
 
-#include "astrologer.hpp"
 #include "command.hpp"
-#include "sorceryspell.hpp"
-// #include "player.hpp"
+// #include "character.hpp"
 // #include "test.hpp"
 // #include "weapon.hpp"
 

@@ -11,8 +11,6 @@ public:
     void cast(Character *caster, Character *target) override;
     const char *getSpellType() const override;
     float calculateDamage() const override;
-
-    const char *getSpellType() const;
 };
 
 class IncantationSpell : public Spell
@@ -24,6 +22,4 @@ public:
     void cast(Character *caster, Character *target) override;
     const char *getSpellType() const override;
     float calculateDamage() const override;
-
-    const char *getSpellType() const;
 };
