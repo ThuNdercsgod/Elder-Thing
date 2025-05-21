@@ -6,7 +6,7 @@
 // Might throw std::invalid_argument
 Confessor::Confessor(const char *name, float maxHp, float maxMp, float maxStamina, int runes, float level,
                      int holySymbolPower, float faithScalling, int divineBlessing)
-    : Player(name, maxHp, maxMp, maxStamina, runes, level)
+    : Character(name, maxHp, maxMp, maxStamina, runes, level)
 {
     if (holySymbolPower < 0 ||
         faithScalling < 0 ||
@@ -43,32 +43,66 @@ void Confessor::predictEnemyAction(const Enemy &enemy) const
               << std::endl;
 }
 
-void Confessor::performSpecialAction() const
+void Confessor::attack(Enemy *enemy)
 {
-    std::cout << "Divine Intervention Activated!" << std::endl;
+    enemy->defend(this);
 }
 
-bool Confessor::canLearnSpell(const SorcerySpell &spell) const
+void Confessor::defend(const Enemy *enemy)
 {
-    if (strcmp(spell.getSpellType(), "Incantation") == 0)
+    if (this->getHp() > 0)
     {
-        return true;
+        this->setHp(this->getHp() - enemy->getDamage());
+        std::cout << "Remaining HP: " << this->getHp() << std::endl;
     }
-    return false;
+    else
+    {
+        std::cout << this->getName() << " is already defeated!" << std::endl;
+    }
 }
 
-bool Confessor::canLearnSpell(const IncantationSpell &spell) const
+void Confessor::useSpecialAbility() const
 {
-    if (strcmp(spell.getSpellType(), "Incantation") == 0)
-    {
-        return true;
-    }
-    return false;
+    std::cout << "Using special ability: Divine Intervention!" << std::endl;
 }
 
 const char *Confessor::getClassName() const
 {
     return "Confessor";
+}
+
+int Confessor::calculateDamage() const
+{
+    return this->getHolySymbolPower() + this->getFaithScalling();
+}
+
+bool Confessor::canLearnSpell(const Spell *spell) const
+{
+    if (strcmp(spell->getSpellType(), "Incantation") == 0)
+    {
+        return true;
+    }
+    return false;
+}
+
+void Confessor::print() const
+{
+    this->printStatus();
+    this->printInventory();
+    this->printSpell();
+}
+
+void Confessor::printStatus() const
+{
+    std::cout << "\n=== " << this->getName() << " stats ===\n"
+              << "HP: " << this->getHp() << "/" << this->getMaxHp()
+              << "\nMP: " << this->getMp() << "/" << this->getMaxMp()
+              << "\nRunes: " << this->getRunes()
+              << "\nLevel: " << this->getLevel()
+              << "\nHoly Symbol Power: " << this->getHolySymbolPower()
+              << "\nFaith Scalling: " << this->getFaithScalling()
+              << "\nDivine Blessing: " << this->getDivineBlessing()
+              << std::endl;
 }
 
 int Confessor::getHolySymbolPower() const

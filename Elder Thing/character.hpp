@@ -10,11 +10,11 @@ public:
     Character();
     Character(const char *name, float maxHp, float maxMp, float maxStamina, int runes, float level);
     Character(const Character &other);
-    ~Character();
+    virtual ~Character();
 
     Character &operator=(const Character &other);
     Character &operator++();
-    Character operator++(int);
+    Character &operator++(int);
     Character &operator+(const Weapon &weapon);
 
     friend std::ostream &operator<<(std::ostream &os, const Character &Character);
@@ -27,13 +27,18 @@ public:
     int castSpell();
     void useHpFlask();
     void useMpFlask();
-    void takeDamage(const Enemy &enemy);
-    int calculateAttackPower() const;
 
-    void print() const;
-    void printStatus() const;
+    virtual void print() const = 0;
+    virtual void printStatus() const = 0;
     void printInventory() const;
     void printSpell() const;
+
+    virtual void attack(Enemy *enemy) = 0;
+    virtual void defend(const Enemy *enemy) = 0;
+    virtual void useSpecialAbility() const = 0;
+    virtual const char *getClassName() const = 0;
+    virtual int calculateDamage() const = 0;
+    virtual bool canLearnSpell(const Spell *spell) const = 0;
 
     const char *getName() const;
     float getHp() const;
@@ -64,10 +69,6 @@ public:
     void setIsAlive(bool alive);
 
 protected:
-    // void performSpecialPower() const;
-    // bool canLearnSpell(const Spell &spell) const;
-    // const char *getClassName() const;
-
     bool validHp(float hp) const;
     bool validMp(float mp) const;
     bool validRunes(int runes) const;

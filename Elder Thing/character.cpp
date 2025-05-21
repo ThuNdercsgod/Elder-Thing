@@ -137,13 +137,12 @@ Character &Character::operator++()
     return *this;
 }
 
-Character Character::operator++(int)
+Character &Character::operator++(int)
 {
-    Character old = *this;
     int level = this->level;
     this->level = level + 1;
 
-    return old;
+    return *this;
 }
 
 Character &Character::operator+(const Weapon &weapon)
@@ -327,48 +326,30 @@ void Character::useMpFlask()
     this->mp = this->maxMp;
 }
 
-void Character::takeDamage(const Enemy &enemy)
-{
-    if (this->hp <= enemy.getDamage())
-    {
-        this->hp = 0;
-        this->isAlive = false;
-    }
-    else
-    {
-        this->hp -= enemy.getDamage();
-    }
-}
+// void Character::print() const
+// {
+//     std::cout << "\n=== " << this->name << " stats ===\n"
+//               << "HP: " << this->hp << "/" << this->maxHp
+//               << "\nMP: " << this->mp << "/" << this->maxMp
+//               << "\nRunes: " << this->runes
+//               << "\nLevel: " << this->level
+//               << "\nCurrent weight: " << this->currentWeight
+//               << std::endl;
 
-int Character::calculateAttackPower() const
-{
-    return this->weaponSlots[this->equippedWeapon].getDamage();
-}
+//     this->printInventory();
+//     this->printSpell();
+// }
 
-void Character::print() const
-{
-    std::cout << "\n=== " << this->name << " stats ===\n"
-              << "HP: " << this->hp << "/" << this->maxHp
-              << "\nMP: " << this->mp << "/" << this->maxMp
-              << "\nRunes: " << this->runes
-              << "\nLevel: " << this->level
-              << "\nCurrent weight: " << this->currentWeight
-              << std::endl;
-
-    this->printInventory();
-    this->printSpell();
-}
-
-void Character::printStatus() const
-{
-    std::cout << "\n=== " << this->name << " stats ===\n"
-              << "HP: " << this->hp << "/" << this->maxHp
-              << "\nMP: " << this->mp << "/" << this->maxMp
-              << "\nRunes: " << this->runes
-              << "\nLevel: " << this->level
-              << "\nCurrent weight: " << this->currentWeight
-              << std::endl;
-}
+// void Character::printStatus() const
+// {
+//     std::cout << "\n=== " << this->name << " stats ===\n"
+//               << "HP: " << this->hp << "/" << this->maxHp
+//               << "\nMP: " << this->mp << "/" << this->maxMp
+//               << "\nRunes: " << this->runes
+//               << "\nLevel: " << this->level
+//               << "\nCurrent weight: " << this->currentWeight
+//               << std::endl;
+// }
 
 void Character::printInventory() const
 {

@@ -1,10 +1,9 @@
 #pragma once
 
-#include "player.hpp"
-#include "sorceryspell.hpp"
-#include "incantationspell.hpp"
+#include "character.hpp"
+#include "spelltypes.hpp"
 
-class Confessor : public Player
+class Confessor : public Character
 {
 public:
     Confessor() = delete;
@@ -15,10 +14,15 @@ public:
     void empowerNextSpell(const IncantationSpell &spell) const;
     void predictEnemyAction(const Enemy &enemy) const;
 
-    void performSpecialAction() const;
-    bool canLearnSpell(const SorcerySpell &spell) const;
-    bool canLearnSpell(const IncantationSpell &spell) const;
-    const char *getClassName() const;
+    void attack(Enemy *enemy) override;
+    void defend(const Enemy *enemy) override;
+    void useSpecialAbility() const override;
+    const char *getClassName() const override;
+    virtual int calculateDamage() const override;
+    bool canLearnSpell(const Spell *spell) const override;
+
+    void print() const override;
+    void printStatus() const override;
 
     int getHolySymbolPower() const;
     float getFaithScalling() const;

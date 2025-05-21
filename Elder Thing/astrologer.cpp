@@ -6,7 +6,7 @@
 // Might throw std::invalid_argument or std::bad_alloc
 Astrologer::Astrologer(const char *name, float maxHp, float maxMp, float maxStamina, int runes, float level,
                        int staffPower, float intelligenceScalling, float cosmicAffinity)
-    : Player(name, maxHp, maxMp, maxStamina, runes, level)
+    : Character(name, maxHp, maxMp, maxStamina, runes, level)
 {
     if (staffPower < 0 ||
         intelligenceScalling < 0 ||
@@ -43,32 +43,46 @@ void Astrologer::predictEnemyAction(const Enemy &enemy) const
               << std::endl;
 }
 
-void Astrologer::performSpecialAction() const
+void Astrologer::attack(Enemy *enemy)
 {
-    std::cout << "Cosmic Vision Activated!" << std::endl;
+    enemy->defend(this);
 }
 
-bool Astrologer::canLearnSpell(const SorcerySpell &spell) const
+void Astrologer::defend(const Enemy *enemy)
 {
-    if (strcmp(spell.getSpellType(), "Sorcery") == 0)
+    if (this->getHp() > 0)
     {
-        return true;
+        this->setHp(this->getHp() - enemy->getDamage());
+        std::cout << "Remaining HP: " << this->getHp() << std::endl;
     }
-    return false;
+    else
+    {
+        std::cout << this->getName() << " is already defeated!" << std::endl;
+    }
 }
 
-bool Astrologer::canLearnSpell(const IncantationSpell &spell) const
+void Astrologer::useSpecialAbility() const
 {
-    if (strcmp(spell.getSpellType(), "Sorcery") == 0)
-    {
-        return true;
-    }
-    return false;
+    std::cout << "Using Special Ability: Cosmic Vision!" << std::endl;
 }
 
 const char *Astrologer::getClassName() const
 {
     return "Astrologer";
+}
+
+int Astrologer::calculateDamage() const
+{
+    return this->getStaffPower() + this->getIntelligenceScalling();
+}
+
+bool Astrologer::canLearnSpell(const Spell *spell) const
+{
+    if (strcmp(spell->getSpellType(), "Sorcery") == 0)
+    {
+        return true;
+    }
+    return false;
 }
 
 void Astrologer::print() const
