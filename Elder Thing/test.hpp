@@ -1,6 +1,6 @@
 #pragma once
 
-namespace PlayerTest
+namespace AstrologerTest
 {
     void basic();
     // void input();
@@ -8,11 +8,15 @@ namespace PlayerTest
     void spellEquip();
     void spellCast();
     void operators();
-    namespace PlayerClass
-    {
-        void astrologer();
-        void confessor();
-    }
+};
+
+namespace ConfessorTest
+{
+    void basic();
+    void weaponEquip();
+    void spellEquip();
+    void spellCast();
+    void operators();
 };
 
 namespace WeaponTest

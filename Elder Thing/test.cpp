@@ -2,47 +2,38 @@
 
 #include "astrologer.hpp"
 #include "confessor.hpp"
-#include "player.hpp"
+#include "character.hpp"
 
-#include "incantationspell.hpp"
-#include "sorceryspell.hpp"
 #include "spell.hpp"
+#include "spelltypes.hpp"
 
 #include "enemy.hpp"
 #include "weapon.hpp"
 
 #include "test.hpp"
 
-void PlayerTest::basic()
+void AstrologerTest::basic()
 {
-    Player defConstr;
-    defConstr.print();
+    std::cout << "\n=== Testing Character Class ===\n"
+              << std::endl;
 
-    Player paramConstr("Parametrized player", 20, 20, 70, 5, 10);
+    Astrologer paramConstr("Parametrized Astrologer", 20, 20, 70, 5, 10, 30, 30, 30);
     paramConstr.print();
 
-    Player copyConstr(paramConstr);
+    Astrologer copyConstr(paramConstr);
     copyConstr.print();
 
     std::cout << copyConstr << std::endl;
 }
 
-// void PlayerTest::input()
-// {
-//     Player player;
-//     Weapon longsword("Longsword", 80, 5.0f, 12);
-//     Weapon greatsword("Greatsword", 100, 12.0f, 20);
-//     Weapon dagger("Dagger", 45, 1.5f, 5);
-//     player.print();
-//     player.equipWeapon(longsword);
-//     player.equipWeapon(greatsword);
-//     player.equipWeapon(dagger);
-//     player.print();
-// }
-
-void PlayerTest::weaponEquip()
+void AstrologerTest::weaponEquip()
 {
-    Player player("Default", 20, 20, 70, 5, 10);
+    std::cout << "\n=== Testing Weapon Equipping ===\n"
+              << std::endl;
+
+    Astrologer astrologer("Default", 20, 20, 70, 5, 10, 30, 30, 30);
+    std::cout << "Initial Astrologer status:" << std::endl;
+    astrologer.printStatus();
 
     Weapon longsword("Longsword", 80, 5.0f, 12);
 
@@ -50,155 +41,247 @@ void PlayerTest::weaponEquip()
 
     Weapon dagger("Dagger", 45, 1.5f, 5);
 
-    player.equipWeapon(longsword);
-    player.equipWeapon(greatsword);
-    player.equipWeapon(dagger);
+    astrologer.equipWeapon(longsword);
+    astrologer.equipWeapon(greatsword);
+    astrologer.equipWeapon(dagger);
 
-    player.print();
+    astrologer.print();
 
-    player.setLevel(30);
+    astrologer.setLevel(30);
 
-    player.equipWeapon(longsword);
-    player.equipWeapon(greatsword);
+    astrologer.equipWeapon(longsword);
+    astrologer.equipWeapon(greatsword);
 
-    player.print();
+    astrologer.print();
 }
 
-void PlayerTest::spellEquip()
+void AstrologerTest::spellEquip()
 {
-    // Create a new player
-    Player player("Default", 20, 20, 70, 5, 10);
+    // Create a new Astrologer
+    Astrologer astrologer("Default", 20, 20, 70, 5, 10, 30, 30, 30);
 
     // Print initial status
-    std::cout << "Initial player status:" << std::endl;
-    player.printStatus();
-    player.printSpell();
+    std::cout << "Initial Astrologer status:" << std::endl;
+    astrologer.printStatus();
+    astrologer.printSpell();
 
     // Create some spells
     Spell fireball("Fireball", 30, 15, 2, 12, 0);
     Spell healingLight("Healing Light", 0, 20, 3, 5, 15);
     Spell lightningBolt("Lightning Bolt", 45, 25, 3, 15, 8);
 
-    player.setIntelligence(20);
-    player.setFaith(20);
+    astrologer.setIntelligence(20);
+    astrologer.setFaith(20);
 
     // Equip spells
     std::cout << "\nLearning spells:" << std::endl;
-    player.equipSpell(fireball);
-    player.equipSpell(healingLight);
-    player.equipSpell(lightningBolt);
+    astrologer.equipSpell(fireball);
+    astrologer.equipSpell(healingLight);
+    astrologer.equipSpell(lightningBolt);
 
     // Print updated spell list
     std::cout << "\nUpdated spell list:" << std::endl;
-    player.printSpell();
+    astrologer.printSpell();
 }
 
-void PlayerTest::spellCast()
+void AstrologerTest::spellCast()
 {
     std::cout << "\n=== Testing Spell Casting ===\n"
               << std::endl;
 
-    // Create a player with increased intelligence
-    Player player("Default", 20, 20, 70, 5, 10);
+    // Create a Astrologer with increased intelligence
+    Astrologer astrologer("Default", 20, 20, 70, 5, 10, 30, 30, 30);
 
     // Increase intelligence to meet requirements
-    player.setIntelligence(12);
+    astrologer.setIntelligence(12);
 
     // Learn a spell
     Spell fireball("Fireball", 30, 15, 2, 12, 0);
-    player.equipSpell(fireball);
-    player.setCurrentSpell(0);
+    astrologer.equipSpell(fireball);
+    astrologer.setCurrentSpell(0);
 
-    std::cout << "Player status before casting:" << std::endl;
-    player.printStatus();
-    player.printSpell();
+    std::cout << "Astrologer status before casting:" << std::endl;
+    astrologer.printStatus();
+    astrologer.printSpell();
 
     // Cast the spell
     std::cout << "\nCasting spell:" << std::endl;
-    int damage = player.castSpell();
+    int damage = astrologer.castSpell();
     std::cout << "Spell dealt " << damage << " damage" << std::endl;
 
-    std::cout << "\nPlayer status after casting:" << std::endl;
-    player.printStatus();
+    std::cout << "\nAstrologer status after casting:" << std::endl;
+    astrologer.printStatus();
 
     // Try to cast again (should be on cooldown)
     std::cout << "\nTrying to cast again:" << std::endl;
-    damage = player.castSpell();
+    damage = astrologer.castSpell();
     std::cout << "Spell dealt " << damage << " damage" << std::endl;
 
     // Show final status
-    std::cout << "\nFinal player status:" << std::endl;
-    player.printStatus();
+    std::cout << "\nFinal Astrologer status:" << std::endl;
+    astrologer.printStatus();
 }
 
-void PlayerTest::operators()
+void AstrologerTest::operators()
 {
-    std::cout << "\n=== Testing Player Operators ===\n"
+    std::cout << "\n=== Testing Astrologer Operators ===\n"
               << std::endl;
 
-    std::cout << "Creating Default Player: " << std::endl;
-    Player def("Default", 20, 20, 70, 5, 10);
+    std::cout << "Creating Default Astrologer: " << std::endl;
+    Astrologer def("Default", 20, 20, 70, 5, 10, 30, 30, 30);
     def.print();
 
     std::cout << "\nUsing assignment operator: " << std::endl;
-    Player equalOp;
+    Astrologer equalOp("Equal", 20, 20, 70, 5, 10, 30, 30, 30);
     equalOp = def;
     equalOp.print();
 
-    std::cout << "\nIncreasing Player Level by 1: " << std::endl;
-    Player plusPlus;
+    std::cout << "\nIncreasing Astrologer Level by 1: " << std::endl;
+    Astrologer plusPlus("PlusPlus", 20, 20, 70, 5, 10, 30, 30, 30);
     plusPlus++;
     plusPlus.print();
 
-    std::cout << "\nAdding a weapon to player inventory: " << std::endl;
+    std::cout << "\nAdding a weapon to Astrologer inventory: " << std::endl;
     Weapon dagger("Dagger", 45, 1.5f, 5);
-    Player plus("Default", 20, 20, 70, 5, 10);
+    Astrologer plus("Default", 20, 20, 70, 5, 10, 30, 30, 30);
     plus + dagger;
     plus.printInventory();
 }
 
-void PlayerTest::PlayerClass::astrologer()
-{
-    std::cout << "\n=== Testing Astrologer Class ===\n"
-              << std::endl;
-
-    // Create an Astrologer object
-    Astrologer astrologer("Astrologer", 100, 100, 100, 30, 30, 30, 30, 30);
-
-    // Print initial status
-    astrologer.print();
-
-    // Test casting spells
-    SorcerySpell fireball("Fireball", 30, 15, 2, 12, 0);
-    astrologer.castSorcerySpell(fireball);
-
-    SorcerySpell healingLight("Healing Light", 0, 20, 3, 5, 15);
-    astrologer.castSorcerySpell(healingLight);
-
-    // Test special action
-    astrologer.performSpecialAction();
-}
-
-void PlayerTest::PlayerClass::confessor()
+void ConfessorTest::basic()
 {
     std::cout << "\n=== Testing Confessor Class ===\n"
               << std::endl;
 
-    // Create a Confessor object
-    Confessor confessor("Confessor", 100, 100, 100, 30, 30, 30, 30, 30);
+    Confessor paramConstr("Parametrized Confessor", 20, 20, 70, 5, 10, 30, 30, 30);
+    paramConstr.print();
 
-    // Print initial status
+    Confessor copyConstr(paramConstr);
+    copyConstr.print();
+
+    std::cout << copyConstr << std::endl;
+}
+
+void ConfessorTest::weaponEquip()
+{
+    std::cout << "\n=== Testing Weapon Equipping ===\n"
+              << std::endl;
+
+    Confessor confessor("Default", 20, 20, 70, 5, 10, 30, 30, 30);
+    std::cout << "Initial Confessor status:" << std::endl;
+    confessor.printStatus();
+
+    Weapon longsword("Longsword", 80, 5.0f, 12);
+
+    Weapon greatsword("Greatsword", 100, 12.0f, 20);
+
+    Weapon dagger("Dagger", 45, 1.5f, 5);
+
+    confessor.equipWeapon(longsword);
+    confessor.equipWeapon(greatsword);
+    confessor.equipWeapon(dagger);
+
     confessor.print();
 
-    // Test casting spells
-    IncantationSpell fireball("Fireball", 30, 15, 2, 12, 0);
-    confessor.castIncantationSpell(fireball);
+    confessor.setLevel(30);
 
-    IncantationSpell healingLight("Healing Light", 0, 20, 3, 5, 15);
-    confessor.castIncantationSpell(healingLight);
+    confessor.equipWeapon(longsword);
+    confessor.equipWeapon(greatsword);
 
-    // Test special action
-    confessor.performSpecialAction();
+    confessor.print();
+}
+
+void ConfessorTest::spellEquip()
+{
+    // Create a new Confessor
+    Confessor confessor("Default", 20, 20, 70, 5, 10, 30, 30, 30);
+
+    // Print initial status
+    std::cout << "Initial Confessor status:" << std::endl;
+    confessor.printStatus();
+    confessor.printSpell();
+
+    // Create some spells
+    Spell fireball("Fireball", 30, 15, 2, 12, 0);
+    Spell healingLight("Healing Light", 0, 20, 3, 5, 15);
+    Spell lightningBolt("Lightning Bolt", 45, 25, 3, 15, 8);
+
+    confessor.setIntelligence(20);
+    confessor.setFaith(20);
+
+    // Equip spells
+    std::cout << "\nLearning spells:" << std::endl;
+    confessor.equipSpell(fireball);
+    confessor.equipSpell(healingLight);
+    confessor.equipSpell(lightningBolt);
+
+    // Print updated spell list
+    std::cout << "\nUpdated spell list:" << std::endl;
+    confessor.printSpell();
+}
+
+void ConfessorTest::spellCast()
+{
+    std::cout << "\n=== Testing Spell Casting ===\n"
+              << std::endl;
+
+    // Create a Confessor with increased intelligence
+    Confessor confessor("Default", 20, 20, 70, 5, 10, 30, 30, 30);
+
+    // Increase intelligence to meet requirements
+    confessor.setIntelligence(12);
+
+    // Learn a spell
+    Spell fireball("Fireball", 30, 15, 2, 12, 0);
+    confessor.equipSpell(fireball);
+    confessor.setCurrentSpell(0);
+
+    std::cout << "Confessor status before casting:" << std::endl;
+    confessor.printStatus();
+    confessor.printSpell();
+
+    // Cast the spell
+    std::cout << "\nCasting spell:" << std::endl;
+    int damage = confessor.castSpell();
+    std::cout << "Spell dealt " << damage << " damage" << std::endl;
+
+    std::cout << "\nConfessor status after casting:" << std::endl;
+    confessor.printStatus();
+
+    // Try to cast again (should be on cooldown)
+    std::cout << "\nTrying to cast again:" << std::endl;
+    damage = confessor.castSpell();
+    std::cout << "Spell dealt " << damage << " damage" << std::endl;
+
+    // Show final status
+    std::cout << "\nFinal Confessor status:" << std::endl;
+    confessor.printStatus();
+}
+
+void ConfessorTest::operators()
+{
+    std::cout << "\n=== Testing Confessor Operators ===\n"
+              << std::endl;
+
+    std::cout << "Creating Default Confessor: " << std::endl;
+    Confessor def("Default", 20, 20, 70, 5, 10, 30, 30, 30);
+    def.print();
+
+    std::cout << "\nUsing assignment operator: " << std::endl;
+    Confessor equalOp("Equal", 20, 20, 70, 5, 10, 30, 30, 30);
+    equalOp = def;
+    equalOp.print();
+
+    std::cout << "\nIncreasing Confessor Level by 1: " << std::endl;
+    Confessor plusPlus("PlusPlus", 20, 20, 70, 5, 10, 30, 30, 30);
+    plusPlus++;
+    plusPlus.print();
+
+    std::cout << "\nAdding a weapon to Confessor inventory: " << std::endl;
+    Weapon dagger("Dagger", 45, 1.5f, 5);
+    Confessor plus("Default", 20, 20, 70, 5, 10, 30, 30, 30);
+    plus + dagger;
+    plus.printInventory();
 }
 
 void WeaponTest::basic()
