@@ -1,13 +1,13 @@
 #include <cstring>
 #include <iostream>
 
-#include "player.hpp"
+#include "character.hpp"
 
-Player::Player()
-    : Player("Unknown", 100, 100, 100, 0, 0) {}
+Character::Character()
+    : Character("Unknown", 100, 100, 100, 0, 0) {}
 
 // Might throw std::invalid_argument or std::bad_alloc
-Player::Player(const char *name, float maxHp, float maxMp, float maxStamina, int runes, float level)
+Character::Character(const char *name, float maxHp, float maxMp, float maxStamina, int runes, float level)
     : flaskChargesHp(0), flaskChargesMp(0), currentWeight(0), maxWeight(100), equippedSpell(-1),
       equippedWeapon(-1), strength(0), dexterity(0), intelligence(0), faith(0), endurance(0)
 {
@@ -17,7 +17,7 @@ Player::Player(const char *name, float maxHp, float maxMp, float maxStamina, int
           this->validRunes(runes) &&
           this->validLevel(level)))
     {
-        throw std::invalid_argument("Invalid Player parameters!");
+        throw std::invalid_argument("Invalid Character parameters!");
     }
     this->name = new char[strlen(name) + 1];
     strcpy(this->name, name);
@@ -38,7 +38,7 @@ Player::Player(const char *name, float maxHp, float maxMp, float maxStamina, int
 }
 
 // Might throws std::bad_alloc
-Player::Player(const Player &other)
+Character::Character(const Character &other)
 {
     this->name = new char[strlen(other.name) + 1];
     strcpy(this->name, other.name);
@@ -77,14 +77,14 @@ Player::Player(const Player &other)
     this->equippedSpell = other.equippedSpell;
 }
 
-Player::~Player()
+Character::~Character()
 {
     delete[] this->name;
     this->name = nullptr;
 }
 
 // Might throw std::bad_alloc
-Player &Player::operator=(const Player &other)
+Character &Character::operator=(const Character &other)
 {
     if (this != &other)
     {
@@ -128,7 +128,7 @@ Player &Player::operator=(const Player &other)
     return *this;
 }
 
-Player &Player::operator++()
+Character &Character::operator++()
 {
     int level = this->level;
 
@@ -137,16 +137,16 @@ Player &Player::operator++()
     return *this;
 }
 
-Player Player::operator++(int)
+Character Character::operator++(int)
 {
-    Player old = *this;
+    Character old = *this;
     int level = this->level;
     this->level = level + 1;
 
     return old;
 }
 
-Player &Player::operator+(const Weapon &weapon)
+Character &Character::operator+(const Weapon &weapon)
 {
     int i = 0;
     while (this->weaponsSlotsOccupied[i] == true)
@@ -168,7 +168,7 @@ Player &Player::operator+(const Weapon &weapon)
     }
     else
     {
-        std::cout << "Player level is not high enough! "
+        std::cout << "Character level is not high enough! "
                   << weapon.getName()
                   << " not equipped!" << std::endl;
     }
@@ -176,22 +176,22 @@ Player &Player::operator+(const Weapon &weapon)
 }
 
 // Might throw std::ios_base::failure
-std::ostream &operator<<(std::ostream &os, const Player &player)
+std::ostream &operator<<(std::ostream &os, const Character &Character)
 {
     if (os.fail() || os.bad())
     {
         throw std::ios_base::failure("Output stream error!");
     }
 
-    return os << "\n=== " << player.name << " stats ===\n"
-              << "HP: " << player.hp << "/" << player.maxHp
-              << "\nMP: " << player.mp << "/" << player.maxMp
-              << "\nRunes: " << player.runes
-              << "\nLevel: " << player.level
-              << "\nCurrent weight: " << player.currentWeight;
+    return os << "\n=== " << Character.name << " stats ===\n"
+              << "HP: " << Character.hp << "/" << Character.maxHp
+              << "\nMP: " << Character.mp << "/" << Character.maxMp
+              << "\nRunes: " << Character.runes
+              << "\nLevel: " << Character.level
+              << "\nCurrent weight: " << Character.currentWeight;
 }
 
-void Player::equipWeapon(Weapon weapon)
+void Character::equipWeapon(Weapon weapon)
 {
     int i = 0;
     while (this->weaponsSlotsOccupied[i] == true)
@@ -213,13 +213,13 @@ void Player::equipWeapon(Weapon weapon)
     }
     else
     {
-        std::cout << "Player level is not high enough! "
+        std::cout << "Character level is not high enough! "
                   << weapon.getName()
                   << " not equipped!" << std::endl;
     }
 }
 
-void Player::equipSpell(Spell spell)
+void Character::equipSpell(Spell spell)
 {
     int i = 0;
     while (this->spellSlotsOccupied[i] == true)
@@ -241,14 +241,14 @@ void Player::equipSpell(Spell spell)
     }
     else
     {
-        std::cout << "Player intelligence or faith is not high enough! "
+        std::cout << "Character intelligence or faith is not high enough! "
                   << spell.getName()
                   << " not learned!" << std::endl;
     }
 }
 
 // Might throw std::invalid_argument
-void Player::unequipSpell(int index)
+void Character::unequipSpell(int index)
 {
     if (index < 0 || index >= 8)
     {
@@ -267,7 +267,7 @@ void Player::unequipSpell(int index)
 }
 
 // Might throw std::invalid_argument
-void Player::setCurrentWeapon(int index)
+void Character::setCurrentWeapon(int index)
 {
     if (index < 0 || index >= 8)
     {
@@ -284,7 +284,7 @@ void Player::setCurrentWeapon(int index)
     }
 }
 
-void Player::setCurrentSpell(int index)
+void Character::setCurrentSpell(int index)
 {
     if (index < 0 || index >= 8)
     {
@@ -301,7 +301,7 @@ void Player::setCurrentSpell(int index)
     }
 }
 
-int Player::castSpell()
+int Character::castSpell()
 {
     if (this->spellSlots[this->equippedSpell].isOnCooldown() == false)
     {
@@ -315,19 +315,19 @@ int Player::castSpell()
     }
 }
 
-void Player::useHpFlask()
+void Character::useHpFlask()
 {
     this->flaskChargesHp--;
     this->hp = this->maxHp;
 }
 
-void Player::useMpFlask()
+void Character::useMpFlask()
 {
     this->flaskChargesMp--;
     this->mp = this->maxMp;
 }
 
-void Player::takeDamage(const Enemy &enemy)
+void Character::takeDamage(const Enemy &enemy)
 {
     if (this->hp <= enemy.getDamage())
     {
@@ -340,12 +340,12 @@ void Player::takeDamage(const Enemy &enemy)
     }
 }
 
-int Player::calculateAttackPower() const
+int Character::calculateAttackPower() const
 {
     return this->weaponSlots[this->equippedWeapon].getDamage();
 }
 
-void Player::print() const
+void Character::print() const
 {
     std::cout << "\n=== " << this->name << " stats ===\n"
               << "HP: " << this->hp << "/" << this->maxHp
@@ -359,7 +359,7 @@ void Player::print() const
     this->printSpell();
 }
 
-void Player::printStatus() const
+void Character::printStatus() const
 {
     std::cout << "\n=== " << this->name << " stats ===\n"
               << "HP: " << this->hp << "/" << this->maxHp
@@ -370,7 +370,7 @@ void Player::printStatus() const
               << std::endl;
 }
 
-void Player::printInventory() const
+void Character::printInventory() const
 {
     std::cout << "\n=== Inventory ===" << std::endl;
     for (int i = 0; i < 8; i++)
@@ -387,7 +387,7 @@ void Player::printInventory() const
     std::cout << std::endl;
 }
 
-void Player::printSpell() const
+void Character::printSpell() const
 {
     std::cout << "\n=== Spells ===" << std::endl;
     for (int i = 0; i < 8; i++)
@@ -404,83 +404,83 @@ void Player::printSpell() const
     std::cout << std::endl;
 }
 
-const char *Player::getName() const
+const char *Character::getName() const
 {
     return this->name;
 }
 
-float Player::getHp() const
+float Character::getHp() const
 {
     return this->hp;
 }
 
-float Player::getMaxHp() const
+float Character::getMaxHp() const
 {
     return this->maxHp;
 }
 
-float Player::getMp() const
+float Character::getMp() const
 {
     return this->mp;
 }
 
-float Player::getMaxMp() const
+float Character::getMaxMp() const
 {
     return this->maxMp;
 }
 
-float Player::getStamina() const
+float Character::getStamina() const
 {
     return this->stamina;
 }
 
-float Player::getMaxStamina() const
+float Character::getMaxStamina() const
 {
     return this->maxStamina;
 }
 
-int Player::getRunes() const
+int Character::getRunes() const
 {
     return this->runes;
 }
 
-float Player::getLevel() const
+float Character::getLevel() const
 {
     return this->level;
 }
 
-int Player::getStrength() const
+int Character::getStrength() const
 {
     return this->strength;
 }
 
-int Player::getDexterity() const
+int Character::getDexterity() const
 {
     return this->dexterity;
 }
 
-int Player::getIntelligence() const
+int Character::getIntelligence() const
 {
     return this->intelligence;
 }
 
-int Player::getFaith() const
+int Character::getFaith() const
 {
     return this->faith;
 }
 
-int Player::getEndurance() const
+int Character::getEndurance() const
 {
     return this->endurance;
 }
 
-bool Player::getIsAlive() const
+bool Character::getIsAlive() const
 {
     return this->isAlive;
 }
 
 // Might throw std::invalid_argument;
-void Player::setHp(float newHp)
+void Character::setHp(float newHp)
 {
     if (this->validHp(newHp))
     {
@@ -492,12 +492,12 @@ void Player::setHp(float newHp)
     }
     else
     {
-        throw std::invalid_argument("Invalid Player HP!");
+        throw std::invalid_argument("Invalid Character HP!");
     }
 }
 
 // Might throw std::invalid_argument;
-void Player::setMp(float newMp)
+void Character::setMp(float newMp)
 {
     if (this->validMp(newMp))
     {
@@ -505,12 +505,12 @@ void Player::setMp(float newMp)
     }
     else
     {
-        throw std::invalid_argument("Invalid Player MP!");
+        throw std::invalid_argument("Invalid Character MP!");
     }
 }
 
 // Might throw std::invalid_argument;
-void Player::setStamina(float newStamina)
+void Character::setStamina(float newStamina)
 {
     if (this->validStamina(newStamina))
     {
@@ -518,12 +518,12 @@ void Player::setStamina(float newStamina)
     }
     else
     {
-        throw std::invalid_argument("Invalid Player stamina!");
+        throw std::invalid_argument("Invalid Character stamina!");
     }
 }
 
 // Might throw std::invalid_argument;
-void Player::setRunes(int newRunes)
+void Character::setRunes(int newRunes)
 {
     if (this->validRunes(newRunes))
     {
@@ -531,12 +531,12 @@ void Player::setRunes(int newRunes)
     }
     else
     {
-        throw std::invalid_argument("Invalid Player runes!");
+        throw std::invalid_argument("Invalid Character runes!");
     }
 }
 
 // Might throw std::invalid_argument;
-void Player::setLevel(float newLevel)
+void Character::setLevel(float newLevel)
 {
     if (this->validLevel(newLevel))
     {
@@ -544,11 +544,11 @@ void Player::setLevel(float newLevel)
     }
     else
     {
-        throw std::invalid_argument("Invalid Player level!");
+        throw std::invalid_argument("Invalid Character level!");
     }
 }
 
-void Player::setStrength(int amount)
+void Character::setStrength(int amount)
 {
     if (amount > 0)
     {
@@ -560,7 +560,7 @@ void Player::setStrength(int amount)
     }
 }
 
-void Player::setDexterity(int amount)
+void Character::setDexterity(int amount)
 {
     if (amount > 0)
     {
@@ -572,7 +572,7 @@ void Player::setDexterity(int amount)
     }
 }
 
-void Player::setIntelligence(int amount)
+void Character::setIntelligence(int amount)
 {
     if (amount > 0)
     {
@@ -584,7 +584,7 @@ void Player::setIntelligence(int amount)
     }
 }
 
-void Player::setFaith(int amount)
+void Character::setFaith(int amount)
 {
     if (amount > 0)
     {
@@ -596,7 +596,7 @@ void Player::setFaith(int amount)
     }
 }
 
-void Player::setEndurance(int amount)
+void Character::setEndurance(int amount)
 {
     if (amount > 0)
     {
@@ -608,56 +608,56 @@ void Player::setEndurance(int amount)
     }
 }
 
-void Player::setIsAlive(bool alive)
+void Character::setIsAlive(bool alive)
 {
     this->isAlive = alive;
 }
 
-bool Player::validHp(float hp) const
+bool Character::validHp(float hp) const
 {
     if (!(hp >= 0))
     {
-        std::cout << "Invalid player HP!" << std::endl;
+        std::cout << "Invalid Character HP!" << std::endl;
         return false;
     }
     return true;
 }
 
-bool Player::validMp(float mp) const
+bool Character::validMp(float mp) const
 {
     if (!(mp >= 0))
     {
-        std::cout << "Invalid player MP!" << std::endl;
+        std::cout << "Invalid Character MP!" << std::endl;
         return false;
     }
     return true;
 }
 
-bool Player::validStamina(float stamina) const
+bool Character::validStamina(float stamina) const
 {
     if (!(stamina >= 0))
     {
-        std::cout << "Invalid player stamina!" << std::endl;
+        std::cout << "Invalid Character stamina!" << std::endl;
         return false;
     }
     return true;
 }
 
-bool Player::validRunes(int runes) const
+bool Character::validRunes(int runes) const
 {
     if (!(runes >= 0))
     {
-        std::cout << "Invalid player runes!" << std::endl;
+        std::cout << "Invalid Character runes!" << std::endl;
         return false;
     }
     return true;
 }
 
-bool Player::validLevel(float level) const
+bool Character::validLevel(float level) const
 {
     if (!(level >= 0))
     {
-        std::cout << "Invalid player level!" << std::endl;
+        std::cout << "Invalid Character level!" << std::endl;
         return false;
     }
     return true;

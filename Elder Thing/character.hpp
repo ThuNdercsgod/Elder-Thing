@@ -4,20 +4,20 @@
 #include "spell.hpp"
 #include "weapon.hpp"
 
-class Player
+class Character
 {
 public:
-    Player();
-    Player(const char *name, float maxHp, float maxMp, float maxStamina, int runes, float level);
-    Player(const Player &other);
-    ~Player();
+    Character();
+    Character(const char *name, float maxHp, float maxMp, float maxStamina, int runes, float level);
+    Character(const Character &other);
+    ~Character();
 
-    Player &operator=(const Player &other);
-    Player &operator++();
-    Player operator++(int);
-    Player &operator+(const Weapon &weapon);
+    Character &operator=(const Character &other);
+    Character &operator++();
+    Character operator++(int);
+    Character &operator+(const Weapon &weapon);
 
-    friend std::ostream &operator<<(std::ostream &os, const Player &player);
+    friend std::ostream &operator<<(std::ostream &os, const Character &Character);
 
     void equipWeapon(Weapon weapon);
     void equipSpell(Spell spell);
