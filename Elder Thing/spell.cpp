@@ -125,11 +125,6 @@ bool Spell::isOnCooldown() const
     return false;
 }
 
-const char *Spell::getSpellType() const
-{
-    return "Base";
-}
-
 void Spell::print() const
 {
     std::cout << "Spell \"" << this->name << "\":\n"

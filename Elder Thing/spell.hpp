@@ -2,13 +2,15 @@
 
 #include <iostream>
 
+class Character;
+
 class Spell
 {
 public:
     Spell();
     Spell(const char *name, float damage, int mpCost, int cooldown, int requiredIntelligence, int requiredFaith);
     Spell(const Spell &other);
-    ~Spell();
+    virtual ~Spell();
 
     Spell &operator=(const Spell &other);
     bool operator<(const Spell &other) const;
@@ -19,9 +21,12 @@ public:
     void resetCooldown();
     void decrementCooldown(int amount);
     bool isOnCooldown() const;
-    const char *getSpellType() const;
 
     void print() const;
+
+    virtual void cast(Character *caster, Character *target) = 0;
+    virtual const char *getSpellType() const = 0;
+    virtual float calculateDamage() const = 0;
 
     const char *getName() const;
     float getDamage() const;
