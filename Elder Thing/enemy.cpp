@@ -1,6 +1,7 @@
 #include <cstring>
 #include <iostream>
 
+#include "character.hpp"
 #include "enemy.hpp"
 
 Enemy::Enemy()
@@ -103,6 +104,30 @@ void Enemy::print() const
               << "\nHP: " << this->hp << "/" << this->maxHp
               << "\nDamage: " << this->damage
               << std::endl;
+}
+
+void Enemy::attack(Character *target) const
+{
+    target->defend(this);
+}
+
+void Enemy::defend(Character *attacker)
+{
+    if (this->hp > 0)
+    {
+        this->hp -= attacker->calculateDamage();
+        std::cout << "Remaining HP: " << this->hp << std::endl;
+    }
+    else if (this->hp <= attacker->calculateDamage())
+    {
+        this->hp = 0;
+        std::cout << this->name << " is defeated!" << std::endl;
+    }
+
+    else
+    {
+        std::cout << this->name << " is already defeated!" << std::endl;
+    }
 }
 
 const char *Enemy::getName() const

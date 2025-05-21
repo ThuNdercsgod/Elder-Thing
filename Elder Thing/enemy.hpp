@@ -1,5 +1,7 @@
 #pragma once
 
+class Character;
+
 // class Attack
 // {
 //     Attack();
@@ -27,6 +29,9 @@ public:
 
     // void addAttack(const char *name, int damage, int range);
     void print() const;
+
+    void attack(Character *target) const;
+    void defend(Character *attacker);
 
     const char *getName() const;
     int getHp() const;
