@@ -19,8 +19,8 @@ public:
 
     friend std::ostream &operator<<(std::ostream &os, const Character &Character);
 
-    void equipWeapon(Weapon weapon);
-    void equipSpell(Spell spell);
+    void equipWeapon(Weapon *weapon);
+    void equipSpell(Spell *spell);
     void unequipSpell(int index);
     void setCurrentWeapon(int index);
     void setCurrentSpell(int index);
@@ -91,11 +91,11 @@ private:
     bool isAlive = true;
 
     float currentWeight, maxWeight;
-    Weapon weaponSlots[8] = {};
+    Weapon *weaponSlots[8] = {nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
     bool weaponsSlotsOccupied[8] = {false, false, false, false, false, false, false, false};
     int equippedWeapon;
 
-    Spell spellSlots[8] = {};
+    Spell *spellSlots[8] = {nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
     bool spellSlotsOccupied[8] = {false, false, false, false, false, false, false, false};
     int equippedSpell;
 };

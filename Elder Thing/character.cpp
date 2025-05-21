@@ -161,7 +161,7 @@ Character &Character::operator+(const Weapon &weapon)
 
     if (weapon.getRequiredLevel() <= this->getLevel())
     {
-        weaponSlots[i] = weapon;
+        weaponSlots[i] = (Weapon *)&weapon;
         weaponsSlotsOccupied[i] = true;
         this->currentWeight += weapon.getWeight();
     }
@@ -190,7 +190,7 @@ std::ostream &operator<<(std::ostream &os, const Character &Character)
               << "\nCurrent weight: " << Character.currentWeight;
 }
 
-void Character::equipWeapon(Weapon weapon)
+void Character::equipWeapon(Weapon *weapon)
 {
     int i = 0;
     while (this->weaponsSlotsOccupied[i] == true)
@@ -204,21 +204,21 @@ void Character::equipWeapon(Weapon weapon)
         }
     }
 
-    if (weapon.getRequiredLevel() <= this->getLevel())
+    if (weapon->getRequiredLevel() <= this->getLevel())
     {
         weaponSlots[i] = weapon;
         weaponsSlotsOccupied[i] = true;
-        this->currentWeight += weapon.getWeight();
+        this->currentWeight += weapon->getWeight();
     }
     else
     {
         std::cout << "Character level is not high enough! "
-                  << weapon.getName()
+                  << weapon->getName()
                   << " not equipped!" << std::endl;
     }
 }
 
-void Character::equipSpell(Spell spell)
+void Character::equipSpell(Spell *spell)
 {
     int i = 0;
     while (this->spellSlotsOccupied[i] == true)
@@ -232,8 +232,8 @@ void Character::equipSpell(Spell spell)
         }
     }
 
-    if (spell.getRequiredIntelligence() <= this->intelligence &&
-        spell.getRequiredFaith() <= this->faith)
+    if (spell->getRequiredIntelligence() <= this->intelligence &&
+        spell->getRequiredFaith() <= this->faith)
     {
         spellSlots[i] = spell;
         spellSlotsOccupied[i] = true;
@@ -241,7 +241,7 @@ void Character::equipSpell(Spell spell)
     else
     {
         std::cout << "Character intelligence or faith is not high enough! "
-                  << spell.getName()
+                  << spell->getName()
                   << " not learned!" << std::endl;
     }
 }
@@ -257,7 +257,7 @@ void Character::unequipSpell(int index)
     if (this->spellSlotsOccupied[index] == true)
     {
         this->spellSlotsOccupied[index] = false;
-        this->spellSlots[index] = Spell();
+        this->spellSlots[index] = nullptr;
     }
     else
     {
@@ -302,10 +302,10 @@ void Character::setCurrentSpell(int index)
 
 int Character::castSpell()
 {
-    if (this->spellSlots[this->equippedSpell].isOnCooldown() == false)
+    if (this->spellSlots[this->equippedSpell]->isOnCooldown() == false)
     {
-        this->spellSlots[this->equippedSpell].setRemainingCooldown(this->spellSlots[this->equippedSpell].getCooldown());
-        return this->spellSlots[this->equippedSpell].getDamage();
+        this->spellSlots[this->equippedSpell]->setRemainingCooldown(this->spellSlots[this->equippedSpell]->getCooldown());
+        return this->spellSlots[this->equippedSpell]->getDamage();
     }
     else
     {
@@ -358,7 +358,7 @@ void Character::printInventory() const
     {
         if (this->weaponsSlotsOccupied[i] == true)
         {
-            std::cout << i + 1 << ". " << weaponSlots[i].getName() << std::endl;
+            std::cout << i + 1 << ". " << weaponSlots[i]->getName() << std::endl;
         }
         else
         {
@@ -375,7 +375,7 @@ void Character::printSpell() const
     {
         if (this->spellSlotsOccupied[i] == true)
         {
-            std::cout << i + 1 << ". " << spellSlots[i].getName() << std::endl;
+            std::cout << i + 1 << ". " << spellSlots[i]->getName() << std::endl;
         }
         else
         {
