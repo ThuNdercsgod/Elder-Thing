@@ -42,3 +42,8 @@ namespace EnemyTest
     void basic();
     // void attack();
 };
+
+namespace CombatManagerTest
+{
+    void basic();
+}

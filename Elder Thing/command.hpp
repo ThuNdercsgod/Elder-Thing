@@ -29,4 +29,7 @@ public:
 
     void enemyTest();
     void printEnemyTest();
+
+    void combatManagerTest();
+    void printCombatManagerTest();
 };

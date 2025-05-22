@@ -32,6 +32,9 @@ void Command::test()
         case 4:
             this->enemyTest();
             break;
+        case 5:
+            this->combatManagerTest();
+            break;
         default:
             std::cout << "Invalid input!" << std::endl;
             break;
@@ -46,6 +49,7 @@ void Command::printTest()
               << "2. Run Weapon tests\n"
               << "3. Run Spell tests\n"
               << "4. Run Enemy tests\n"
+              << "5. Run Combat tests\n"
               << "0. Exit\n"
               << std::endl;
 }
@@ -85,6 +89,7 @@ void Command::printCharacterTest()
     std::cout << "\n=== Elder Thing Character Tests ===\n"
               << "1. Run Astrologer tests\n"
               << "2. Run Confessor tests\n"
+              << "0. Go back\n"
               << std::endl;
 }
 
@@ -379,6 +384,41 @@ void Command::enemyTest()
 void Command::printEnemyTest()
 {
     std::cout << "\n=== Elder Thing Enemy Tests ===\n"
+              << "1. Run basic tests\n"
+              << "0. Go back\n"
+              << std::endl;
+}
+
+void Command::combatManagerTest()
+{
+    int input;
+    bool valid;
+
+    do
+    {
+        valid = false;
+        this->printCombatManagerTest();
+        std::cout << "Enter the number representing the command:" << std::endl;
+        std::cin >> input;
+
+        switch (input)
+        {
+        case 0:
+            valid = true;
+            break;
+        case 1:
+            CombatManagerTest::basic();
+            break;
+        default:
+            std::cout << "Invalid input!" << std::endl;
+            break;
+        }
+    } while (!valid);
+}
+
+void Command::printCombatManagerTest()
+{
+    std::cout << "\n=== Elder Thing Combat Tests ===\n"
               << "1. Run basic tests\n"
               << "0. Go back\n"
               << std::endl;

@@ -1,5 +1,7 @@
 #include <iostream>
 
+#include "combatmanager.hpp"
+
 #include "astrologer.hpp"
 #include "confessor.hpp"
 #include "character.hpp"
@@ -542,3 +544,32 @@ void EnemyTest::basic()
 //     // Testing exception handling
 //     defaultEnemy.addAttack("Invalid", -10, 10);
 // }
+
+void CombatManagerTest::basic()
+{
+    std::cout << "=== Testing Combat Manager Basic Functionality ===\n"
+              << std::endl;
+
+    // Create characters
+    Astrologer astrologer("Astrologer", 100, 50, 70, 5, 10, 30, 30, 30);
+    Confessor confessor("Confessor", 120, 60, 80, 6, 12, 35, 35, 35);
+
+    // Create enemies
+    Enemy enemy1("Goblin", 80, 20);
+    Enemy enemy2("Orc", 100, 25);
+
+    // Create combat manager
+    CombatManager combatManager;
+
+    // Add characters and enemies to the combat manager
+    combatManager.addCharacter(&astrologer);
+    combatManager.addCharacter(&confessor);
+    combatManager.addEnemy(&enemy1);
+    combatManager.addEnemy(&enemy2);
+
+    // Start the combat
+    combatManager.executeRound();
+
+    // Display battle status
+    combatManager.displayBattleStatus();
+}
