@@ -43,6 +43,11 @@ void Confessor::predictEnemyAction(const Enemy &enemy) const
               << std::endl;
 }
 
+Character *Confessor::clone() const
+{
+    return new Confessor(*this);
+}
+
 void Confessor::attack(Enemy *enemy)
 {
     enemy->defend(this);

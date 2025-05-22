@@ -43,6 +43,11 @@ void Astrologer::predictEnemyAction(const Enemy &enemy) const
               << std::endl;
 }
 
+Character *Astrologer::clone() const
+{
+    return new Astrologer(*this);
+}
+
 void Astrologer::attack(Enemy *enemy)
 {
     enemy->defend(this);

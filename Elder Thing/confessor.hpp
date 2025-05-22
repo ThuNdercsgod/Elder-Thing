@@ -14,6 +14,7 @@ public:
     void empowerNextSpell(const IncantationSpell &spell) const;
     void predictEnemyAction(const Enemy &enemy) const;
 
+    Character *clone() const override;
     void attack(Enemy *enemy) override;
     void defend(const Enemy *enemy) override;
     void useSpecialAbility() const override;

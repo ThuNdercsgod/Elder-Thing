@@ -33,6 +33,7 @@ public:
     void printInventory() const;
     void printSpell() const;
 
+    virtual Character *clone() const = 0;
     virtual void attack(Enemy *enemy) = 0;
     virtual void defend(const Enemy *enemy) = 0;
     virtual void useSpecialAbility() const = 0;
@@ -55,6 +56,10 @@ public:
     int getFaith() const;
     int getEndurance() const;
     bool getIsAlive() const;
+    int getEquippedWeapon() const;
+    int getEquippedSpell() const;
+    Weapon *getWeapon(int index) const;
+    Spell *getSpell(int index) const;
 
     void setHp(float newHp);
     void setMp(float newMp);

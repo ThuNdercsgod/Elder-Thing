@@ -460,6 +460,50 @@ bool Character::getIsAlive() const
     return this->isAlive;
 }
 
+int Character::getEquippedWeapon() const
+{
+    return this->equippedWeapon;
+}
+
+int Character::getEquippedSpell() const
+{
+    return this->equippedSpell;
+}
+
+Weapon *Character::getWeapon(int index) const
+{
+    if (index < 0 || index >= 8)
+    {
+        throw std::invalid_argument("Invalid weapon slot!");
+    }
+
+    if (this->weaponsSlotsOccupied[index] == true)
+    {
+        return this->weaponSlots[index];
+    }
+    else
+    {
+        throw std::invalid_argument("Invalid weapon slot!");
+    }
+}
+
+Spell *Character::getSpell(int index) const
+{
+    if (index < 0 || index >= 8)
+    {
+        throw std::invalid_argument("Invalid spell slot!");
+    }
+
+    if (this->spellSlotsOccupied[index] == true)
+    {
+        return this->spellSlots[index];
+    }
+    else
+    {
+        throw std::invalid_argument("Invalid spell slot!");
+    }
+}
+
 // Might throw std::invalid_argument;
 void Character::setHp(float newHp)
 {
