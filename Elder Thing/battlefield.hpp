@@ -2,14 +2,14 @@
 
 #include "character.hpp"
 
-class CombatManager
+class Battlefield
 {
 public:
-    CombatManager() = default;
-    // CombatManager(const CombatManager &other);
-    ~CombatManager();
+    Battlefield() = default;
+    // Battlefield(const Battlefield &other);
+    ~Battlefield();
 
-    // CombatManager &operator=(const CombatManager &other);
+    // Battlefield &operator=(const Battlefield &other);
 
     void addCharacter(Character *character);
     void removeCharacter(Character *character);
@@ -17,8 +17,6 @@ public:
     void removeEnemy(Enemy *enemy);
     void executeRound();
     void displayBattleStatus();
-
-    const Character *getCharacter(const char *type);
 
 private:
     void freeCharacters(unsigned numOfChar);

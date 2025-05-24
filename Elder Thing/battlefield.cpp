@@ -1,8 +1,8 @@
 #include <cstring>
 
-#include "combatmanager.hpp"
+#include "battlefield.hpp"
 
-// CombatManager &CombatManager::operator=(const CombatManager &other)
+// Battlefield &Battlefield::operator=(const Battlefield &other)
 // {
 //     if (this != &other)
 //     {
@@ -19,7 +19,7 @@
 //     return *this;
 // }
 
-CombatManager::~CombatManager()
+Battlefield::~Battlefield()
 {
     delete[] this->characters;
     this->characters = nullptr;
@@ -27,7 +27,7 @@ CombatManager::~CombatManager()
     this->enemies = nullptr;
 }
 
-void CombatManager::addCharacter(Character *character)
+void Battlefield::addCharacter(Character *character)
 {
     Character **newChar = new Character *[this->numOfChar + 1];
     for (int i = 0; i < this->numOfChar; i++)
@@ -41,7 +41,7 @@ void CombatManager::addCharacter(Character *character)
     this->numOfChar++;
 }
 
-void CombatManager::removeCharacter(Character *character)
+void Battlefield::removeCharacter(Character *character)
 {
     int index = -1;
     for (int i = 0; i < this->numOfChar; i++)
@@ -82,7 +82,7 @@ void CombatManager::removeCharacter(Character *character)
     }
 }
 
-void CombatManager::addEnemy(Enemy *enemy)
+void Battlefield::addEnemy(Enemy *enemy)
 {
     Enemy **newEnemies = new Enemy *[this->numOfEnemies + 1];
     for (int i = 0; i < this->numOfEnemies; i++)
@@ -96,7 +96,7 @@ void CombatManager::addEnemy(Enemy *enemy)
     this->numOfEnemies++;
 }
 
-void CombatManager::removeEnemy(Enemy *enemy)
+void Battlefield::removeEnemy(Enemy *enemy)
 {
     int index = -1;
     for (int i = 0; i < this->numOfEnemies; i++)
@@ -137,7 +137,7 @@ void CombatManager::removeEnemy(Enemy *enemy)
     }
 }
 
-void CombatManager::executeRound()
+void Battlefield::executeRound()
 {
     for (int i = 0; i < this->numOfChar; i++)
     {
@@ -157,7 +157,7 @@ void CombatManager::executeRound()
     }
 }
 
-void CombatManager::displayBattleStatus()
+void Battlefield::displayBattleStatus()
 {
     std::cout << "\n=== Battle Status ===" << std::endl;
     for (int i = 0; i < this->numOfChar; i++)
@@ -172,7 +172,7 @@ void CombatManager::displayBattleStatus()
 
 const Character *getCharacter(const char *type);
 
-void CombatManager::freeCharacters(unsigned numOfChar)
+void Battlefield::freeCharacters(unsigned numOfChar)
 {
     if (numOfChar != 0)
     {
@@ -186,7 +186,7 @@ void CombatManager::freeCharacters(unsigned numOfChar)
     }
 }
 
-void CombatManager::freeEnemies(unsigned numOfEnemies)
+void Battlefield::freeEnemies(unsigned numOfEnemies)
 {
     if (numOfEnemies != 0)
     {
