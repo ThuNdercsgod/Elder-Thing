@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "combatmanager.hpp"
+#include "battlefield.hpp"
 
 #include "astrologer.hpp"
 #include "confessor.hpp"
@@ -93,6 +93,7 @@ void AstrologerTest::spellCast()
 
     // Create a Astrologer with increased intelligence
     Astrologer astrologer("Default", 20, 20, 70, 5, 10, 30, 30, 30);
+    Enemy enemy("Default", 100, 10);
 
     // Increase intelligence to meet requirements
     astrologer.setIntelligence(12);
@@ -108,16 +109,14 @@ void AstrologerTest::spellCast()
 
     // Cast the spell
     std::cout << "\nCasting spell:" << std::endl;
-    int damage = astrologer.castSpell();
-    std::cout << "Spell dealt " << damage << " damage" << std::endl;
+    astrologer.castSpell(fireball.clone(), enemy.clone());
 
     std::cout << "\nAstrologer status after casting:" << std::endl;
     astrologer.printStatus();
 
     // Try to cast again (should be on cooldown)
     std::cout << "\nTrying to cast again:" << std::endl;
-    damage = astrologer.castSpell();
-    std::cout << "Spell dealt " << damage << " damage" << std::endl;
+    astrologer.castSpell(fireball.clone(), enemy.clone());
 
     // Show final status
     std::cout << "\nFinal Astrologer status:" << std::endl;
@@ -229,6 +228,7 @@ void ConfessorTest::spellCast()
 
     // Create a Confessor with increased intelligence
     Confessor confessor("Default", 20, 20, 70, 5, 10, 30, 30, 30);
+    Enemy enemy("Default", 100, 10);
 
     // Increase intelligence to meet requirements
     confessor.setIntelligence(12);
@@ -244,16 +244,14 @@ void ConfessorTest::spellCast()
 
     // Cast the spell
     std::cout << "\nCasting spell:" << std::endl;
-    int damage = confessor.castSpell();
-    std::cout << "Spell dealt " << damage << " damage" << std::endl;
+    confessor.castSpell(fireball.clone(), enemy.clone());
 
     std::cout << "\nConfessor status after casting:" << std::endl;
     confessor.printStatus();
 
     // Try to cast again (should be on cooldown)
     std::cout << "\nTrying to cast again:" << std::endl;
-    damage = confessor.castSpell();
-    std::cout << "Spell dealt " << damage << " damage" << std::endl;
+    confessor.castSpell(fireball.clone(), enemy.clone());
 
     // Show final status
     std::cout << "\nFinal Confessor status:" << std::endl;
@@ -545,7 +543,7 @@ void EnemyTest::basic()
 //     defaultEnemy.addAttack("Invalid", -10, 10);
 // }
 
-void CombatManagerTest::basic()
+void BattlefieldTest::basic()
 {
     std::cout << "=== Testing Combat Manager Basic Functionality ===\n"
               << std::endl;
@@ -559,17 +557,17 @@ void CombatManagerTest::basic()
     Enemy enemy2("Orc", 100, 25);
 
     // Create combat manager
-    CombatManager combatManager;
+    Battlefield battlefield;
 
     // Add characters and enemies to the combat manager
-    combatManager.addCharacter(&astrologer);
-    combatManager.addCharacter(&confessor);
-    combatManager.addEnemy(&enemy1);
-    combatManager.addEnemy(&enemy2);
+    battlefield.addCharacter(&astrologer);
+    battlefield.addCharacter(&confessor);
+    battlefield.addEnemy(&enemy1);
+    battlefield.addEnemy(&enemy2);
 
     // Start the combat
-    combatManager.executeRound();
+    battlefield.executeRound();
 
     // Display battle status
-    combatManager.displayBattleStatus();
+    battlefield.displayBattleStatus();
 }

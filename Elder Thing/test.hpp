@@ -43,7 +43,7 @@ namespace EnemyTest
     // void attack();
 };
 
-namespace CombatManagerTest
+namespace BattlefieldTest
 {
     void basic();
 }
