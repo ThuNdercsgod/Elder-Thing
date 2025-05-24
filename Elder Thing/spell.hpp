@@ -27,6 +27,7 @@ public:
     virtual void cast(Character *caster, Character *target) = 0;
     virtual const char *getSpellType() const = 0;
     virtual float calculateDamage() const = 0;
+    virtual Spell *clone() const = 0;
 
     const char *getName() const;
     float getDamage() const;

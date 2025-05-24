@@ -300,20 +300,6 @@ void Character::setCurrentSpell(int index)
     }
 }
 
-int Character::castSpell()
-{
-    if (this->spellSlots[this->equippedSpell]->isOnCooldown() == false)
-    {
-        this->spellSlots[this->equippedSpell]->setRemainingCooldown(this->spellSlots[this->equippedSpell]->getCooldown());
-        return this->spellSlots[this->equippedSpell]->getDamage();
-    }
-    else
-    {
-        std::cout << "Spell is on cooldown!" << std::endl;
-        return 0;
-    }
-}
-
 void Character::useHpFlask()
 {
     this->flaskChargesHp--;
@@ -325,31 +311,6 @@ void Character::useMpFlask()
     this->flaskChargesMp--;
     this->mp = this->maxMp;
 }
-
-// void Character::print() const
-// {
-//     std::cout << "\n=== " << this->name << " stats ===\n"
-//               << "HP: " << this->hp << "/" << this->maxHp
-//               << "\nMP: " << this->mp << "/" << this->maxMp
-//               << "\nRunes: " << this->runes
-//               << "\nLevel: " << this->level
-//               << "\nCurrent weight: " << this->currentWeight
-//               << std::endl;
-
-//     this->printInventory();
-//     this->printSpell();
-// }
-
-// void Character::printStatus() const
-// {
-//     std::cout << "\n=== " << this->name << " stats ===\n"
-//               << "HP: " << this->hp << "/" << this->maxHp
-//               << "\nMP: " << this->mp << "/" << this->maxMp
-//               << "\nRunes: " << this->runes
-//               << "\nLevel: " << this->level
-//               << "\nCurrent weight: " << this->currentWeight
-//               << std::endl;
-// }
 
 void Character::printInventory() const
 {

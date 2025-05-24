@@ -19,19 +19,22 @@ Astrologer::Astrologer(const char *name, float maxHp, float maxMp, float maxStam
     this->cosmicAffinity = cosmicAffinity;
 }
 
-void Astrologer::castSorcerySpell(const SorcerySpell &spell) const
+void Astrologer::castSpell(Spell *spell, Combatant *target)
 {
-    std::cout << "Casting Sorcery Spell: " << spell.getName()
-              << " with damage: " << spell.getDamage()
-              << " and MP cost: " << spell.getMpCost()
+    std::cout << "Casting Sorcery Spell: " << spell->getName()
+              << " with damage: " << spell->getDamage()
+              << " and MP cost: " << spell->getMpCost()
               << std::endl;
+
+    spell->setRemainingCooldown(spell->getCooldown());
+    // Target loses hp
 }
 
-void Astrologer::empowerNextSpell(const SorcerySpell &spell) const
+void Astrologer::empowerNextSpell(const Spell *spell) const
 {
-    std::cout << "Casting Sorcery Spell: " << spell.getName()
-              << " with damage: " << spell.getDamage() * 2
-              << " and MP cost: " << spell.getMpCost()
+    std::cout << "Casting Sorcery Spell: " << spell->getName()
+              << " with damage: " << spell->getDamage() * 2
+              << " and MP cost: " << spell->getMpCost()
               << std::endl;
 }
 
@@ -39,25 +42,25 @@ void Astrologer::predictEnemyAction(const Enemy &enemy) const
 {
     std::cout << "Predicting enemy action: " << enemy.getName()
               << " with HP: " << enemy.getHp()
-              << " and damage: " << enemy.getDamage()
+              << " and damage: " << enemy.calculateDamage()
               << std::endl;
 }
 
-Character *Astrologer::clone() const
+Combatant *Astrologer::clone() const
 {
     return new Astrologer(*this);
 }
 
-void Astrologer::attack(Enemy *enemy)
+void Astrologer::attack(Combatant *target)
 {
-    enemy->defend(this);
+    target->defend(this);
 }
 
-void Astrologer::defend(const Enemy *enemy)
+void Astrologer::defend(const Combatant *target)
 {
     if (this->getHp() > 0)
     {
-        this->setHp(this->getHp() - enemy->getDamage());
+        this->setHp(this->getHp() - target->calculateDamage());
         std::cout << "Remaining HP: " << this->getHp() << std::endl;
     }
     else
@@ -71,23 +74,28 @@ void Astrologer::useSpecialAbility() const
     std::cout << "Using Special Ability: Cosmic Vision!" << std::endl;
 }
 
-const char *Astrologer::getClassName() const
-{
-    return "Astrologer";
-}
-
-int Astrologer::calculateDamage() const
+float Astrologer::calculateDamage() const
 {
     return this->getStaffPower() + this->getIntelligenceScalling();
 }
 
-bool Astrologer::canLearnSpell(const Spell *spell) const
+bool Astrologer::canCastSpell(const Spell *spell) const
 {
     if (strcmp(spell->getSpellType(), "Sorcery") == 0)
     {
         return true;
     }
     return false;
+}
+
+const char *Astrologer::getType() const
+{
+    return "Astrologer";
+}
+
+float Astrologer::calculateMagicPower() const
+{
+    return this->calculateDamage();
 }
 
 void Astrologer::print() const

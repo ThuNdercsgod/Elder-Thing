@@ -19,12 +19,15 @@ Confessor::Confessor(const char *name, float maxHp, float maxMp, float maxStamin
     this->divineBlessing = divineBlessing;
 }
 
-void Confessor::castIncantationSpell(const IncantationSpell &spell) const
+void Confessor::castSpell(Spell *spell, Combatant *target)
 {
-    std::cout << "Casting Incantation Spell: " << spell.getName()
-              << " with damage: " << spell.getDamage()
-              << " and MP cost: " << spell.getMpCost()
+    std::cout << "Casting Incantation Spell: " << spell->getName()
+              << " with damage: " << spell->getDamage()
+              << " and MP cost: " << spell->getMpCost()
               << std::endl;
+
+    spell->setRemainingCooldown(spell->getCooldown());
+    //   Target loses hp
 }
 
 void Confessor::empowerNextSpell(const IncantationSpell &spell) const
@@ -39,25 +42,25 @@ void Confessor::predictEnemyAction(const Enemy &enemy) const
 {
     std::cout << "Predicting enemy action: " << enemy.getName()
               << " with HP: " << enemy.getHp()
-              << " and damage: " << enemy.getDamage()
+              << " and damage: " << enemy.calculateDamage()
               << std::endl;
 }
 
-Character *Confessor::clone() const
+Combatant *Confessor::clone() const
 {
     return new Confessor(*this);
 }
 
-void Confessor::attack(Enemy *enemy)
+void Confessor::attack(Combatant *target)
 {
-    enemy->defend(this);
+    target->defend(this);
 }
 
-void Confessor::defend(const Enemy *enemy)
+void Confessor::defend(const Combatant *target)
 {
     if (this->getHp() > 0)
     {
-        this->setHp(this->getHp() - enemy->getDamage());
+        this->setHp(this->getHp() - target->calculateDamage());
         std::cout << "Remaining HP: " << this->getHp() << std::endl;
     }
     else
@@ -71,23 +74,28 @@ void Confessor::useSpecialAbility() const
     std::cout << "Using special ability: Divine Intervention!" << std::endl;
 }
 
-const char *Confessor::getClassName() const
-{
-    return "Confessor";
-}
-
-int Confessor::calculateDamage() const
+float Confessor::calculateDamage() const
 {
     return this->getHolySymbolPower() + this->getFaithScalling();
 }
 
-bool Confessor::canLearnSpell(const Spell *spell) const
+bool Confessor::canCastSpell(const Spell *spell) const
 {
     if (strcmp(spell->getSpellType(), "Incantation") == 0)
     {
         return true;
     }
     return false;
+}
+
+const char *Confessor::getType() const
+{
+    return "Confessor";
+}
+
+float Confessor::calculateMagicPower() const
+{
+    return this->calculateDamage();
 }
 
 void Confessor::print() const

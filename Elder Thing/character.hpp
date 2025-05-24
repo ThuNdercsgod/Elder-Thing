@@ -1,10 +1,11 @@
 #pragma once
 
 #include "enemy.hpp"
+#include "interfaces.hpp"
 #include "spell.hpp"
 #include "weapon.hpp"
 
-class Character
+class Character : public Combatant
 {
 public:
     Character();
@@ -24,7 +25,6 @@ public:
     void unequipSpell(int index);
     void setCurrentWeapon(int index);
     void setCurrentSpell(int index);
-    int castSpell();
     void useHpFlask();
     void useMpFlask();
 
@@ -33,13 +33,7 @@ public:
     void printInventory() const;
     void printSpell() const;
 
-    virtual Character *clone() const = 0;
-    virtual void attack(Enemy *enemy) = 0;
-    virtual void defend(const Enemy *enemy) = 0;
     virtual void useSpecialAbility() const = 0;
-    virtual const char *getClassName() const = 0;
-    virtual int calculateDamage() const = 0;
-    virtual bool canLearnSpell(const Spell *spell) const = 0;
 
     const char *getName() const;
     float getHp() const;

@@ -106,19 +106,19 @@ void Enemy::print() const
               << std::endl;
 }
 
-void Enemy::attack(Character *target) const
+void Enemy::attack(Combatant *target)
 {
     target->defend(this);
 }
 
-void Enemy::defend(Character *attacker)
+void Enemy::defend(const Combatant *target)
 {
     if (this->hp > 0)
     {
-        this->hp -= attacker->calculateDamage();
+        this->hp -= target->calculateDamage();
         std::cout << "Remaining HP: " << this->hp << std::endl;
     }
-    else if (this->hp <= attacker->calculateDamage())
+    else if (this->hp <= target->calculateDamage())
     {
         this->hp = 0;
         std::cout << this->name << " is defeated!" << std::endl;
@@ -128,6 +128,21 @@ void Enemy::defend(Character *attacker)
     {
         std::cout << this->name << " is already defeated!" << std::endl;
     }
+}
+
+float Enemy::calculateDamage() const
+{
+    return this->damage;
+}
+
+const char *Enemy::getType() const
+{
+    return "Enemy";
+}
+
+Combatant *Enemy::clone() const
+{
+    return new Enemy(*this);
 }
 
 const char *Enemy::getName() const
@@ -143,11 +158,6 @@ int Enemy::getHp() const
 int Enemy::getMaxHp() const
 {
     return this->maxHp;
-}
-
-int Enemy::getDamage() const
-{
-    return this->damage;
 }
 
 // Might throw std::invalid_argument

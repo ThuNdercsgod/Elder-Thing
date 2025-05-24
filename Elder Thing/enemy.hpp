@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "interfaces.hpp"
+
 class Character;
 
 // class Attack
@@ -17,7 +19,7 @@ class Character;
 //     int range;
 // };
 
-class Enemy
+class Enemy : public Combatant
 {
 public:
     Enemy();
@@ -32,13 +34,16 @@ public:
     // void addAttack(const char *name, int damage, int range);
     void print() const;
 
-    void attack(Character *target) const;
-    void defend(Character *attacker);
+    void attack(Combatant *target) override;
+    void defend(const Combatant *target) override;
+    float calculateDamage() const override;
+    const char *getType() const override;
+
+    Combatant *clone() const override;
 
     const char *getName() const;
     int getHp() const;
     int getMaxHp() const;
-    int getDamage() const;
 
     void setHp(int hp);
     void setMaxHp(int maxHp);
